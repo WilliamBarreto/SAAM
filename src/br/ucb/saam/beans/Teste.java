@@ -9,5 +9,5 @@ package br.ucb.saam.beans;
  * @since 2013
  */
 public class Teste {
-
+	private String Thuthuthu;
 }
