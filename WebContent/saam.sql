@@ -52,6 +52,21 @@ CREATE TABLE usuarios(
 	PRIMARY KEY(id_usuario)
 );
 
+CREATE TABLE areas(
+	id_area INT(11) NOT NULL AUTO_INCREMENT,
+	nome VARCHAR(30),
+	PRIMARY KEY (id_area)
+);
+
+CREATE TABLE voluntarios(
+	id_voluntario INT(11) NOT NULL AUTO_INCREMENT,
+	nome VARCHAR(50),
+	email VARCHAR(40),
+	telefone VARCHAR(10),
+	sexo VARCHAR(2),
+	id_area	INT (11) NOT NULL,
+	PRIMARY KEY(id_voluntario)
+);
 
 /*
 	CRIANDO CHAVES ESTRANGEIRAS
@@ -59,6 +74,7 @@ CREATE TABLE usuarios(
 ALTER TABLE usuarios ADD CONSTRAINT fk_usuario_id_perfil FOREIGN KEY(id_perfil) REFERENCES perfis(id_perfil);
 ALTER TABLE perf_func ADD CONSTRAINT fk_perf_func_id_perfil FOREIGN KEY(id_perfil) REFERENCES perfis(id_perfil);
 ALTER TABLE perf_func ADD CONSTRAINT fk_perf_func_id_funcionalidade FOREIGN KEY(id_funcionalidade) REFERENCES funcionalidades(id_funcionalidade);
+ALTER TABLE voluntarios ADD CONSTRAINT fk_voluntario_id_area FOREIGN KEY (id_area) REFERENCES areas(id_area);
 
 
 /*
@@ -157,6 +173,14 @@ INSERT INTO usuarios VALUES(NULL,'gerente','gerente',4);
 INSERT INTO usuarios VALUES(NULL,'mulher','mulher',5);
 
 /*
+ 	Inserindo areas
+*/
+
+INSERT INTO areas VALUES(NULL,'Jurídica');
+INSERT INTO areas VALUES(NULL,'Social');
+INSERT INTO areas VALUES(NULL,'Psicológica');
+
+/*
  
  VERIFICANDO RESULTADOS
 
@@ -171,6 +195,7 @@ SELECT * FROM usuarios;
 SELECT * FROM perfis;
 SELECT * FROM funcionalidades;
 SELECT * FROM perf_func;
+SELECT * FROM areas;
 
 
 
