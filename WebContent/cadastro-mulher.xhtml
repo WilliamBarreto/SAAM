@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title>Cadastro de Mulher</title>
+</h:head>
+
+<h:body>
+	<h:form>
+		<h:panelGrid>
+			<h:outputText value="Nome"/>
+			<h:inputText value="#{voluntarioMB.voluntario.nome}"/>
+			
+			<h:outputText value="E-mail"/>			
+			<h:inputText value="#{voluntarioMB.voluntario.email}"/>
+						
+			<h:outputText value="Telefone"/>			
+			<h:inputText value="#{voluntarioMB.voluntario.telefone}"/>
+			
+			<h:outputText value="Sexo"/>
+			<h:selectOneMenu value="#{voluntarioMB.voluntario.sexo}">
+				<f:selectItem itemValue="M" itemLabel="Masculino"></f:selectItem>
+				<f:selectItem itemValue="F" itemLabel="Feminino"></f:selectItem>	
+			</h:selectOneMenu>
+			
+			<h:outputText value="Area de Atuação"/>
+			<h:selectOneMenu value="#{voluntarioMB.voluntario.area}">
+				<f:selectItems value="#{voluntarioMB.areas}" var="area" itemLabel="#{area.nome}"/>			
+			</h:selectOneMenu>
+						
+		</h:panelGrid>
+		
+		<h:commandButton value="Gravar" action="#{voluntarioMB.cadastrar}"/>
+		
+	</h:form>
+</h:body>
+</html>

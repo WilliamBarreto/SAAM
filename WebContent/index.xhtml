@@ -6,21 +6,67 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 
+
 <h:head>
 	<title>Página de Login </title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"/>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+
 </h:head>
 
 <h:body>
-	<h:form>
-		<h:panelGrid>
-			<h:outputText value="Nome"/>
-			<h:inputText value="#{usuarioMB.usuario.nome}"/>
+
+		<h1><h:outputText class="" value="Bem vindo ao SAAM"/></h1>
 		
-			<h:outputText value="Senha"/>
-			<h:inputSecret value="#{usuarioMB.usuario.senha}"/>
-		</h:panelGrid>
-		<h:commandButton value="Entrar" action="#{usuarioMB.login}"/>
-		
-	</h:form>
+		<div class="container-fluid">
+  			<div class="row-fluid">
+    			<div class="span5">
+	      			<h:form>
+						<h:commandLink value="Area da Mulher" action="#{controllerMB.apresentarArea}">
+							 <f:setPropertyActionListener target="#{controllerMB.area}" value="mulher"/>  
+						</h:commandLink><br/>
+					
+						<h:commandLink value="Area Administrativa" action="#{controllerMB.apresentarArea}">
+							 <f:setPropertyActionListener target="#{controllerMB.area}" value="administrativa"/>  
+						</h:commandLink><br/>
+						
+						<h:commandLink value="Area do Voluntario" action="#{controllerMB.apresentarArea}">
+							 <f:setPropertyActionListener target="#{controllerMB.area}" value="voluntario"/>  
+						</h:commandLink><br/>
+					</h:form>    			
+    			</div>
+    			<div class="span5">
+    					
+	    			<h3><h:outputText redered="#{controllerMB.renderFormLogin}" value="#{controllerMB.area == 'mulher'?'Area da Mulher':(controllerMB.area == 'administrativa' ? 'Area Administrativa':(controllerMB.area == 'voluntario'?'Area do Voluntario':'Erro! Parâmetro não definido'))}"/></h3>
+					<br/>
+
+
+					
+					<h:form target="_blank">
+						<h:commandButton class="btn btn-danger" rendered="#{controllerMB.area == 'mulher' ? true:false}" value="Cadastre-se" action="#{controllerMB.cadastrarMulher}"/>
+						<h:commandButton class="btn btn-danger" rendered="#{controllerMB.area == 'voluntario'? true:false}" value="Cadastre-se" action="#{controllerMB.cadastrarVoluntario}"/>
+					</h:form>
+
+
+      				<h:form rendered="#{controllerMB.renderFormLogin}" class="form-horizontal">
+						<div>
+							<h:panelGrid >
+
+								<h:outputText value="Usuario"/>
+								<h:inputText value="#{usuarioMB.usuario.nome}"/>
+					
+								<h:outputText value="Senha"/>
+								<h:inputSecret value="#{usuarioMB.usuario.senha}"/> <br/>
+							
+								<h:commandButton class="btn btn-success" style="text-align:right;" value="Entrar" action="#{usuarioMB.login}"/>
+							</h:panelGrid>
+						</div>
+					</h:form>
+    			</div>
+  			</div>
+		</div>
 </h:body>
 </html>
