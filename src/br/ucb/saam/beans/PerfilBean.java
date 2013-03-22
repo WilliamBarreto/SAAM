@@ -1,7 +1,8 @@
 package br.ucb.saam.beans;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,14 +40,14 @@ public class PerfilBean implements Serializable{
 	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="perf_func", joinColumns=@JoinColumn(name="id_perfil"),
 	inverseJoinColumns=@JoinColumn(name="id_funcionalidade"))
-	private Collection<FuncionalidadeBean> funcionalidades;
+	private List<FuncionalidadeBean> funcionalidades;
 
 
 
 
 	//Constructor------------------------------------------------------------------------------
 	public PerfilBean(){
-
+		this.funcionalidades = new ArrayList<FuncionalidadeBean>();
 	}
 
 
@@ -78,10 +79,10 @@ public class PerfilBean implements Serializable{
 		this.nome = nome;
 	}
 
-	public Collection<FuncionalidadeBean> getFuncionalidades() {
+	public List<FuncionalidadeBean> getFuncionalidades() {
 		return funcionalidades;
 	}
-	public void setFuncionalidades(Collection<FuncionalidadeBean> funcionalidades) {
+	public void setFuncionalidades(List<FuncionalidadeBean> funcionalidades) {
 		this.funcionalidades = funcionalidades;
 	}
 

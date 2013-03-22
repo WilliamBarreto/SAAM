@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title>Dados do Voluntario</title>
+</h:head>
+<h:body>
+	
+	Voluntario:
+	<h:outputText value="#{voluntarioMB.voluntario.nome}"/>
+	<br />
+	E-mail:
+	<h:outputText value="#{voluntarioMB.voluntario.email}"/>
+	<br />
+	Telefone:
+	<h:outputText value="#{voluntarioMB.voluntario.telefone}"/>
+	<br />
+	Sexo:
+	<h:outputText value="#{voluntarioMB.voluntario.sexo}"/>
+	<br />
+	Area Atendimento:
+	<h:outputText value="#{voluntarioMB.voluntario.area.nome}"/>
+	<br />
+
+	<h:form>
+		<h:commandLink value="Voltar" action="#{voluntarioMB.index}"/>
+	</h:form>
+</h:body>
+</html>
