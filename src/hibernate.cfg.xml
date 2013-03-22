@@ -20,6 +20,7 @@
 		<mapping class="br.ucb.saam.beans.PerfilBean"/>
 		<mapping class="br.ucb.saam.beans.FuncionalidadeBean"/>
 		<mapping class="br.ucb.saam.beans.VoluntarioBean"/>
+		<mapping class="br.ucb.saam.beans.PerguntaFrequenteBean"/>
 		
 	</session-factory>
 </hibernate-configuration>
