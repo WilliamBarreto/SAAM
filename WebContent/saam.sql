@@ -33,7 +33,7 @@ CREATE TABLE perfis(
 
 /*
 	Tabela: perf_func
-	Está tabela é da associação entre a tabela perfis e funcionalidades
+	Estï¿½ tabela ï¿½ da associaï¿½ï¿½o entre a tabela perfis e funcionalidades
  */	
 CREATE TABLE perf_func(
 	id_perfil INT(11) NOT NULL,
@@ -69,13 +69,26 @@ CREATE TABLE voluntarios(
 );
 
 /*
+	Tabela: Perguntas Frequentes
+ */
+
+CREATE TABLE perguntas_frequentes(
+ id_pergunta_frequente INT(11) NOT NULL AUTO_INCREMENT,
+ pergunta VARCHAR(255),
+ resposta VARCHAR(255),
+ data_publicacao DATE,
+ id_area INT(11) NOT NULL,
+ PRIMARY KEY(id_pergunta_frequente)
+);
+
+/*
 	CRIANDO CHAVES ESTRANGEIRAS
  */
 ALTER TABLE usuarios ADD CONSTRAINT fk_usuario_id_perfil FOREIGN KEY(id_perfil) REFERENCES perfis(id_perfil);
 ALTER TABLE perf_func ADD CONSTRAINT fk_perf_func_id_perfil FOREIGN KEY(id_perfil) REFERENCES perfis(id_perfil);
 ALTER TABLE perf_func ADD CONSTRAINT fk_perf_func_id_funcionalidade FOREIGN KEY(id_funcionalidade) REFERENCES funcionalidades(id_funcionalidade);
 ALTER TABLE voluntarios ADD CONSTRAINT fk_voluntario_id_area FOREIGN KEY (id_area) REFERENCES areas(id_area);
-
+ALTER TABLE perguntas_frequentes ADD CONSTRAINT fk_perguntas_frequentes_id_area FOREIGN KEY (id_area) REFERENCES areas(id_area);
 
 /*
 	INSERINDO DADOS
@@ -88,18 +101,18 @@ ALTER TABLE voluntarios ADD CONSTRAINT fk_voluntario_id_area FOREIGN KEY (id_are
 
 INSERT INTO funcionalidades VALUES (NULL,'Solicitar Atendimento');/* 1 */
 INSERT INTO funcionalidades VALUES (NULL,'Atender Vitima');/* 2 */
-INSERT INTO funcionalidades VALUES (NULL,'Consultar histórico de atendimentos');/* 3 */
+INSERT INTO funcionalidades VALUES (NULL,'Consultar histï¿½rico de atendimentos');/* 3 */
 INSERT INTO funcionalidades VALUES (NULL,'Atender Mensagens');/* 4 */
 INSERT INTO funcionalidades VALUES (NULL,'Manter Atendentes');/* 5 */
-INSERT INTO funcionalidades VALUES (NULL,'Manter Usuários');/* 6 */
+INSERT INTO funcionalidades VALUES (NULL,'Manter Usuï¿½rios');/* 6 */
 INSERT INTO funcionalidades VALUES (NULL,'Manter Perfil');/* 7 */
 INSERT INTO funcionalidades VALUES (NULL,'Avaliar Cadastro de Atendentes');/* 8 */
 INSERT INTO funcionalidades VALUES (NULL,'Consultar Logs');/* 9 */
 INSERT INTO funcionalidades VALUES (NULL,'Manter Perguntas Frequentes');/* 10 */
-INSERT INTO funcionalidades VALUES (NULL,'Relatório de Atendimentos');/* 11 */
-INSERT INTO funcionalidades VALUES (NULL,'Relatório de Acessos');/* 12 */
-INSERT INTO funcionalidades VALUES (NULL,'Relatório de Avaliações');/* 13 */
-INSERT INTO funcionalidades VALUES (NULL,'Relatório de Pessoas');/* 14 */
+INSERT INTO funcionalidades VALUES (NULL,'Relatï¿½rio de Atendimentos');/* 11 */
+INSERT INTO funcionalidades VALUES (NULL,'Relatï¿½rio de Acessos');/* 12 */
+INSERT INTO funcionalidades VALUES (NULL,'Relatï¿½rio de Avaliaï¿½ï¿½es');/* 13 */
+INSERT INTO funcionalidades VALUES (NULL,'Relatï¿½rio de Pessoas');/* 14 */
 
 /*
  	Inserindo perfis 
@@ -113,7 +126,7 @@ INSERT INTO perfis VALUES(NULL,'Gerente');
 INSERT INTO perfis VALUES(NULL,'Mulher');
 
 /*
- Funções do Admnistrador
+ Funï¿½ï¿½es do Admnistrador
  
  */
 INSERT INTO perf_func VALUES(1,3);
@@ -124,7 +137,7 @@ INSERT INTO perf_func VALUES(1,9);
 
 /*
  
- Funções do Atendente
+ Funï¿½ï¿½es do Atendente
  
  */
 INSERT INTO perf_func VALUES(2,2);
@@ -133,7 +146,7 @@ INSERT INTO perf_func VALUES(2,4);
 
 /*
  
- Funções da Diretoria
+ Funï¿½ï¿½es da Diretoria
  
  */
 INSERT INTO perf_func VALUES(3,11);
@@ -143,7 +156,7 @@ INSERT INTO perf_func VALUES(3,14);
 
 /*
  
- Funções do Gerente
+ Funï¿½ï¿½es do Gerente
  
  */
 INSERT INTO perf_func VALUES(4,3);
@@ -155,7 +168,7 @@ INSERT INTO perf_func VALUES(4,14);
 
 /*
  
- Funções da Mulher
+ Funï¿½ï¿½es da Mulher
  
  */
 INSERT INTO perf_func VALUES(5,1);
@@ -176,9 +189,9 @@ INSERT INTO usuarios VALUES(NULL,'mulher','mulher',5);
  	Inserindo areas
 */
 
-INSERT INTO areas VALUES(NULL,'Jurídica');
+INSERT INTO areas VALUES(NULL,'Jurï¿½dica');
 INSERT INTO areas VALUES(NULL,'Social');
-INSERT INTO areas VALUES(NULL,'Psicológica');
+INSERT INTO areas VALUES(NULL,'Psicolï¿½gica');
 
 /*
  

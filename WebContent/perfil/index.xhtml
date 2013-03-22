@@ -23,13 +23,17 @@
 		</h:column>
 		<h:column>
 			<h:form>
-				<h:commandLink value="Editar" action="#{perfilMB.show}">
+				<h:commandLink value="Vizualizar" action="#{perfilMB.show}">
 						<f:setPropertyActionListener value="#{item}"
 						target="#{perfilMB.perfil}" />
 				</h:commandLink>
 				<h:commandLink value="Editar" action="#{perfilMB.edit}">
 						<f:setPropertyActionListener value="#{item}"
 						target="#{perfilMB.perfil}" />
+				</h:commandLink>
+				
+				<h:commandLink value="Excluir" actionListener="#{perfilMB.delete}">
+					<f:attribute name="perfil" value="#{item}" />
 				</h:commandLink>
 				<br />
 			</h:form>

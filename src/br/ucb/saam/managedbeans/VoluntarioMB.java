@@ -1,9 +1,11 @@
 package br.ucb.saam.managedbeans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ActionEvent;
 
 import br.ucb.saam.beans.AreaBean;
 import br.ucb.saam.beans.VoluntarioBean;
@@ -15,7 +17,9 @@ import br.ucb.saam.dao.VoluntarioDAO;
 public class VoluntarioMB {
 
 	private VoluntarioBean voluntario;
+	private List<VoluntarioBean> voluntarios;
 	private List<AreaBean> areas;
+	private VoluntarioDAO voluntarioDAO;
 	
 
 // Constructor
@@ -23,25 +27,38 @@ public class VoluntarioMB {
 	public VoluntarioMB(){
 		setVoluntario(new VoluntarioBean());
 		setAreas(new AreaDAO().findAll(AreaBean.class));
+		setVoluntarios(new ArrayList<VoluntarioBean>());
+		setVoluntarioDAO(new VoluntarioDAO());
 	}
 	
 // Methods
 	
 	public String cadastrar(){
 		
-		System.out.println("Nome: " + voluntario.getNome());
-		System.out.println("Email: "+voluntario.getEmail());
-		System.out.println("Telefone : "+voluntario.getTelefone());
-		System.out.println("Sexo: "+voluntario.getSexo());
-		System.out.println("-------------------------");
-		
-		System.out.println("ID : "+voluntario.getArea().getId());
-		System.out.println("NOME : "+voluntario.getArea().getNome());
-
-		new VoluntarioDAO().saveOrUpdate(voluntario);
-		
-		this.voluntario = new VoluntarioBean();
+		voluntarioDAO.saveOrUpdate(voluntario);
+		voluntario = new VoluntarioBean();
 		return "sucess";
+	}
+	
+	public String index(){
+		voluntarios = voluntarioDAO.findAll(VoluntarioBean.class);
+		return "voluntario/index";
+	}
+	
+	public String show(){
+		
+		return "show";
+	}
+	
+	public String reprovar(ActionEvent evento){
+		this.voluntario = (VoluntarioBean) evento.getComponent().getAttributes().get("voluntario");
+		voluntarioDAO.delete(voluntario);
+		return index();
+	}
+	
+	public String aprovar(){
+		//To do!
+		return "";
 	}
 	
 	
@@ -60,6 +77,22 @@ public class VoluntarioMB {
 
 	public void setVoluntario(VoluntarioBean voluntario) {
 		this.voluntario = voluntario;
+	}
+
+	public List<VoluntarioBean> getVoluntarios() {
+		return voluntarios;
+	}
+
+	public void setVoluntarios(List<VoluntarioBean> voluntarios) {
+		this.voluntarios = voluntarios;
+	}
+
+	public VoluntarioDAO getVoluntarioDAO() {
+		return voluntarioDAO;
+	}
+
+	public void setVoluntarioDAO(VoluntarioDAO voluntarioDAO) {
+		this.voluntarioDAO = voluntarioDAO;
 	}
 	
 

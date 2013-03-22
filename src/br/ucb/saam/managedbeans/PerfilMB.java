@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ActionEvent;
 
 import br.ucb.saam.beans.FuncionalidadeBean;
 import br.ucb.saam.beans.PerfilBean;
@@ -18,7 +19,6 @@ public class PerfilMB implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private List<String> ids;
 	private PerfilBean perfil;
 	private PerfilDAO perfilDAO;
 	private List<PerfilBean> perfis;
@@ -31,7 +31,6 @@ public class PerfilMB implements Serializable{
 		setPerfis(new ArrayList<PerfilBean>());
 		setFuncionalidades(new ArrayList<FuncionalidadeBean>());
 		setFuncionalidadeDAO(new FuncionalidadeDAO());
-		ids = new ArrayList<String>();
 	}
 	
 	public String index(){
@@ -51,24 +50,28 @@ public class PerfilMB implements Serializable{
 	public String novo(){
 		
 		funcionalidades = funcionalidadeDAO.findAll(FuncionalidadeBean.class);
+		
 		return "new";
 	}
 	
 	public String criar(){
 		
-//		for (String i : ids) {
-//			System.out.println(i);
-//			perfil.getFuncionalidades().add((FuncionalidadeBean) funcionalidadeDAO.buscarPorId(FuncionalidadeBean.class, Integer.parseInt(i)));
-//		}
-		System.out.println(perfil.getFuncionalidades());
-			
 		perfilDAO.saveOrUpdate(perfil);
 		
-		return "index";
+		return index();
 	}
+	
 	public String edit(){
 		funcionalidades = funcionalidadeDAO.findAll(FuncionalidadeBean.class);
 		return "new";
+	}
+	
+	public String delete(ActionEvent evento){
+		
+		this.perfil = (PerfilBean) evento.getComponent().getAttributes().get("perfil");
+		perfilDAO.delete(perfil);
+		
+		return index();
 	}
 	
 	
@@ -103,14 +106,6 @@ public class PerfilMB implements Serializable{
 
 	public void setPerfis(List<PerfilBean> perfis) {
 		this.perfis = perfis;
-	}
-
-	public List<String> getIds() {
-		return ids;
-	}
-
-	public void setIds(List<String> ids) {
-		this.ids = ids;
 	}
 	
 }

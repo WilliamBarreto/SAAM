@@ -12,27 +12,27 @@
 </h:head>
 
 <h:body>
-	
+
 	<h:form>
 		<h:panelGrid>
-			
-			<h:outputText value="Nome"/>
-			<h:inputText value="#{perfilMB.perfil.nome}"/>
-			
+
+			<h:outputText value="Nome" />
+			<h:inputText value="#{perfilMB.perfil.nome}" />
+
 		</h:panelGrid>
-		
-			<h:column>
-			
+
+		<h:column>
+
 			<h:selectManyCheckbox value="#{perfilMB.perfil.funcionalidades}">
-   			
-   			<f:selectItems value="#{perfilMB.funcionalidades}" var="funcionalidade"
-   			itemLabel="#{funcionalidade.nome}"/>
-   			</h:selectManyCheckbox>
-			
-			</h:column>
-	<h:commandButton value="Salvar" action="#{perfilMB.criar}" />
+				<f:converter converterId="funcionalidadeConverter" />
+				<f:selectItems value="#{perfilMB.funcionalidades}"
+					var="funcionalidade" itemLabel="#{funcionalidade.nome}" />
+			</h:selectManyCheckbox>
+
+		</h:column>
+		<h:commandButton value="Salvar" action="#{perfilMB.criar}" />
 	</h:form>
-	
+
 
 </h:body>
 

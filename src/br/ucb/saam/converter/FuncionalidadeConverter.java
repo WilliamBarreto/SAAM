@@ -8,13 +8,15 @@ import javax.faces.convert.FacesConverter;
 import br.ucb.saam.beans.FuncionalidadeBean;
 import br.ucb.saam.dao.FuncionalidadeDAO;
 
-//@FacesConverter(forClass=FuncionalidadeBean.class)
+@FacesConverter(value="funcionalidadeConverter")
 public class FuncionalidadeConverter implements Converter{
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
+		
 		FuncionalidadeBean funcionalidade = new FuncionalidadeBean();
 		funcionalidade = (FuncionalidadeBean) new FuncionalidadeDAO().buscarPorId(FuncionalidadeBean.class, Integer.parseInt(value));
+		
 		return funcionalidade;
 	}
 
