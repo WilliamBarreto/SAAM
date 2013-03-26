@@ -6,15 +6,15 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 
-<h:head>
-	<title>Lista de funcionalidades</title>
-</h:head>
-
 <h:body>
+ 
+   <ui:composition template="/template/common/layout.xhtml">
+   	<ui:param name="title" value="Lista de perfis" />
+ 
+    		<ui:define name="content">
+    		<h3>Lista de Perfis</h3>
 
-	<h3>Lista de Perfis</h3>
-
-	<h:dataTable value="#{perfilMB.perfis}" var="item">
+	<h:dataTable value="#{perfilMB.perfis}" var="item" styleClass="table">
 		<h:column>
 			<f:facet name="header">
 				<h:outputText value="Nome" />
@@ -23,16 +23,25 @@
 		</h:column>
 		<h:column>
 			<h:form>
-				<h:commandLink value="Vizualizar" action="#{perfilMB.show}">
+				<h:commandLink value="Vizualizar" action="#{perfilMB.show}" styleClass="btn">
 						<f:setPropertyActionListener value="#{item}"
 						target="#{perfilMB.perfil}" />
 				</h:commandLink>
-				<h:commandLink value="Editar" action="#{perfilMB.edit}">
+			</h:form>
+		</h:column>
+		
+		<h:column>
+			<h:form>
+				<h:commandLink value="Editar" action="#{perfilMB.edit}" styleClass="btn">
 						<f:setPropertyActionListener value="#{item}"
 						target="#{perfilMB.perfil}" />
 				</h:commandLink>
+			</h:form>
+		</h:column>
 				
-				<h:commandLink value="Excluir" actionListener="#{perfilMB.delete}">
+		<h:column>
+			<h:form>
+				<h:commandLink value="Excluir" actionListener="#{perfilMB.delete}" styleClass="btn">
 					<f:attribute name="perfil" value="#{item}" />
 				</h:commandLink>
 				<br />
@@ -42,8 +51,13 @@
 	</h:dataTable>
 	
 	<h:form>
-		<h:commandLink value="Novo perfil" action="#{perfilMB.novo}"/>
+		<h:commandLink value="Novo perfil" action="#{perfilMB.novo}" styleClass="btn"/>
 	</h:form>
+    		
+    		</ui:define>
+    		
+   </ui:composition>
+ 
 
 </h:body>
 
