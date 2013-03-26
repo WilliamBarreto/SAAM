@@ -6,18 +6,11 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 
-
-<h:head>
-	<title>Página de Login </title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	
-	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-	<link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"/>
-	<script src="bootstrap/js/bootstrap.min.js"></script>
-
-</h:head>
-
 <h:body>
+	
+	<ui:composition template="/template/common/layout.xhtml">
+ 
+    		<ui:define name="content">
 
 		<h1><h:outputText class="" value="Bem vindo ao SAAM"/></h1>
 		
@@ -68,5 +61,7 @@
     			</div>
   			</div>
 		</div>
+	</ui:define>
+</ui:composition>
 </h:body>
 </html>
