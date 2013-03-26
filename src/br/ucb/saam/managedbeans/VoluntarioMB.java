@@ -7,10 +7,14 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
 
+import org.apache.commons.mail.EmailException;
+
 import br.ucb.saam.beans.AreaBean;
 import br.ucb.saam.beans.VoluntarioBean;
 import br.ucb.saam.dao.AreaDAO;
 import br.ucb.saam.dao.VoluntarioDAO;
+import br.ucb.saam.util.EmailUtils;
+import br.ucb.saam.util.Mensagem;
 
 @ManagedBean
 @SessionScoped
@@ -37,6 +41,7 @@ public class VoluntarioMB {
 		
 		voluntarioDAO.saveOrUpdate(voluntario);
 		voluntario = new VoluntarioBean();
+		enviaEmail();
 		return "sucess";
 	}
 	
@@ -95,5 +100,21 @@ public class VoluntarioMB {
 		this.voluntarioDAO = voluntarioDAO;
 	}
 	
+	public void enviaEmail(){
+		Mensagem mensagem = new Mensagem();
+		
+		mensagem.setDestino("bsi.william@gmail.com");
+		mensagem.setTitulo("Testando envio de e-mail");
+		mensagem.setMensagem("Voluntario cadastrado com sucesso!");
+		
+		try {
+			EmailUtils.enviaEmail(mensagem);
+		} catch (EmailException ex){
+			System.out.println("Erro! Ocorreu um erro ao enviar a mensagem"+ex);
+			
+			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro! Occoreu um erro ao enviar a mensagem.", "Erro"));
+			//Logger.getLogger(IndexController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
 
 }
