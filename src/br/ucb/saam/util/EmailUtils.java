@@ -1,8 +1,5 @@
 package br.ucb.saam.util;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
@@ -11,7 +8,7 @@ import org.apache.commons.mail.SimpleEmail;
 public class EmailUtils {
 	private static final String HOSTNAME = "smtp.gmail.com";
 	private static final String USERNAME = "saamprojeto";
-	private static final String PASSWORD = "projeto2013";
+	private static final String PASSWORD = "****";
 	private static final String EMAILORIGEM = "saamprojeto@gmail.com";
 	
 	@SuppressWarnings("deprecation")
@@ -33,6 +30,6 @@ public class EmailUtils {
 		 email.setMsg(mensagem.getMensagem());
 		 email.addTo(mensagem.getDestino());
 		 String resposta = email.send();
-		 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "E-mail enviado com sucesso para: " + mensagem.getDestino(), "Informação"));
+		 //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "E-mail enviado com sucesso para: " + mensagem.getDestino(), "Informação"));
 	}
 }

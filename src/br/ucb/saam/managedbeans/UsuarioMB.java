@@ -9,6 +9,7 @@ import javax.faces.context.FacesContext;
 
 import br.ucb.saam.beans.UsuarioBean;
 import br.ucb.saam.dao.UsuarioDAO;
+import br.ucb.saam.util.JSFMensageiro;
 
 
 
@@ -16,6 +17,7 @@ import br.ucb.saam.dao.UsuarioDAO;
 @ManagedBean(name="usuarioMB")
 @SessionScoped
 public class UsuarioMB {
+
 
 	private UsuarioBean usuario;
 	private UsuarioDAO usuarioDAO;
@@ -29,22 +31,61 @@ public class UsuarioMB {
 	}
 
 
+	//Methods
+	public  List<UsuarioBean> getListUsuarios(){
+
+		return this.usuarios = this.usuarioDAO.findAll(UsuarioBean.class);
+	}
+
+
+
 	public String login(){
 
-		this.usuarios = usuarioDAO.findAll(UsuarioBean.class);
+		getListUsuarios();
 
 		for (UsuarioBean user : usuarios) {	
 			if(user.equals(this.usuario)){
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", user);
 				return "home";
 			}
-		}	
+		}
+		JSFMensageiro.info("Usuário ou senha incorreta(Resumida).","Detalhada");
+		return "index";
+	}
+	public String logout(){
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("usuario");
 		return "index";
 	}
 
 
 
+	public String deletar(UsuarioBean usuario){
+		this.usuarios.remove(usuario);
+		return null;
+	}
 
+
+	public String salvar(){
+		System.out.println("UAUUUUUUUUUUUUUUUUUUUUU");
+	
+		return "";
+	}
+
+	
+	
+	
+	/*Neste método é necessário uma nova instância do usuário
+	 *Para que o valor acessado pelo método getUsuário esteja null
+	 */
+	public String incluir(){
+		this.usuario = new UsuarioBean();
+		return "formUsuario";
+	}
+
+
+
+
+	//getters and setters
 	public UsuarioBean getUsuario() {
 		return usuario;
 	}
@@ -72,6 +113,8 @@ public class UsuarioMB {
 	public void setUsuarios(List<UsuarioBean> usuarios) {
 		this.usuarios = usuarios;
 	}
+
+
 
 
 

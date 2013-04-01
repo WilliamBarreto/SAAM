@@ -4,20 +4,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
-
-
-<h:head>
-	<title>Página de Login </title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	
-	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-	<link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"/>
-	<script src="bootstrap/js/bootstrap.min.js"></script>
-
-</h:head>
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:body>
+	
+	<ui:composition template="/template/common/layout.xhtml">
+ 
+    		<ui:define name="content">
 
 		<h1><h:outputText class="" value="Bem vindo ao SAAM"/></h1>
 		
@@ -40,7 +34,7 @@
     			</div>
     			<div class="span5">
     					
-	    			<h3><h:outputText redered="#{controllerMB.renderFormLogin}" value="#{controllerMB.area == 'mulher'?'Area da Mulher':(controllerMB.area == 'administrativa' ? 'Area Administrativa':(controllerMB.area == 'voluntario'?'Area do Voluntario':'Erro! Parâmetro não definido'))}"/></h3>
+	    			<h3><h:outputText redered="#{controllerMB.renderFormLogin}" value="#{controllerMB.area == 'mulher'?'Area da Mulher':(controllerMB.area == 'administrativa' ? 'Area Administrativa':(controllerMB.area == 'voluntario'?'Area do Voluntario':''))}"/></h3>
 					<br/>
 
 
@@ -52,11 +46,13 @@
 
 
       				<h:form rendered="#{controllerMB.renderFormLogin}" class="form-horizontal">
+						<p:messages id="messages" autoUpdate="true" closable="true"/>
 						<div>
 							<h:panelGrid >
 
 								<h:outputText value="Usuario"/>
-								<h:inputText value="#{usuarioMB.usuario.nome}"/>
+								<p:inputText value="#{usuarioMB.usuario.nome}" id="default" required="true"/>
+															       						
 					
 								<h:outputText value="Senha"/>
 								<h:inputSecret value="#{usuarioMB.usuario.senha}"/> <br/>
@@ -68,5 +64,7 @@
     			</div>
   			</div>
 		</div>
+	</ui:define>
+</ui:composition>
 </h:body>
 </html>

@@ -55,10 +55,9 @@ public class VoluntarioMB {
 		return "show";
 	}
 	
-	public String reprovar(ActionEvent evento){
+	public void reprovar(ActionEvent evento){
 		this.voluntario = (VoluntarioBean) evento.getComponent().getAttributes().get("voluntario");
 		voluntarioDAO.delete(voluntario);
-		return index();
 	}
 	
 	public String aprovar(){
@@ -104,8 +103,8 @@ public class VoluntarioMB {
 		Mensagem mensagem = new Mensagem();
 		
 		mensagem.setDestino("bsi.william@gmail.com");
-		mensagem.setTitulo("Testando envio de e-mail");
-		mensagem.setMensagem("Voluntario cadastrado com sucesso!");
+		mensagem.setTitulo("Testando envio de email");
+		mensagem.setMensagem("Prezado Usuario,\n Estamos testando o envio de e-mail da aplicação saam.\n \nAtenciosamente,\n \n Equipe SAAM.");
 		
 		try {
 			EmailUtils.enviaEmail(mensagem);

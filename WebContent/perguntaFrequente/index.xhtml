@@ -6,55 +6,66 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 
-<h:head>
-	<title>Lista de perguntas Frequentes</title>
-</h:head>
-
 <h:body>
+	<ui:composition template="/template/common/layout.xhtml">
+		<ui:param name="title" value="Lista de Voluntarios" />
+		<ui:define name="content">
+			<h:dataTable value="#{perguntaFrequenteMB.perguntasFrequentes}"
+				var="item" styleClass="table">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Data" />
+					</f:facet>
+					<h:outputText value="#{item.data}">
+						<f:convertDateTime pattern="d/M/yyyy" />
+					</h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Pergunta" />
+					</f:facet>
+					<h:outputText value="#{item.pergunta}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Area" />
+					</f:facet>
+					<h:outputText value="#{item.area.nome}" />
+				</h:column>
+				<h:column>
+					<h:form>
+						<h:commandLink value="Vizualizar"
+							action="#{perguntaFrequenteMB.show}" styleClass="btn">
+							<f:setPropertyActionListener value="#{item}"
+								target="#{perguntaFrequenteMB.perguntaFrequente}" />
+						</h:commandLink>
+					</h:form>
+				</h:column>
+				<h:column>
+					<h:form>
+						<h:commandLink value="Editar" action="#{perguntaFrequenteMB.edit}"
+							styleClass="btn">
+							<f:setPropertyActionListener value="#{item}"
+								target="#{perguntaFrequenteMB.perguntaFrequente}" />
+						</h:commandLink>
+					</h:form>
+				</h:column>
+				<h:column>
+					<h:form>
+						<h:commandLink value="Excluir"
+							actionListener="#{perguntaFrequenteMB.delete}" styleClass="btn">
+							<f:attribute name="perguntaFrequente" value="#{item}" />
+						</h:commandLink>
+						<br />
+					</h:form>
+				</h:column>
 
-</h:body>
-<h:dataTable value="#{perguntaFrequenteMB.perguntasFrequentes}" var="item">
-		<h:column>
-			<f:facet name="header">
-				<h:outputText value="Data" />
-			</f:facet>
-			<h:outputText value="#{item.data}" >
-			<f:convertDateTime pattern="d/M/yyyy" />
-			</h:outputText>
-		</h:column>
-		<h:column>
-			<f:facet name="header">
-				<h:outputText value="Pergunta" />
-			</f:facet>
-			<h:outputText value="#{item.pergunta}" />
-		</h:column>
-		<h:column>
-			<f:facet name="header">
-				<h:outputText value="Area" />
-			</f:facet>
-			<h:outputText value="#{item.area.nome}" />
-		</h:column>
-		<h:column>
+			</h:dataTable>
 			<h:form>
-				<h:commandLink value="Vizualizar" action="#{perguntaFrequenteMB.show}">
-						<f:setPropertyActionListener value="#{item}"
-						target="#{perguntaFrequenteMB.perguntaFrequente}" />
-				</h:commandLink>
-				<h:commandLink value="Editar" action="#{perguntaFrequenteMB.edit}">
-						<f:setPropertyActionListener value="#{item}"
-						target="#{perguntaFrequenteMB.perguntaFrequente}" />
-				</h:commandLink>
-				
-				<h:commandLink value="Excluir" actionListener="#{perguntaFrequenteMB.delete}">
-					<f:attribute name="perguntaFrequente" value="#{item}" />
-				</h:commandLink>
-				<br />
+				<h:commandLink value="Nova Pergunta Frequente"
+					action="#{perguntaFrequenteMB.novo}" />
 			</h:form>
-		</h:column>
-
-	</h:dataTable>
-	<h:form>
-		<h:commandLink value="Nova Pergunta Frequente" action="#{perguntaFrequenteMB.novo}"/>
-	</h:form>
-
+		</ui:define>
+	</ui:composition> 
+</h:body>
 </html>

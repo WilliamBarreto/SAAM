@@ -20,18 +20,14 @@
 				<f:facet name="header">
 					<h:outputText value="Menu"/>
 				</f:facet>
-				<h:outputText value="#{item.nome}"/>
+				<h:form>
+					<h:commandLink action="#{menuMB.navegar}" actionListener="#{menuMB.executaMenu}">
+						<h:outputText value="#{item.nome}" />
+						<f:attribute name="funcionalidade" value="#{item.id}"/>
+					</h:commandLink>
+				</h:form>
 			</h:column>	
-		
 	</h:dataTable>
-	
-	<h:form>
-		<h:commandLink value="Perfils" action="#{perfilMB.index}" />
-		<br />
-		<h:commandLink value="Avaliar cadastro de Atendentes" action="#{voluntarioMB.index}" />
-		<br />
-		<h:commandLink value="Manter perguntas frequentes" action="#{perguntaFrequenteMB.index}" />
-	</h:form>
 </h:body>
 
 </html>

@@ -33,7 +33,7 @@ public abstract class GenericDAO<T> {
 
 
 	@SuppressWarnings("unchecked")
-	public List<T> findAll(Class classe){
+	public List<T> findAll(Class<T> classe){
 
 		ArrayList<T>  lista = new ArrayList<T>();
 
@@ -68,7 +68,7 @@ public abstract class GenericDAO<T> {
 	}
 
 
-	public Object buscarPorId(Class classe, int id){
+	public Object buscarPorId(Class<T> classe, int id){
 		Object object = null;
 		try {
 			this.session = ConnectionFactory.getSession();
@@ -80,7 +80,4 @@ public abstract class GenericDAO<T> {
 		}
 		return object;
 	}
-
-
-
 }

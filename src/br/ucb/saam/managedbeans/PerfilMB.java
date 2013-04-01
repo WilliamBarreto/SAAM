@@ -28,22 +28,18 @@ public class PerfilMB implements Serializable{
 	public PerfilMB(){
 		setPerfil(new PerfilBean());
 		setPerdilDAO(new PerfilDAO());
-		setPerfis(new ArrayList<PerfilBean>());
+		setPerfis(perfilDAO.findAll(PerfilBean.class));
 		setFuncionalidades(new ArrayList<FuncionalidadeBean>());
 		setFuncionalidadeDAO(new FuncionalidadeDAO());
 	}
 	
 	public String index(){
-		
-		this.perfis = perfilDAO.findAll(PerfilBean.class);
-		
+		this.perfis = perfilDAO.findAll(PerfilBean.class);		
 		return "/perfil/index";
 	}
 	
-	public String show() {
-		
-		funcionalidades = (List<FuncionalidadeBean>) perfil.getFuncionalidades();
-		
+	public String show() {		
+		funcionalidades = (List<FuncionalidadeBean>) perfil.getFuncionalidades();		
 		return "show";
 	}
 	
@@ -55,9 +51,7 @@ public class PerfilMB implements Serializable{
 	}
 	
 	public String criar(){
-		
 		perfilDAO.saveOrUpdate(perfil);
-		
 		return index();
 	}
 	
@@ -66,12 +60,10 @@ public class PerfilMB implements Serializable{
 		return "new";
 	}
 	
-	public String delete(ActionEvent evento){
+	public void delete(ActionEvent evento){
 		
 		this.perfil = (PerfilBean) evento.getComponent().getAttributes().get("perfil");
 		perfilDAO.delete(perfil);
-		
-		return index();
 	}
 	
 	

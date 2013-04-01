@@ -4,6 +4,7 @@
 
 DROP DATABASE IF EXISTS saam;
 CREATE DATABASE saam;
+ALTER SCHEMA saam  DEFAULT CHARACTER SET utf8 ;
 
 USE saam;
 
@@ -101,18 +102,18 @@ ALTER TABLE perguntas_frequentes ADD CONSTRAINT fk_perguntas_frequentes_id_area 
 
 INSERT INTO funcionalidades VALUES (NULL,'Solicitar Atendimento');/* 1 */
 INSERT INTO funcionalidades VALUES (NULL,'Atender Vitima');/* 2 */
-INSERT INTO funcionalidades VALUES (NULL,'Consultar histï¿½rico de atendimentos');/* 3 */
+INSERT INTO funcionalidades VALUES (NULL,'Consultar histórico de atendimentos');/* 3 */
 INSERT INTO funcionalidades VALUES (NULL,'Atender Mensagens');/* 4 */
 INSERT INTO funcionalidades VALUES (NULL,'Manter Atendentes');/* 5 */
-INSERT INTO funcionalidades VALUES (NULL,'Manter Usuï¿½rios');/* 6 */
+INSERT INTO funcionalidades VALUES (NULL,'Manter Usuários');/* 6 */
 INSERT INTO funcionalidades VALUES (NULL,'Manter Perfil');/* 7 */
 INSERT INTO funcionalidades VALUES (NULL,'Avaliar Cadastro de Atendentes');/* 8 */
 INSERT INTO funcionalidades VALUES (NULL,'Consultar Logs');/* 9 */
 INSERT INTO funcionalidades VALUES (NULL,'Manter Perguntas Frequentes');/* 10 */
-INSERT INTO funcionalidades VALUES (NULL,'Relatï¿½rio de Atendimentos');/* 11 */
-INSERT INTO funcionalidades VALUES (NULL,'Relatï¿½rio de Acessos');/* 12 */
-INSERT INTO funcionalidades VALUES (NULL,'Relatï¿½rio de Avaliaï¿½ï¿½es');/* 13 */
-INSERT INTO funcionalidades VALUES (NULL,'Relatï¿½rio de Pessoas');/* 14 */
+INSERT INTO funcionalidades VALUES (NULL,'Relatório de Atendimentos');/* 11 */
+INSERT INTO funcionalidades VALUES (NULL,'Relatório de Acessos');/* 12 */
+INSERT INTO funcionalidades VALUES (NULL,'Relatório de Avaliações');/* 13 */
+INSERT INTO funcionalidades VALUES (NULL,'Relatório de Pessoas');/* 14 */
 
 /*
  	Inserindo perfis 
@@ -126,7 +127,7 @@ INSERT INTO perfis VALUES(NULL,'Gerente');
 INSERT INTO perfis VALUES(NULL,'Mulher');
 
 /*
- Funï¿½ï¿½es do Admnistrador
+ Funções do Admnistrador
  
  */
 INSERT INTO perf_func VALUES(1,3);
@@ -137,7 +138,7 @@ INSERT INTO perf_func VALUES(1,9);
 
 /*
  
- Funï¿½ï¿½es do Atendente
+ Funções do Atendente
  
  */
 INSERT INTO perf_func VALUES(2,2);
@@ -146,7 +147,7 @@ INSERT INTO perf_func VALUES(2,4);
 
 /*
  
- Funï¿½ï¿½es da Diretoria
+ Funções da Diretoria
  
  */
 INSERT INTO perf_func VALUES(3,11);
@@ -156,7 +157,7 @@ INSERT INTO perf_func VALUES(3,14);
 
 /*
  
- Funï¿½ï¿½es do Gerente
+ Funções do Gerente
  
  */
 INSERT INTO perf_func VALUES(4,3);
@@ -168,7 +169,7 @@ INSERT INTO perf_func VALUES(4,14);
 
 /*
  
- Funï¿½ï¿½es da Mulher
+ Funções da Mulher
  
  */
 INSERT INTO perf_func VALUES(5,1);
@@ -189,9 +190,9 @@ INSERT INTO usuarios VALUES(NULL,'mulher','mulher',5);
  	Inserindo areas
 */
 
-INSERT INTO areas VALUES(NULL,'Jurï¿½dica');
+INSERT INTO areas VALUES(NULL,'Jurídica');
 INSERT INTO areas VALUES(NULL,'Social');
-INSERT INTO areas VALUES(NULL,'Psicolï¿½gica');
+INSERT INTO areas VALUES(NULL,'Psicológica');
 
 /*
  

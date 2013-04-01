@@ -68,12 +68,10 @@ public class PerguntaFrequenteMB implements Serializable{
 		return "new";
 	}
 	
-	public String delete(ActionEvent evento){
+	public void delete(ActionEvent evento){
 		
 		perguntaFrequente = (PerguntaFrequenteBean) evento.getComponent().getAttributes().get("perguntaFrequente");
 		perguntaFrequenteDAO.delete(perguntaFrequente);
-		
-		return index();
 	}
 	
 	
