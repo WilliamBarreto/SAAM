@@ -11,37 +11,46 @@
 </h:head>
 
 <h:body>
-	<h:form>
-		<h:panelGrid>
-			<h:outputText value="Pergunta" />
-			<h:inputTextarea
-				value="#{perguntaFrequenteMB.perguntaFrequente.pergunta}" />
 
-			<h:outputText value="Resposta" />
-			<h:inputText
-				value="#{perguntaFrequenteMB.perguntaFrequente.resposta}" />
+	<ui:composition template="/template/common/layout.xhtml">
+		<ui:param name="title" value="Nova Pergunta" />
+		<ui:define name="content">
+			<h:form>
+				<h:panelGrid>
+					<h:outputText value="Pergunta" />
+					<h:inputTextarea
+						value="#{perguntaFrequenteMB.perguntaFrequente.pergunta}" />
 
-			<h:outputText value="Area da pergunta" />
-			<h:selectOneMenu
-				value="#{perguntaFrequenteMB.perguntaFrequente.area}">
-				<f:selectItems value="#{perguntaFrequenteMB.areas}" var="area"
-					itemLabel="#{area.nome}" />
-			</h:selectOneMenu>
+					<h:outputText value="Resposta" />
+					<h:inputText
+						value="#{perguntaFrequenteMB.perguntaFrequente.resposta}" />
 
-			<h:outputText value="Data" />
-			<h:inputText value="#{perguntaFrequenteMB.perguntaFrequente.data}" >
-			<f:convertDateTime pattern="d/M/yyyy" />
-			</h:inputText>
+					<h:outputText value="Area da pergunta" />
+					<h:selectOneMenu
+						value="#{perguntaFrequenteMB.perguntaFrequente.area}">
+						<f:selectItems value="#{perguntaFrequenteMB.areas}" var="area"
+							itemLabel="#{area.nome}" />
+					</h:selectOneMenu>
 
-		</h:panelGrid>
+					<h:outputText value="Data" />
+					<h:inputText value="#{perguntaFrequenteMB.perguntaFrequente.data}">
+						<f:convertDateTime pattern="d/M/yyyy" />
+					</h:inputText>
 
-		<h:commandButton value="Gravar" action="#{perguntaFrequenteMB.criar}" />
+				</h:panelGrid>
 
-	</h:form>
-	<h:form>
-		<h:commandButton value="Voltar" action="#{perguntaFrequenteMB.index}" />
-	</h:form>
+				<h:commandButton class="btn btn-success" value="Gravar"
+					action="#{perguntaFrequenteMB.criar}" />
+				&nbsp;
+				&nbsp;
+				<h:commandButton class="btn" value="Voltar" action="#{perguntaFrequenteMB.index}" />
 
+			</h:form>
+			<h:form>
+				
+			</h:form>
+		</ui:define>
+	</ui:composition>
 </h:body>
 
 </html>

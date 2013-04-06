@@ -39,7 +39,8 @@ public class PerfilMB implements Serializable{
 	}
 	
 	public String show() {		
-		funcionalidades = (List<FuncionalidadeBean>) perfil.getFuncionalidades();		
+		funcionalidades = (List<FuncionalidadeBean>) perfil.getFuncionalidades();
+		this.perfil = new PerfilBean();
 		return "show";
 	}
 	

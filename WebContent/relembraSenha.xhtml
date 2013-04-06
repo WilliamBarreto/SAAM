@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	
+	<ui:composition template="/template/common/layout.xhtml">
+ 
+    	<ui:define name="content">
+
+
+			<p:messages id="messages" autoUpdate="true" closable="true"/>
+			
+			<h:form>
+				<h:panelGrid>
+				
+					<h:outputLabel value="E-mail" for="email"/>			
+					
+					<p:inputText id="email" value="#{usuarioMB.email}" size="30" maxlength="30" required="true" label="E-mail">
+						<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+					</p:inputText>
+					<h:commandButton value="Enviar" action="#{usuarioMB.procuraUsuario}"/>				
+				
+				</h:panelGrid>
+			</h:form>
+					
+		</ui:define>
+</ui:composition>
+</h:body>
+</html>

@@ -38,6 +38,9 @@ public class UsuarioBean implements Serializable{
 
 	@Column(name="senha")
 	private String senha;
+	
+	@Column(name="email")
+	private String email;
 
 	@ManyToOne()
 	@JoinColumn(name="id_perfil")
@@ -112,6 +115,16 @@ public class UsuarioBean implements Serializable{
 	}
 	public void setPerfil(PerfilBean perfil) {
 		this.perfil = perfil;
+	}
+	public String getEmail() {
+		return email;
+	}
+
+
+
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 

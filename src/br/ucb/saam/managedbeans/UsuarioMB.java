@@ -7,9 +7,13 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.apache.commons.mail.EmailException;
+
 import br.ucb.saam.beans.UsuarioBean;
 import br.ucb.saam.dao.UsuarioDAO;
+import br.ucb.saam.util.EmailUtils;
 import br.ucb.saam.util.JSFMensageiro;
+import br.ucb.saam.util.Mensagem;
 
 
 
@@ -22,18 +26,19 @@ public class UsuarioMB {
 	private UsuarioBean usuario;
 	private UsuarioDAO usuarioDAO;
 	private List<UsuarioBean> usuarios;
+	private String email;
 
 
 	public UsuarioMB(){
 		setUsuario(new UsuarioBean());
 		setUsuarioDAO(new UsuarioDAO());
 		setUsuarios(new ArrayList<UsuarioBean>());
+		setEmail(new String());
 	}
 
 
 	//Methods
 	public  List<UsuarioBean> getListUsuarios(){
-
 		return this.usuarios = this.usuarioDAO.findAll(UsuarioBean.class);
 	}
 
@@ -56,8 +61,39 @@ public class UsuarioMB {
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("usuario");
 		return "index";
 	}
+	public String relembraSenha(){
+		return "relembraSenha";
+	}
 
-
+	public String procuraUsuario(){
+		
+		Mensagem mensagem = new Mensagem();
+		
+		getListUsuarios();
+		for (UsuarioBean user : usuarios) {	
+			if(email.equals(user.getEmail())){
+		
+				mensagem.setDestino(user.getEmail());
+				mensagem.setTitulo("Relembra Senha SAAM");
+				mensagem.setMensagem("Prezado Usuario,\n Suas Informações de acesso são \n\nUsuario:"+user.getNome()+"\nSenha:"+user.getSenha()+" \nAtenciosamente,\n \n Equipe SAAM.");
+				
+				try {
+					EmailUtils.enviaEmail(mensagem);
+					JSFMensageiro.info("Sua senha será enviada em instantes. Acesse seu e-mail para visualizar","Detalhada");
+					this.email = new String();
+				} catch (EmailException ex){
+					System.out.println("Erro! Ocorreu um erro ao enviar a mensagem"+ex);
+				}
+				
+				return "relembraUsuario";
+			}
+		}
+		JSFMensageiro.info("Sua senha será enviada em instantes. Acesse seu e-mail para visualizar","Detalhada");
+		this.email = new String();
+		return "relembraUsario";
+		
+		
+	}
 
 	public String deletar(UsuarioBean usuario){
 		this.usuarios.remove(usuario);
@@ -112,6 +148,16 @@ public class UsuarioMB {
 
 	public void setUsuarios(List<UsuarioBean> usuarios) {
 		this.usuarios = usuarios;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 

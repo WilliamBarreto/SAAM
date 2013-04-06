@@ -56,10 +56,13 @@
 					
 								<h:outputText value="Senha"/>
 								<h:inputSecret value="#{usuarioMB.usuario.senha}"/> <br/>
-							
+														
 								<h:commandButton class="btn btn-success" style="text-align:right;" value="Entrar" action="#{usuarioMB.login}"/>
 							</h:panelGrid>
 						</div>
+					</h:form>
+					<h:form rendered="#{controllerMB.renderFormLogin}">
+						<h:commandLink value="Esqueceu sua senha?" action="#{usuarioMB.relembraSenha}"/>
 					</h:form>
     			</div>
   			</div>

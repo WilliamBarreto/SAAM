@@ -50,6 +50,7 @@ CREATE TABLE usuarios(
 	usuario VARCHAR(20),
 	senha VARCHAR(15),
 	id_perfil INT(11),
+	email VARCHAR(50),
 	PRIMARY KEY(id_usuario)
 );
 
@@ -180,11 +181,11 @@ INSERT INTO perf_func VALUES(5,3);
   
 */
 
-INSERT INTO usuarios VALUES(NULL,'admin','admin',1);
-INSERT INTO usuarios VALUES(NULL,'atendente','atendente',2);
-INSERT INTO usuarios VALUES(NULL,'diretoria','diretoria',3);
-INSERT INTO usuarios VALUES(NULL,'gerente','gerente',4);
-INSERT INTO usuarios VALUES(NULL,'mulher','mulher',5);
+INSERT INTO usuarios VALUES(NULL,'admin','admin',1,'bsi.william@gmail.com');
+INSERT INTO usuarios VALUES(NULL,'atendente','atendente',2,'bsi.william@gmail.com');
+INSERT INTO usuarios VALUES(NULL,'diretoria','diretoria',3,'bsi.william@gmail.com');
+INSERT INTO usuarios VALUES(NULL,'gerente','gerente',4,'bsi.william@gmail.com');
+INSERT INTO usuarios VALUES(NULL,'mulher','mulher',5,'bsi.william@gmail.com');
 
 /*
  	Inserindo areas

@@ -27,53 +27,47 @@ public class PerguntaFrequenteMB implements Serializable{
 	
 	public PerguntaFrequenteMB(){
 		setPerguntaFrequente(new PerguntaFrequenteBean());
-		setPerguntasFrequentes(new ArrayList<PerguntaFrequenteBean>());
 		setPerguntaFrequenteDAO(new PerguntaFrequenteDAO());
+		setPerguntasFrequentes(perguntaFrequenteDAO.findAll(PerguntaFrequenteBean.class));
 		setAreas(new ArrayList<AreaBean>());
 		setAreaDAO(new AreaDAO());
 	}
 	
+	public List<PerguntaFrequenteBean> getListaPerguntasFrequentes(){
+		return this.perguntasFrequentes = this.perguntaFrequenteDAO.findAll(PerguntaFrequenteBean.class);
+	}
+	
 	public String index(){
-		
-		this.perguntasFrequentes = perguntaFrequenteDAO.findAll(PerguntaFrequenteBean.class);
-		
+		perguntaFrequente = new PerguntaFrequenteBean();
+		getListaPerguntasFrequentes();
 		return "/perguntaFrequente/index";
 	}
 	
 	public String novo(){
-		
-		areas = areaDAO.findAll(AreaBean.class);
-		
+		areas = areaDAO.findAll(AreaBean.class);		
 		return "new";
 	}
 	
 	public String criar(){
-		
-		perguntaFrequenteDAO.saveOrUpdate(perguntaFrequente);
-		
-		perguntaFrequente = new PerguntaFrequenteBean();
-		
+		perguntaFrequenteDAO.saveOrUpdate(perguntaFrequente);		
+		perguntaFrequente = new PerguntaFrequenteBean();		
 		return index();
 	}
 	
 	public String show(){
-		
 		return "show";
 	}
 	
 	public String edit(){
-		
-		areas = areaDAO.findAll(AreaBean.class);
-		
+		areas = areaDAO.findAll(AreaBean.class);		
 		return "new";
 	}
 	
 	public void delete(ActionEvent evento){
-		
 		perguntaFrequente = (PerguntaFrequenteBean) evento.getComponent().getAttributes().get("perguntaFrequente");
 		perguntaFrequenteDAO.delete(perguntaFrequente);
+		getListaPerguntasFrequentes();
 	}
-	
 	
 	
 	public PerguntaFrequenteDAO getPerguntaFrequenteDAO() {
@@ -93,25 +87,17 @@ public class PerguntaFrequenteMB implements Serializable{
 	}
 
 
-
 	public List<PerguntaFrequenteBean> getPerguntasFrequentes() {
 		return perguntasFrequentes;
 	}
-
-
-
 	public void setPerguntasFrequentes(List<PerguntaFrequenteBean> perguntasFrequentes) {
 		this.perguntasFrequentes = perguntasFrequentes;
 	}
 
 
-
 	public PerguntaFrequenteBean getPerguntaFrequente() {
 		return perguntaFrequente;
 	}
-
-
-
 	public void setPerguntaFrequente(PerguntaFrequenteBean perguntaFrequente) {
 		this.perguntaFrequente = perguntaFrequente;
 	}
@@ -119,7 +105,6 @@ public class PerguntaFrequenteMB implements Serializable{
 	public AreaDAO getAreaDAO() {
 		return areaDAO;
 	}
-
 	public void setAreaDAO(AreaDAO areaDAO) {
 		this.areaDAO = areaDAO;
 	}

@@ -8,7 +8,7 @@ import org.apache.commons.mail.SimpleEmail;
 public class EmailUtils {
 	private static final String HOSTNAME = "smtp.gmail.com";
 	private static final String USERNAME = "saamprojeto";
-	private static final String PASSWORD = "****";
+	private static final String PASSWORD = "projeto2013";
 	private static final String EMAILORIGEM = "saamprojeto@gmail.com";
 	
 	@SuppressWarnings("deprecation")
