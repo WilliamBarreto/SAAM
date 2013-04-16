@@ -14,15 +14,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-
-/**
- * 
- * 
- * 
- * */
-
-
-
 @Entity
 @Table(name="perfis")
 public class PerfilBean implements Serializable{
@@ -31,15 +22,15 @@ public class PerfilBean implements Serializable{
 
 	@Id
 	@GeneratedValue()
-	@Column(name="id_perfil")
+	@Column(name="COD_PERFIL")
 	private int id;
 
-	@Column()
+	@Column(name="NOME")
 	private String nome;
 
 	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(name="perf_func", joinColumns=@JoinColumn(name="id_perfil"),
-	inverseJoinColumns=@JoinColumn(name="id_funcionalidade"))
+	@JoinTable(name="perf_func", joinColumns=@JoinColumn(name="COD_PERFIL"),
+	inverseJoinColumns=@JoinColumn(name="COD_FUNCIONALIDADE"))
 	private List<FuncionalidadeBean> funcionalidades;
 
 

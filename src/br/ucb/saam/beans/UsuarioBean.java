@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -30,21 +31,22 @@ public class UsuarioBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
-	@Column(name="id_usuario")
+	@Column(name="COD_USUARIO")
 	private int id;
 
-	@Column(name="usuario")
+	@Column(name="USUARIO")
 	private String nome;
 
-	@Column(name="senha")
+	@Column(name="SENHA")
 	private String senha;
 	
-	@Column(name="email")
-	private String email;
-
 	@ManyToOne()
-	@JoinColumn(name="id_perfil")
+	@JoinColumn(name="COD_PERFIL")
 	private PerfilBean perfil;
+	
+	@OneToOne
+	@JoinColumn(name="COD_PESSOA")
+	private PessoaBean pessoa;
 
 
 
@@ -94,39 +96,37 @@ public class UsuarioBean implements Serializable{
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
+	
 	public String getNome() {
 		return nome;
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
 	public String getSenha() {
 		return senha;
 	}
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+	
 	public PerfilBean getPerfil() {
 		return perfil;
 	}
 	public void setPerfil(PerfilBean perfil) {
 		this.perfil = perfil;
 	}
-	public String getEmail() {
-		return email;
+
+	public PessoaBean getPessoa(){
+		return pessoa;
 	}
-
-
-
-
-	public void setEmail(String email) {
-		this.email = email;
+	public void setPessoa(PessoaBean pessoa) {
+		this.pessoa = pessoa;
 	}
-
 
 
 

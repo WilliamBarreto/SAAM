@@ -9,28 +9,38 @@
 
 <h:head>
 	<title>Criar Perfil</title>
+	
+	<style>
+		table{
+			width: 200px;
+		}
+	</style>
+	
 </h:head>
 
 <h:body>
+	<ui:composition template="/template/common/layout.xhtml">
+		<ui:param name="title" value="Incluir Novo Perfil " />
 
-	<h:form>
-		<h:panelGrid>
+		<ui:define name="content">
+			<h:form>
+				<h:panelGrid>
 
-			<h:outputText value="Nome" />
-			<p:inputText value="#{perfilMB.perfil.nome}" required="true"/>
+					<h:outputText value="Nome" />
+					<p:inputText value="#{perfilMB.perfil.nome}" required="true" />
 
-		</h:panelGrid>
+				</h:panelGrid>
+			
+				<h:selectManyCheckbox value="#{perfilMB.perfil.funcionalidades}" layout="pageDirection" styleClass="checkbox">
+					<f:selectItems value="#{perfilMB.funcionalidades}" var="funcionalidade" itemLabel="#{funcionalidade.nomeTecnico}" />
+					<f:converter converterId="funcionalidadeConverter" />
+				</h:selectManyCheckbox>
+					
+				<h:commandButton value="Salvar" action="#{perfilMB.criar}" />
+			</h:form>
 
-		<h:column>
-		<h:selectManyCheckbox value="#{perfilMB.perfil.funcionalidades}">
-				<f:converter converterId="funcionalidadeConverter" />
-				<f:selectItems value="#{perfilMB.funcionalidades}"
-					var="funcionalidade" itemLabel="#{funcionalidade.nome}" />
-			</h:selectManyCheckbox> 
-
-		</h:column>
-		<h:commandButton value="Salvar" action="#{perfilMB.criar}"/>
-	</h:form>
+		</ui:define>
+	</ui:composition>
 
 
 </h:body>

@@ -9,15 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 
-/**
- * 
- * 
- * 
- * 
- **/
-
-
-
 @Entity
 @Table(name="funcionalidades")
 public class FuncionalidadeBean implements Serializable{
@@ -25,20 +16,19 @@ public class FuncionalidadeBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
-	@Column(name="id_funcionalidade")
+	@Column(name="COD_FUNCIONALIDADE")
 	private int id;
 	
-	@Column()
-	private String nome;
+	@Column(name="NOME_TECNICO")
+	private String nomeTecnico;
+	
+	@Column(name="NOME_USUARIO")
+	private String nomeUsuario;
 
 
 	//Constructor---------------------------------------------------------------------------------
 	public FuncionalidadeBean(){
-
-
 	}
-
-
 
 	//Getters and Setters-------------------------------------------------------------------------
 	public int getId() {
@@ -47,45 +37,25 @@ public class FuncionalidadeBean implements Serializable{
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getNome() {
-		return nome;
-	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
 
+	public String getNomeUsuario() {
+		return nomeUsuario;
+	}
+	public void setNomeUsuario(String nomeUsuario) {
+		this.nomeUsuario = nomeUsuario;
+	}
+	
+	public String getNomeTecnico() {
+		return nomeTecnico;
+	}
+	public void setNomeTecnico(String nomeTecnico) {
+		this.nomeTecnico = nomeTecnico;
+	}
 	
 	//Subscribe---------------------------------------------------------------------------------------------
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + id;
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		return result;
-	}
 
 
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		FuncionalidadeBean other = (FuncionalidadeBean) obj;
-		if (id != other.id)
-			return false;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
-			return false;
-		return true;
-	}
 
 
 

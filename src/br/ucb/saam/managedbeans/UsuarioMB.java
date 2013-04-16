@@ -71,9 +71,9 @@ public class UsuarioMB {
 		
 		getListUsuarios();
 		for (UsuarioBean user : usuarios) {	
-			if(email.equals(user.getEmail())){
+			if(email.equals(user.getPessoa().getEmail())){
 		
-				mensagem.setDestino(user.getEmail());
+				mensagem.setDestino(user.getPessoa().getEmail());
 				mensagem.setTitulo("Relembra Senha SAAM");
 				mensagem.setMensagem("Prezado Usuario,\n Suas Informações de acesso são \n\nUsuario:"+user.getNome()+"\nSenha:"+user.getSenha()+" \nAtenciosamente,\n \n Equipe SAAM.");
 				

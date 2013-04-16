@@ -23,10 +23,10 @@ public class AreaBean implements Serializable{
 
 	@Id
 	@GeneratedValue
-	@Column(name="id_area")
+	@Column(name="COD_AREA")
 	private int id;
 	
-	@Column(name="nome")
+	@Column(name="NOME")
 	private String nome;
 
 	

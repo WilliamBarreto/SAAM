@@ -56,10 +56,10 @@ public class MenuMB {
 			case 6:
 				// Manter Usuarios
 				System.out.println("Caso 6");
-				pagina = "usuario/manterUsuarios";
+				pagina = "/usuario/manterUsuarios";
 				break;
 			case 7:
-				pagina = "perfil/index";
+				pagina = "/perfil/index";
 				break;
 			case 8:
 				pagina = "voluntario/index";

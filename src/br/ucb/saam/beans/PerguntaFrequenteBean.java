@@ -28,24 +28,27 @@ public class PerguntaFrequenteBean  implements Serializable{
 	
 	@Id
 	@GeneratedValue
-	@Column(name="id_pergunta_frequente")
+	@Column(name="COD_PERGUNTA_FREQUENTE")
 	private int id;
 	
 	@ManyToOne
-	@JoinColumn(name="id_area")
+	@JoinColumn(name="COD_AREA")
 	private AreaBean area;
 	
-	@Column(name="pergunta")
+	@Column(name="PERGUNTA")
 	private String pergunta;
 	
-	@Column(name="resposta")
+	@Column(name="RESPOSTA")
 	private String resposta;
 	
-	@Column(name="data_publicacao")
+	@Column(name="DATA_CRIACAO")
 	private Date data;
 
-
-
+	//Constructor
+	
+	public PerguntaFrequenteBean(){
+		
+	}
 	
 	// Getters and Setters
 	public int getId() {

@@ -10,29 +10,45 @@
 <h:body>
 	
 	<ui:composition template="/template/common/layout.xhtml">
- 
-    		<ui:define name="content">
-
-		<h1><h:outputText class="" value="Bem vindo ao SAAM"/></h1>
-		
-		<div class="container-fluid">
-  			<div class="row-fluid">
-    			<div class="span5">
+    		<ui:define name="menu">
+    			
+    		
+    		
+				<div>
+	      			
 	      			<h:form>
-						<h:commandLink value="Area da Mulher" action="#{controllerMB.apresentarArea}">
-							 <f:setPropertyActionListener target="#{controllerMB.area}" value="mulher"/>  
-						</h:commandLink><br/>
-					
-						<h:commandLink value="Area Administrativa" action="#{controllerMB.apresentarArea}">
-							 <f:setPropertyActionListener target="#{controllerMB.area}" value="administrativa"/>  
-						</h:commandLink><br/>
+					<div class="">
+						<ul class="nav nav-pills nav-stacked">
+							 <li class="active">
+								<a href="#">Home</a>
+								</li>
+							<li>
+								<h:commandLink value="Area da Mulher" action="#{controllerMB.apresentarArea}">
+								 	<f:setPropertyActionListener target="#{controllerMB.area}" value="mulher"/>  
+								</h:commandLink>
+							</li>
+							<li>
+								<h:commandLink value="Area Administrativa" action="#{controllerMB.apresentarArea}">
+							 		<f:setPropertyActionListener target="#{controllerMB.area}" value="administrativa"/>  
+								</h:commandLink>
+							</li>
+							
+							<li>
 						
-						<h:commandLink value="Area do Voluntario" action="#{controllerMB.apresentarArea}">
-							 <f:setPropertyActionListener target="#{controllerMB.area}" value="voluntario"/>  
-						</h:commandLink><br/>
-					</h:form>    			
+								<h:commandLink value="Area do Voluntario" action="#{controllerMB.apresentarArea}">
+							 		<f:setPropertyActionListener target="#{controllerMB.area}" value="voluntario"/>  
+								</h:commandLink>
+							</li>
+						</ul>
+					</div>
+					</h:form>
+					    			
     			</div>
-    			<div class="span5">
+    			</ui:define>
+				
+				<ui:define name="content">
+    			
+    			<div>
     					
 	    			<h3><h:outputText redered="#{controllerMB.renderFormLogin}" value="#{controllerMB.area == 'mulher'?'Area da Mulher':(controllerMB.area == 'administrativa' ? 'Area Administrativa':(controllerMB.area == 'voluntario'?'Area do Voluntario':''))}"/></h3>
 					<br/>
@@ -45,17 +61,17 @@
 					</h:form>
 
 
-      				<h:form rendered="#{controllerMB.renderFormLogin}" class="form-horizontal">
+      				<h:form rendered="#{controllerMB.renderFormLogin}">
 						<p:messages id="messages" autoUpdate="true" closable="true"/>
 						<div>
 							<h:panelGrid >
 
 								<h:outputText value="Usuario"/>
-								<p:inputText value="#{usuarioMB.usuario.nome}" id="default" required="true"/>
+								<p:inputText value="#{usuarioMB.usuario.nome}" required="true"/>
 															       						
-					
+						
 								<h:outputText value="Senha"/>
-								<h:inputSecret value="#{usuarioMB.usuario.senha}"/> <br/>
+								<p:password value="#{usuarioMB.usuario.senha}" required="true"/> <br/>
 														
 								<h:commandButton class="btn btn-success" style="text-align:right;" value="Entrar" action="#{usuarioMB.login}"/>
 							</h:panelGrid>
@@ -65,8 +81,6 @@
 						<h:commandLink value="Esqueceu sua senha?" action="#{usuarioMB.relembraSenha}"/>
 					</h:form>
     			</div>
-  			</div>
-		</div>
 	</ui:define>
 </ui:composition>
 </h:body>

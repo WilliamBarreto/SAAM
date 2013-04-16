@@ -5,7 +5,13 @@ package br.ucb.saam.beans;
 
 import java.io.Serializable;
 
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  * Esta classe representa um modelo do objeto Pessoa
@@ -14,66 +20,74 @@ import javax.persistence.MappedSuperclass;
  * @version 1.0
  * @since 2013
  */
-@MappedSuperclass
+
+@Entity
+@Table(name="pessoas")
 public class PessoaBean implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
 	
-
+	@Id
+	@GeneratedValue
+	@Column(name="COD_PESSOA")
+	private int id;
+	
+	@Column(name="NOME")	
 	private String nome;
-	private String telefone;
+	
+	@Column(name="EMAIL")
 	private String email;
+	
+	@Column(name="SEXO")
 	private String sexo;
 	
-	//Constructor
+	@Column(name="ESTADO_CIVIL")
+	private String estadoCivil;
 	
+	@Column(name="TELEFONE_RESIDENCIAL")
+	private String telefoneResidencial;
+	
+	@Column(name="CELULAR")
+	private String celular;
+	
+	@Column(name="TELEFONE_COMERCIAL")
+	private String telefoneComercial;
+	
+	@OneToOne
+	@JoinColumn(name="COD_ENDERECO")
+	private EnderecoBean endereco;
+
+	//Constructor
 	public PessoaBean(){
 		
 	}	
-	
 	//Methods
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result
-				+ ((telefone == null) ? 0 : telefone.hashCode());
-		return result;
+	
+	//Getters and Setters
+	public int getId() {
+		return id;
 	}
-	
-	@Override
-	public boolean equals(Object object){
 
-		PessoaBean aux = (PessoaBean) object;
-
-		if(aux.getNome().equalsIgnoreCase(this.getNome()) && 
-				aux.getEmail().equalsIgnoreCase(this.getEmail())){
-			return true;
-		}
-		return false;
+	public void setId(int id) {
+		this.id = id;
 	}
-	
-	//Getters and Setters	
-	
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getTelefone() {
-		return telefone;
-	}
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getSexo() {
 		return sexo;
 	}
@@ -81,5 +95,51 @@ public class PessoaBean implements Serializable{
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
+
+	public String getEstadoCivil() {
+		return estadoCivil;
+	}
+
+	public void setEstadoCivil(String estadoCivil) {
+		this.estadoCivil = estadoCivil;
+	}
+
+	public String getTelefoneResidencial() {
+		return telefoneResidencial;
+	}
+
+	public void setTelefoneResidencial(String telefoneResidencial) {
+		this.telefoneResidencial = telefoneResidencial;
+	}
+
+	public String getCelular() {
+		return celular;
+	}
+
+	public void setCelular(String celular) {
+		this.celular = celular;
+	}
+
+	public String getTelefoneComercial() {
+		return telefoneComercial;
+	}
+
+	public void setTelefoneComercial(String telefoneComercial) {
+		this.telefoneComercial = telefoneComercial;
+	}
+
+	public EnderecoBean getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(EnderecoBean endereco) {
+		this.endereco = endereco;
+	}
+	
+	
+	
+	
+	
+	
 	
 }
