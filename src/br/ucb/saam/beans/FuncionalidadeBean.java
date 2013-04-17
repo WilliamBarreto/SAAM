@@ -54,7 +54,41 @@ public class FuncionalidadeBean implements Serializable{
 	}
 	
 	//Subscribe---------------------------------------------------------------------------------------------
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		result = prime * result
+				+ ((nomeTecnico == null) ? 0 : nomeTecnico.hashCode());
+		result = prime * result
+				+ ((nomeUsuario == null) ? 0 : nomeUsuario.hashCode());
+		return result;
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		FuncionalidadeBean other = (FuncionalidadeBean) obj;
+		if (id != other.id)
+			return false;
+		if (nomeTecnico == null) {
+			if (other.nomeTecnico != null)
+				return false;
+		} else if (!nomeTecnico.equals(other.nomeTecnico))
+			return false;
+		if (nomeUsuario == null) {
+			if (other.nomeUsuario != null)
+				return false;
+		} else if (!nomeUsuario.equals(other.nomeUsuario))
+			return false;
+		return true;
+	}
 
 
 
