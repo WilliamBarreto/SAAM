@@ -16,7 +16,7 @@ public class FuncionalidadeConverter implements Converter{
 		
 		FuncionalidadeBean funcionalidade = new FuncionalidadeBean();
 		funcionalidade = (FuncionalidadeBean) new FuncionalidadeDAO().buscarPorId(FuncionalidadeBean.class, Integer.parseInt(value));
-		
+		System.out.println("Aqui!");
 		return funcionalidade;
 	}
 

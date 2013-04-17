@@ -45,7 +45,7 @@ public class PerfilMB implements Serializable{
 	}
 	
 	public String novo(){
-		
+		this.perfil = new PerfilBean();
 		funcionalidades = funcionalidadeDAO.findAll(FuncionalidadeBean.class);
 		
 		return "new";
@@ -57,6 +57,7 @@ public class PerfilMB implements Serializable{
 	}
 	
 	public String edit(){
+		
 		funcionalidades = funcionalidadeDAO.findAll(FuncionalidadeBean.class);
 		return "new";
 	}
