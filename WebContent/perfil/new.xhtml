@@ -32,6 +32,7 @@
 				</h:panelGrid>
 			
 				<h:selectManyCheckbox value="#{perfilMB.perfil.funcionalidades}" layout="pageDirection" styleClass="checkbox">
+					<f:attribute name="collectionType" value="java.util.ArrayList" />
 					<f:selectItems value="#{perfilMB.funcionalidades}" var="funcionalidade" itemLabel="#{funcionalidade.nomeTecnico}" />
 					<f:converter converterId="funcionalidadeConverter" />
 				</h:selectManyCheckbox>
