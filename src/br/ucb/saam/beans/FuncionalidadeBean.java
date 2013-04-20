@@ -54,7 +54,6 @@ public class FuncionalidadeBean implements Serializable{
 	}
 
 	//Subscribe---------------------------------------------------------------------------------------------
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -68,6 +67,21 @@ public class FuncionalidadeBean implements Serializable{
 	}
 
 	@Override
+<<<<<<< HEAD
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		result = prime * result
+				+ ((nomeTecnico == null) ? 0 : nomeTecnico.hashCode());
+		result = prime * result
+				+ ((nomeUsuario == null) ? 0 : nomeUsuario.hashCode());
+		return result;
+	}
+
+	@Override
+=======
+>>>>>>> 4fc863fe60b61c20c0c87a492189024ed2273122
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
