@@ -11,12 +11,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-/**
- * Estï¿½ classe ï¿½ modelo para um objeto do tipo Perguntas frequentes
- * 
- * @author Neslon Gustavo
+/** Classe para objetos do tipo Pergunta Frequente, onde serão contidos, valores e métodos para o mesmo.
+ *  Representa as dúvidas de usuários que ocorrem com frequência.
+ *  
+ * @author William Barreto
  * @version 1.0
  * @since 2013
+ *
  */
 
 @Entity

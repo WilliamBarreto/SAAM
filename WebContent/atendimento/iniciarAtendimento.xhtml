@@ -11,14 +11,12 @@
 	<ui:param name="title" value="Solicitar Atendimento" />
  	<ui:define name="content">
  	
- 	<h:form id="form">
-	 	<h:outputText value="Todos os atendentes estão ocupados no momento, aguarde em instates você será atendido."/><br/>
-	 	<h:outputText id="txt_count" value="Posição : #{atendimentoMB.posicao}" />  
-	      
-	    <p:poll interval="3" listener="#{atendimentoMB.atualizaPosicao}" update="txt_count" />  
-	</h:form>
+ 	<h:panelGrid columns="2">
+	 	<h:form>
+	        <h:commandButton action="#{atendimentoMB.iniciarAtendimento}" value="Inciar Atendimento"/>
+	 	</h:form>
  	
- 	
+	</h:panelGrid>
  </ui:define>
 </ui:composition>
 

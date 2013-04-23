@@ -21,15 +21,17 @@
  	<br/>
  	
  	<h:form>
- 		<h:inputTextarea style="width: 700px; height: 350px;" value=""/>
+ 		<p:messages id="messages" autoUpdate="true" closable="true"/>
+ 		
+ 		<p:inputTextarea style="width: 700px; height: 350px;" value="" required="true"/>
  		
  		<br/>
- 		<h:commandButton class="btn btn-info" value="Enviar"/>
+ 		<h:commandButton class="btn btn-info" value="Enviar" />
  	</h:form>
  	
  	
  </ui:define>
-</ui:composition>
+</ui:composition> 
 
 </h:body>
 

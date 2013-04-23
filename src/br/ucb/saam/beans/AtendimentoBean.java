@@ -14,6 +14,15 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/** Classe para objetos do tipo Atendimento, onde serão contidos, valores e métodos para o mesmo.
+ *  Representa os Atendimentos realizados pela aplicação.
+ *  
+ * @author William Barreto
+ * @version 1.0
+ * @since 2013
+ *
+ */
+
 @Entity
 @Table(name="atendimentos")
 public class AtendimentoBean implements Serializable{

@@ -10,9 +10,31 @@ usuario = (UsuarioBean)FacesContext.getCurrentInstance().getExternalContext().ge
 Importar sql via prompt
 
 source 'X:/diretorio/nomearquivo.sql;'
+--------------------------------------------------------------------------------------------------------------
+Importar Banco de Dados
+
+Para importar o banco de dados da aplicação deve-se:
+
+1º - Importar o arquivo "saam-new.sql"
+2º - Importar o arquivo "inserts.sql"
 
 --------------------------------------------------------------------------------------------------------------
 Enviar e-mail
 
+A classe utilizada para enviar e-mail é:
+ - br.ucb.saam.util.EmailUtils
+
+Utilizar método estático:
+ - enviaEmail(Mensagem mensagem);
+	
+	
 --------------------------------------------------------------------------------------------------------------
 Mensageiro
+
+A classe utilizada para retornar mensagens para página JSF é:
+
+br.ucb.saam.util.JSFMensageiro
+
+
+
+

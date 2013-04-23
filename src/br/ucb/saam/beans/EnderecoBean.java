@@ -8,6 +8,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/** Classe para objetos do tipo Endereco, onde serão contidos, valores e métodos para o mesmo.
+ *  Representa um Endereço.
+ *  
+ * @author William Barreto
+ * @version 1.0
+ * @since 2013
+ *
+ */
+
 @Entity
 @Table(name="enderecos")
 public class EnderecoBean implements Serializable{

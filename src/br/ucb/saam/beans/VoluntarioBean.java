@@ -10,12 +10,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-/**
- * Está classe é modelo para um objeto do tipo Voluntário
- * 
+/** Classe para objetos do tipo Voluntário, onde serão contidos, valores e métodos para o mesmo.
+ *  Representa os Voluntários(Atendentes) da aplicação.
+ *  
  * @author William Barreto
  * @version 1.0
  * @since 2013
+ *
  */
 
 @Entity

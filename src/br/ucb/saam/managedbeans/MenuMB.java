@@ -39,10 +39,10 @@ public class MenuMB {
 		 
 		 switch ( id ) {
 			case 1:
-				pagina = "atendimento/index.xhtml";
+				pagina = "atendimento/index";
 				break;
 			case 2:
-				pagina = "naoProgramado";
+				pagina = "atendimento/iniciarAtendimento";
 				break;
 			case 3:
 				pagina = "naoProgramado";

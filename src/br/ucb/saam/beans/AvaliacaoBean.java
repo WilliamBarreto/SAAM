@@ -11,6 +11,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/** Classe para objetos do tipo Avaliacao, onde serão contidos, valores e métodos para o mesmo.
+ *  Representa as avaliações realiadas por usuários do atendimento prestado.
+ *  
+ * @author William Barreto
+ * @version 1.0
+ * @since 2013
+ *
+ */
+
 @Entity
 @Table(name="avaliacoes")
 public class AvaliacaoBean implements Serializable{

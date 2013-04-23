@@ -8,6 +8,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/** Classe para objetos do tipo Classificacao, onde serão contidos, valores e métodos para o mesmo.
+ *  Representa as classificações utilizadas pela aplicação. Ex: Ótimo, Bom e etc.
+ *  
+ * @author William Barreto
+ * @version 1.0
+ * @since 2013
+ *
+ */
+
 @Entity
 @Table(name="classificacoes")
 public class ClassificacaoBean implements Serializable{

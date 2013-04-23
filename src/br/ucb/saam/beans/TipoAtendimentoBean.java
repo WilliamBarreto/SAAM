@@ -8,6 +8,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/** Classe para objetos do tipo Tipo de Atendimentos, onde serão contidos, valores e métodos para o mesmo.
+ *  Representa os tipos de atendimentos realizado na aplicação.
+ *  
+ * @author William Barreto
+ * @version 1.0
+ * @since 2013
+ *
+ */
+
 @Entity
 @Table(name="tipo_atendimentos")
 public class TipoAtendimentoBean implements Serializable{

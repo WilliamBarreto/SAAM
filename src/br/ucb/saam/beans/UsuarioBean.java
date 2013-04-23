@@ -11,12 +11,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-
-
-
 /**
- * Esta classe é o modelo para um obejto do tipo Usuario
- * Sobreescreve o método equals e hashCode
+ *  Classe para objetos do tipo Area, onde serão contidos, valores e métodos para o mesmo.
+ *  Representa modelo para um obejto do tipo Usuario.
  *  
  * @author Thiago R. Pereira
  * @version 1.0

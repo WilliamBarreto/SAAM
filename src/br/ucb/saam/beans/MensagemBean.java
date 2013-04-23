@@ -11,6 +11,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/** Classe para objetos do tipo Mensagem, onde serão contidos, valores e métodos para o mesmo.
+ *  Representa as mensagens enviadas por usuários.
+ *  
+ * @author William Barreto
+ * @version 1.0
+ * @since 2013
+ *
+ */
+
 @Entity
 @Table(name="mensagens")
 public class MensagemBean implements Serializable{

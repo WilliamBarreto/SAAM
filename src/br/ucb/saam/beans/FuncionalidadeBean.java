@@ -8,6 +8,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/** Classe para objetos do tipo Funcionalidade, onde serão contidos, valores e métodos para o mesmo.
+ *  Representa as funcionalidades utilizadas pela aplicação.
+ *  
+ * @author William Barreto
+ * @version 1.0
+ * @since 2013
+ *
+ */
 
 @Entity
 @Table(name="funcionalidades")
@@ -65,23 +73,7 @@ public class FuncionalidadeBean implements Serializable{
 				+ ((nomeUsuario == null) ? 0 : nomeUsuario.hashCode());
 		return result;
 	}
-
 	@Override
-<<<<<<< HEAD
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + id;
-		result = prime * result
-				+ ((nomeTecnico == null) ? 0 : nomeTecnico.hashCode());
-		result = prime * result
-				+ ((nomeUsuario == null) ? 0 : nomeUsuario.hashCode());
-		return result;
-	}
-
-	@Override
-=======
->>>>>>> 4fc863fe60b61c20c0c87a492189024ed2273122
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;

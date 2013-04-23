@@ -144,3 +144,10 @@ INSERT INTO saam.usuarios VALUES(NULL,'atendente','atendente',2,2);
 INSERT INTO saam.usuarios VALUES(NULL,'diretoria','diretoria',3,3); 
 INSERT INTO saam.usuarios VALUES(NULL,'gerente','gerente',4,4); 
 INSERT INTO saam.usuarios VALUES(NULL,'mulher','mulher',5,5); 
+
+-- --------------------------------------------------------------
+-- CRIANDO TIPO ATENDIMENTOS
+-- --------------------------------------------------------------
+INSERT INTO saam.tipo_atendimentos (NOME) VALUES ('CHAT');
+INSERT INTO saam.tipo_atendimentos (NOME) VALUES ('MENSAGEM');
+

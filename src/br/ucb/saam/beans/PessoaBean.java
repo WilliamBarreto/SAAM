@@ -13,12 +13,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-/**
- * Esta classe representa um modelo do objeto Pessoa
- * 
+/** Classe para objetos do tipo Pessoa, onde serão contidos, valores e métodos para o mesmo.
+ *  Representa uma Pessoa na aplicação.
+ *  
  * @author William Barreto
  * @version 1.0
  * @since 2013
+ *
  */
 
 @Entity

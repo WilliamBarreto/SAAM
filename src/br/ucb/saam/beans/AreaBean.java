@@ -7,14 +7,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-/**
- * Está classe representa um objeto do tipo Area
- * 
+
+/** Classe para objetos do tipo Area, onde serão contidos, valores e métodos para o mesmo.
+ *  Representa as diversas Areas utilizadas pela aplicação. Ex: Social, Psícologica e etc.
+ *  
  * @author William Barreto
  * @version 1.0
  * @since 2013
- * 
- * */
+ *
+ */
 
 @Entity
 @Table(name="areas")

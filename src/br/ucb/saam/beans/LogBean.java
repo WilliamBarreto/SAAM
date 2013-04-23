@@ -11,6 +11,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/** Classe para objetos do tipo Log, onde serão contidos, valores e métodos para o mesmo.
+ *  Representa logs de operação realizadas na aplicação.
+ *  
+ * @author William Barreto
+ * @version 1.0
+ * @since 2013
+ *
+ */
+
 @Entity
 @Table(name="logs")
 public class LogBean implements Serializable{
