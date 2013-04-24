@@ -43,7 +43,7 @@ public class MensagemBean implements Serializable{
 	
 	//Constructor
 	public MensagemBean(){
-		
+		this.usuario = new  UsuarioBean();
 	}
 	
 	//Methods
