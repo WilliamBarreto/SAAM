@@ -11,10 +11,35 @@
 	<ui:param name="title" value="Solicitar Atendimento" />
  	<ui:define name="content">
  	
+ 	<style> 
+			.messageInput {
+				width: 420px;
+			}
+			
+			.publicColumn {
+				width: 80%;
+			}
+				
+			.usersColumn {
+				width: 20%;
+			}
+				
+			.vtop {
+				vertical-align: top;
+			}
+				
+			.chatlogs {
+				height: 200px;
+				width: 500px;
+				overflow: auto;
+				padding: 0.5em 1em 0.5em 0.5em;
+			}
+		</style>
+ 	
  	<h:form id="form">
 	 	<h:outputText value="Todos os atendentes estão ocupados no momento, aguarde em instates você será atendido."/><br/>
-	 	<h:outputText id="txt_count" value="Posição : #{atendimentoMB.posicao}" />  
-	      
+	 	<h:outputText id="txt_count" value="Posição : #{atendimentoMB.posicao}"  />  
+	    
 	    <p:poll interval="3" listener="#{atendimentoMB.atualizaPosicao}" update="txt_count" />  
 	</h:form>
  	
@@ -22,7 +47,7 @@
  	<h:form id="formchat"> 
 
 		<p:outputPanel id="public" layout="block" styleClass="ui-corner-all ui-widget-content chatlogs" />
-
+		<br/>	
 		<p:inputText value="#{atendimentoMB.mensagem.texto}" styleClass="messageInput" />
 		<p:spacer width="5" />
 		

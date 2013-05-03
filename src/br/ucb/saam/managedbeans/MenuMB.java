@@ -9,6 +9,7 @@ import javax.faces.event.ActionEvent;
 @RequestScoped
 public class MenuMB {
 
+	
 	private String resultado;
 	//private List<FuncionalidadeBean> funcionalidades;
 	//private FuncionalidadeDAO funciDAO;
@@ -86,7 +87,7 @@ public class MenuMB {
 				break;
 		}
 		return pagina;
-
 	}
+	
 
 }

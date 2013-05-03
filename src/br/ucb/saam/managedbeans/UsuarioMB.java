@@ -38,25 +38,44 @@ public class UsuarioMB {
 
 
 	//Methods
+	/**Metodo para buscar todos os usuário cadastrados no banco de dados
+	 * 
+	 * @return ArrayList<UsuarioBean>
+	 */
 	public  List<UsuarioBean> getListUsuarios(){
 		return this.usuarios = this.usuarioDAO.findAll(UsuarioBean.class);
 	}
-
-
-
+	
+	/**Metodo para autenticar o usuário no sistema.
+	 *  
+	 * @return String - Página que será redirecionada.
+	 */
 	public String login(){
-
+		
+		//Busca a lista de usuários gravados no banco de dados
 		getListUsuarios();
 
+		//Percorre a lista de usuários		
 		for (UsuarioBean user : usuarios) {	
+			
+			//Compara se o usuário informado é igual ao da vez
 			if(user.equals(this.usuario)){
+				//Sicroniza o objeto usuário
+				user = (UsuarioBean) usuarioDAO.buscarPorId(UsuarioBean.class, user.getId());				
+				
+				//Adiciona o usuário na Sessão
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", user);
+				
+				//Redireciona para Home(Menu de Funcionalidades)
 				return "home";
 			}
 		}
-		JSFMensageiro.info("Usuário ou senha incorreta(Resumida).","Detalhada");
+		//Caso não encontre envia uma mensagem informando o problema		
+		JSFMensageiro.info("Usuário ou Senha Incorreta");
 		return "index";
 	}
+	
+	
 	public String logout(){
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("usuario");
 		return "index";

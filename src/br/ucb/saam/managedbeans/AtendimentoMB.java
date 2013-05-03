@@ -30,7 +30,7 @@ public class AtendimentoMB implements Serializable{
 	private List<UsuarioBean> atendentesDisponiveis;
 	private List<Chat> chats;
 	private Fila fila;
-	private int posicao;
+	private String posicao;
 	private MensagemBean mensagem;
 	private String canal;
 	
@@ -134,13 +134,16 @@ public class AtendimentoMB implements Serializable{
 	 */
 	public String solicitarAtendimento(){
 		
-		//Verifica se existe a lista de atendentes está vazia
+		//Verifica se existe a lista de atendentes disponiveis está vazia
 		if(this.atendentesDisponiveis.isEmpty()){
+			//Caso a lista de atendentes esteja vazia(isEmpty) o usuário é redirecionado para o 
+			//formulário para enviar uma mensagem off-line.
 			return "mensagem";
-			
 		}else {
-			// Adiciona o usuário da sessão na Fila.
-			fila.insere(getUsuarioSessao());			
+			//Caso a lista tenha pelo menos um atendente
+			//Adiciona o usuário da sessão na Fila de atendimento.
+			fila.insere(getUsuarioSessao());
+			setPosicao("Adicionando na fila de atendimento ...");
 			return "aguarde";
 		}
 	}
@@ -151,8 +154,11 @@ public class AtendimentoMB implements Serializable{
 	 * 
 	 */
 	public void atualizaPosicao(){
-		if(getUsuarioSessao()!= null){
-			this.posicao = fila.posicao(getUsuarioSessao());
+		//Se a posicao do usuário for igual a 0, significa que ele está em atendimento
+		if(fila.posicao(getUsuarioSessao()) == 0){
+			setPosicao("Em Atendimento");
+		}else{
+			setPosicao(String.valueOf(fila.posicao(getUsuarioSessao())));
 		}
 	}
 	
@@ -160,6 +166,14 @@ public class AtendimentoMB implements Serializable{
 		if(getUsuarioSessao()!= null){
 			this.canal = getChat().getCanal();
 		}
+	}
+
+	/**Metodo utilizado apenas para manter a fila atualizada na página dos usuários
+	 * 
+	 */
+	public void atualizaFila(){
+		//O componente do p:poll do primefaces necessita de um metodo para atualizar a fila.
+		//Como a fila sempre estar atualizada, este metodo é apenas para satisfazer o componente
 	}
 	
 	/**Metodo para enviar mensagens para a página html
@@ -214,10 +228,10 @@ public class AtendimentoMB implements Serializable{
 		this.fila = fila;
 	}
 
-	public int getPosicao() {
+	public String getPosicao() {
 		return posicao;
 	}
-	public void setPosicao(int posicao) {
+	public void setPosicao(String posicao) {
 		this.posicao = posicao;
 	}
 
