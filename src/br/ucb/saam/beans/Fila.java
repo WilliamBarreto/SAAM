@@ -5,31 +5,35 @@ import java.util.List;
 
 public class Fila {
 
-	private List<UsuarioBean> usuarios = new LinkedList<UsuarioBean>();
-	
-	public List<UsuarioBean> getUsuarios(){
-		return this.usuarios;
+	private List<ItemFila> itens = new LinkedList<ItemFila>();
+		
+	public List<ItemFila> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<ItemFila> itens) {
+		this.itens = itens;
+	}
+
+	public void insere(ItemFila item){
+		this.itens.add(item);
 	}
 	
-	public void insere(UsuarioBean usuario){
-		this.usuarios.add(usuario);
-	}
-	
-	public UsuarioBean remove(){
-		return this.usuarios.remove(0);
+	public ItemFila remove(){
+		return this.itens.remove(0);
 	}
 	
 	public boolean vazia(){
-		return this.usuarios.size() == 0;
+		return this.itens.size() == 0;
 	}
 	
 	public int posicao(UsuarioBean usuario){
 		int i;
 		int posicao = 0;
 		
-		for (i=0; i<this.usuarios.size(); i++) {
+		for (i=0; i<this.itens.size(); i++) {
 			
-			if(usuarios.get(i).getNome().equals(usuario.getNome())){
+			if(itens.get(i).getUsuario().getNome().equals(usuario.getNome())){
 				posicao = i + 1;
 			}			      
 		}

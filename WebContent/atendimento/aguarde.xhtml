@@ -3,6 +3,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
@@ -35,49 +36,19 @@
 				padding: 0.5em 1em 0.5em 0.5em;
 			}
 		</style>
+		
  	
  	<h:form id="form">
 	 	<h:outputText value="Todos os atendentes estão ocupados no momento, aguarde em instates você será atendido."/><br/>
-	 	<h:outputText id="txt_count" value="Posição : #{atendimentoMB.posicao}"  />  
+	 	<h:outputText value="Situação do Atendimento:" />
+	 	<b>
+	 		<h:outputText id="txt_count" value="#{atendimentoMB.posicao} " />  
+	    </b>
+	    <p:poll interval="3" listener="#{atendimentoMB.atualizaPosicao}" update="txt_count" />
+
 	    
-	    <p:poll interval="3" listener="#{atendimentoMB.atualizaPosicao}" update="txt_count" />  
-	</h:form>
- 	
- 	
- 	<h:form id="formchat"> 
-
-		<p:outputPanel id="public" layout="block" styleClass="ui-corner-all ui-widget-content chatlogs" />
-		<br/>	
-		<p:inputText value="#{atendimentoMB.mensagem.texto}" styleClass="messageInput" />
-		<p:spacer width="5" />
-		
-		
-		
-		<p:commandButton value="Enviar"
-			actionListener="#{atendimentoMB.sendMensagem}"
-			oncomplete="$('.messageInput').val('').focus()" />
-		<p:spacer width="5" />
-
 	</h:form>
 
-	<h:outputText value="Canal : /#{sessionScope.usuario.id}"/>
-	<p:socket onMessage="handleMessage" channel="/#{sessionScope.usuario.id}" autoConnect="true" widgetVar="subscriber"/>
-
-	<script type="text/javascript">
-	
-		function handleMessage(data) {
-			var chatContent = $(PrimeFaces.escapeClientId('formchat:public'));
-			chatContent.append(data + '<br />');			
-			//alert(data)
-			
-			//keep scroll
-			chatContent.scrollTop(chatContent.height());
-
-		}
-	</script>
-
- 	
- 	
  </ui:define>
 </ui:composition>
 

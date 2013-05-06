@@ -36,38 +36,38 @@
 				}
 		</style>
 		
-		<h:form id="formchat"> 
+		<h:form id="formchat">
 
-		<p:outputPanel id="public" layout="block" styleClass="ui-corner-all ui-widget-content chatlogs" />
-		<br/>	
-		<p:inputText value="#{atendimentoMB.mensagem.texto}" styleClass="messageInput" />
-		<p:spacer width="5" />
+			<p:outputPanel id="public" layout="block"
+				styleClass="ui-corner-all ui-widget-content chatlogs" />
+
+			<br/>
+			<p:inputText value="#{atendimentoMB.mensagem.texto}"
+				styleClass="messageInput" />
+			<p:spacer width="5" />
+
+			<p:commandButton value="Enviar"
+				actionListener="#{atendimentoMB.sendMensagem}"
+				oncomplete="$('.messageInput').val('').focus()"/>
+			<p:spacer width="5" />
 		
-		
-		
-		<p:commandButton value="Enviar"
-			actionListener="#{atendimentoMB.sendMensagem}"
-			oncomplete="$('.messageInput').val('').focus()" />
-		<p:spacer width="5" />
+			<h:commandButton value="Encerrar Atendimento"/>
+		</h:form>
 
-	</h:form>
+		<h:outputText value="Canal : /#{sessionScope.usuario.id}"/>
+		<p:socket onMessage="handleMessage" channel="/#{sessionScope.usuario.id}" autoConnect="true" widgetVar="subscriber" />
 
-	<h:outputText value="Canal : /#{sessionScope.usuario.id}"/>
-	<p:socket onMessage="handleMessage" channel="/#{sessionScope.usuario.id}" autoConnect="true" widgetVar="subscriber"/>
-
-	<script type="text/javascript">
+		<script type="text/javascript">
 	
 		function handleMessage(data) {
 			var chatContent = $(PrimeFaces.escapeClientId('formchat:public'));
 			chatContent.append(data + '<br />');			
 			//alert(data)
-
 			//keep scroll
 			chatContent.scrollTop(chatContent.height());
 
 		}
 	</script>
-
 
 	</ui:define>
 </ui:composition>

@@ -11,13 +11,13 @@
 	<ui:param name="title" value="Fila de Atendimento" />
  	<ui:define name="content">
  	 	
-	<h:form> 	
-	 	<h:dataTable id="txt_count" value="#{atendimentoMB.fila.usuarios}" var="item" >
+	<h:form> 	 
+	 	<h:dataTable id="txt_count" value="#{atendimentoMB.fila.itens}" var="item" >
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="Nome" />
 				</f:facet>
-				<h:outputText value="#{item.pessoa.nome}"/>
+				<h:outputText value="#{item.usuario.pessoa.nome}"/>
 			</h:column>
 		</h:dataTable> 
 
