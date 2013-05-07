@@ -14,6 +14,7 @@
 	
 	Perfil:
 	<h:outputText value="#{perfilMB.perfil.nome}"/>
+	
 	<br />
 	
 	Funcionalidades:
@@ -27,9 +28,7 @@
 	</h:dataTable>
 	
 	<h:form>
-		<h:commandLink value="Editar" action="#"/>
-		
-		<h:commandLink value="Voltar" action="#"/>
+		<h:commandButton value="Voltar" action="#{perfilMB.index}" />
 	</h:form>
 	
 

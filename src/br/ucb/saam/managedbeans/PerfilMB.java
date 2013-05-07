@@ -40,7 +40,6 @@ public class PerfilMB implements Serializable{
 	
 	public String show() {		
 		funcionalidades = (List<FuncionalidadeBean>) perfil.getFuncionalidades();
-		this.perfil = new PerfilBean();
 		return "show";
 	}
 	
@@ -66,6 +65,7 @@ public class PerfilMB implements Serializable{
 		
 		this.perfil = (PerfilBean) evento.getComponent().getAttributes().get("perfil");
 		perfilDAO.delete(perfil);
+		this.perfis = perfilDAO.findAll(PerfilBean.class);
 	}
 	
 	

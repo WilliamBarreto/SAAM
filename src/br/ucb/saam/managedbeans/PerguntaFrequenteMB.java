@@ -38,12 +38,12 @@ public class PerguntaFrequenteMB implements Serializable{
 	}
 	
 	public String index(){
-		perguntaFrequente = new PerguntaFrequenteBean();
 		getListaPerguntasFrequentes();
 		return "/perguntaFrequente/index";
 	}
 	
 	public String novo(){
+		this.perguntaFrequente = new PerguntaFrequenteBean();
 		areas = areaDAO.findAll(AreaBean.class);		
 		return "new";
 	}
