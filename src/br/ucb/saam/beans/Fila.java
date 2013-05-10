@@ -39,7 +39,24 @@ public class Fila {
 		}
 		
 		return posicao;
-	}	
+	}
+	
+	
+	/**Metodo verifica se o usuário esta na fila 
+	 * @param usuario
+	 * @return boolean - Se estiver retorna true, senão retorna false
+	 */
+	public boolean isUsuario(UsuarioBean usuario){
+		boolean retorno = false;
+		
+		for (int i=0; i<this.itens.size(); i++) {
+			
+			if(itens.get(i).getUsuario().getNome().equals(usuario.getNome())){
+				retorno = true;
+			}			      
+		}
+		return retorno;
+	}
 	
 	
 }

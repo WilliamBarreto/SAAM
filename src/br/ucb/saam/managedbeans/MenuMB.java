@@ -63,7 +63,7 @@ public class MenuMB {
 				pagina = "/perfil/index";
 				break;
 			case 8:
-				pagina = "voluntario/index";
+				pagina = new VoluntarioMB().index();
 				break;
 			case 9:
 				pagina = "naoProgramado";

@@ -2,12 +2,10 @@ package br.ucb.saam.beans;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 /** Classe para objetos do tipo Voluntário, onde serão contidos, valores e métodos para o mesmo.
@@ -21,16 +19,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="voluntarios")
+@PrimaryKeyJoinColumn(name="COD_VOLUNTARIO")
 public class VoluntarioBean extends PessoaBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue
-	@Column(name="id_voluntario")
-	private int id;
 	
 	@ManyToOne
-	@JoinColumn(name="id_area")
+	@JoinColumn(name="COD_AREA")
 	private AreaBean area;
 
 	
@@ -42,14 +37,7 @@ public class VoluntarioBean extends PessoaBean implements Serializable{
 	//Methods
 	
 
-	//Getters and Setters
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	
+	//Getters and Setters	
 	public AreaBean getArea() {
 		return area;
 	}

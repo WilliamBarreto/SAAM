@@ -11,8 +11,9 @@
 	<ui:param name="title" value="Fila de Atendimento" />
  	<ui:define name="content">
  	 	
-	<h:form> 	 
-	 	<h:dataTable id="txt_count" value="#{atendimentoMB.fila.itens}" var="item" >
+	<h:form rendered="#{sessionScope.area.nome == 'JURÍDICA'?true:false}"> 	 
+	 
+	 	<h:dataTable id="txt_count" value="#{atendimentoMB.filaJ.itens}" var="item" >
 			<h:column>
 				<f:facet name="header">
 					<h:outputText value="Nome" />
@@ -27,6 +28,40 @@
 	
 		<h:commandButton class="btn" value="Chamar Próximo" action="#{atendimentoMB.chamarFila}"/>
 	</h:form>
+	
+	<h:form rendered="#{sessionScope.area.nome == 'PSICOLÓGICA'?true:false}"> 	 
+	 	<h:dataTable id="txt_count" value="#{atendimentoMB.filaP.itens}" var="item" >
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Nome" />
+				</f:facet>
+				<h:outputText value="#{item.usuario.pessoa.nome}"/>
+			</h:column>
+		</h:dataTable> 
+
+		<p:poll interval="3" listener="#{atendimentoMB.atualizaFila}" update="txt_count"/>
+		
+		
+	
+		<h:commandButton class="btn" value="Chamar Próximo" action="#{atendimentoMB.chamarFila}"/>
+	</h:form>
+	<h:form rendered="#{sessionScope.area.nome == 'Social'?true:false}"> 	 
+	 	<h:dataTable id="txt_count" value="#{atendimentoMB.filaS.itens}" var="item" >
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Nome" />
+				</f:facet>
+				<h:outputText value="#{item.usuario.pessoa.nome}"/>
+			</h:column>
+		</h:dataTable> 
+
+		<p:poll interval="3" listener="#{atendimentoMB.atualizaFila}" update="txt_count"/>
+		
+		
+	
+		<h:commandButton class="btn" value="Chamar Próximo" action="#{atendimentoMB.chamarFila}"/>
+	</h:form>
+	
  	
  </ui:define>
 </ui:composition>

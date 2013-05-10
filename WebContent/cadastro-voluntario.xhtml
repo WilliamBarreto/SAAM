@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<h:head>
+		<title>Cadastro de Voluntário</title>
+	</h:head>
+
+	<h:body>
+		<h:form>
+			<h:panelGrid>
+				<h:outputText value="Nome"/>
+				<h:inputText value="#{voluntarioMB.voluntario.nome}"/>
+				
+				<h:outputText value="E-mail"/>			
+				<h:inputText value="#{voluntarioMB.voluntario.email}"/>
+				
+				<h:outputText value="Sexo"/>
+				<h:selectOneMenu value="#{voluntarioMB.voluntario.sexo}">
+					<f:selectItem itemValue="M" itemLabel="Masculino"></f:selectItem>
+					<f:selectItem itemValue="F" itemLabel="Feminino"></f:selectItem>	
+				</h:selectOneMenu>
+				
+				<h:outputText value="Estado Civil"/>
+				<h:selectOneMenu value="#{voluntarioMB.voluntario.estadoCivil}">
+					<f:selectItem itemValue="Solteiro" itemLabel="Solteiro(a)"></f:selectItem>
+					<f:selectItem itemValue="Casado" itemLabel="Casado(a)"></f:selectItem>	
+				</h:selectOneMenu>
+
+				<h:outputText value="Celular"/>			
+				<h:inputText value="#{voluntarioMB.voluntario.celular}"/>
+				
+				<h:outputText value="Telefone Residencial"/>			
+				<h:inputText value="#{voluntarioMB.voluntario.telefoneResidencial}"/>
+				
+				<h:outputText value="Telefone Comercial"/>			
+				<h:inputText value="#{voluntarioMB.voluntario.telefoneComercial}"/>
+				
+				<h:outputText value="Area de Atuação"/>
+				<h:selectOneMenu value="#{voluntarioMB.voluntario.area}">
+					<f:selectItems value="#{voluntarioMB.areas}" var="area" itemLabel="#{area.nome}"/>			
+				</h:selectOneMenu>
+				
+				<h:outputText value="Logradouro"/>			
+				<h:inputText value="#{voluntarioMB.voluntario.endereco.logradouro}"/>
+				
+				<h:outputText value="Bairro"/>			
+				<h:inputText value="#{voluntarioMB.voluntario.endereco.bairro}"/>
+				
+				<h:outputText value="Cidade"/>			
+				<h:inputText value="#{voluntarioMB.voluntario.endereco.cidade}"/>
+				
+				<h:outputText value="CEP"/>			
+				<h:inputText value="#{voluntarioMB.voluntario.endereco.cep}"/>
+				
+				<h:outputText value="Estado"/>			
+				<h:inputText value="#{voluntarioMB.voluntario.endereco.estado}"/>
+				
+				<h:outputText value="Logradouro"/>			
+				<h:inputText value="#{voluntarioMB.voluntario.endereco.pais}"/>		
+				
+							
+			</h:panelGrid>
+			
+			<h:commandButton value="Gravar" action="#{voluntarioMB.cadastrar}"/>
+			
+		</h:form>
+	</h:body>
+</html>

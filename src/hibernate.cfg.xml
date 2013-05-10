@@ -29,7 +29,7 @@
 		<mapping class="br.ucb.saam.beans.TipoAtendimentoBean"/>
 		<mapping class="br.ucb.saam.beans.TipoLogBean"/>
 		<mapping class="br.ucb.saam.beans.UsuarioBean"/>
-		<!--  <mapping class="br.ucb.saam.beans.VoluntarioBean"/>-->
+		<mapping class="br.ucb.saam.beans.VoluntarioBean"/>
 		
 		
 	</session-factory>
