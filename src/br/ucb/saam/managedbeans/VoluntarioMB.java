@@ -1,44 +1,42 @@
 package br.ucb.saam.managedbeans;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
 
-import org.apache.commons.mail.EmailException;
-
 import br.ucb.saam.beans.AreaBean;
 import br.ucb.saam.beans.VoluntarioBean;
 import br.ucb.saam.dao.AreaDAO;
+import br.ucb.saam.dao.EnderecoDAO;
 import br.ucb.saam.dao.VoluntarioDAO;
-import br.ucb.saam.util.EmailUtils;
 import br.ucb.saam.util.Mensagem;
 
 @ManagedBean
 @SessionScoped
-public class VoluntarioMB {
+public class VoluntarioMB implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private VoluntarioBean voluntario;
 	private List<VoluntarioBean> voluntarios;
 	private List<AreaBean> areas;
 	private VoluntarioDAO voluntarioDAO;
 	
 
-// Constructor
-	
+	// Constructor	
 	public VoluntarioMB(){
 		setVoluntario(new VoluntarioBean());
 		setAreas(new AreaDAO().findAll(AreaBean.class));
-		setVoluntarios(new ArrayList<VoluntarioBean>());
 		setVoluntarioDAO(new VoluntarioDAO());
+		setVoluntarios(voluntarioDAO.findAll(VoluntarioBean.class));
 	}
+
 	
-// Methods
-	
+	// Methods	
 	public String cadastrar(){
-		
+		new EnderecoDAO().saveOrUpdate(voluntario.getEndereco());
 		voluntarioDAO.saveOrUpdate(voluntario);
 		voluntario = new VoluntarioBean();
 		enviaEmail();
@@ -46,7 +44,13 @@ public class VoluntarioMB {
 	}
 	
 	public String index(){
-		voluntarios = voluntarioDAO.findAll(VoluntarioBean.class);
+		this.voluntarios = voluntarioDAO.findAll(VoluntarioBean.class);
+		for (VoluntarioBean v : voluntarios) {
+			System.out.println(v.getNome());
+			System.out.println(v.getTelefoneComercial());
+			System.out.println(v.getSexo());
+			System.out.println(v.getId());			
+		}
 		return "voluntario/index";
 	}
 	
@@ -106,14 +110,14 @@ public class VoluntarioMB {
 		mensagem.setTitulo("Testando envio de email");
 		mensagem.setMensagem("Prezado Usuario,\n Estamos testando o envio de e-mail da aplicação saam.\n \nAtenciosamente,\n \n Equipe SAAM.");
 		
-		try {
+		/*try {
 			EmailUtils.enviaEmail(mensagem);
 		} catch (EmailException ex){
 			System.out.println("Erro! Ocorreu um erro ao enviar a mensagem"+ex);
 			
 			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro! Occoreu um erro ao enviar a mensagem.", "Erro"));
 			//Logger.getLogger(IndexController.class.getName()).log(Level.SEVERE, null, ex);
-		}
+		}*/
 	}
 
 }

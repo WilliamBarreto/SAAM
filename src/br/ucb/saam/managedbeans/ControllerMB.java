@@ -46,7 +46,7 @@ public class ControllerMB implements Serializable{
 	}
 	
 	public String cadastrarVoluntario(){
-		return "/voluntario/new";
+		return "cadastro-voluntario";
 	}
 	
 	public String cadastrarMulher(){

@@ -8,10 +8,11 @@ public class Chat {
 	private UsuarioBean atendente;
 	private UsuarioBean atendido;
 	private List<MensagemBean> msgs;
-	private String canal;
+		
 	
-	
-	public Chat(){
+	public Chat(UsuarioBean atendente, UsuarioBean atendido){
+		setAtendente(atendente);
+		setAtendido(atendido);
 		this.msgs = new ArrayList<MensagemBean>();
 	}
 	
@@ -33,11 +34,5 @@ public class Chat {
 	public void setMsgs(List<MensagemBean> msgs) {
 		this.msgs = msgs;
 	}
-	public String getCanal() {
-		return canal;
-	}
-	public void setCanal(String canal) {
-		this.canal = canal;
-	}
-	
+
 }

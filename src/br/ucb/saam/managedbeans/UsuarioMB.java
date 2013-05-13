@@ -10,7 +10,9 @@ import javax.faces.context.FacesContext;
 import org.apache.commons.mail.EmailException;
 
 import br.ucb.saam.beans.UsuarioBean;
+import br.ucb.saam.beans.VoluntarioBean;
 import br.ucb.saam.dao.UsuarioDAO;
+import br.ucb.saam.dao.VoluntarioDAO;
 import br.ucb.saam.util.EmailUtils;
 import br.ucb.saam.util.JSFMensageiro;
 import br.ucb.saam.util.Mensagem;
@@ -66,13 +68,29 @@ public class UsuarioMB {
 				//Adiciona o usuário na Sessão
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", user);
 				
+				isAtendente(user);
 				//Redireciona para Home(Menu de Funcionalidades)
+			
+				this.usuario = new UsuarioBean();
 				return "home";
 			}
 		}
 		//Caso não encontre envia uma mensagem informando o problema		
 		JSFMensageiro.info("Usuário ou Senha Incorreta");
 		return "index";
+	}
+	
+	/**
+	 * Metodo para verificar se o usuário é atendente. Caso seja atendente adiciona a area do atendente na sua sessão
+	 * @param usuario
+	 */
+	
+	public void isAtendente(UsuarioBean usuario){
+		if(usuario.getPerfil().getNome().equalsIgnoreCase("atendente")){
+			VoluntarioBean voluntario = (VoluntarioBean) new VoluntarioDAO().buscarPorId(VoluntarioBean.class, usuario.getPessoa().getId());
+			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("area",voluntario.getArea());
+			voluntario = new VoluntarioBean();
+		}
 	}
 	
 	
