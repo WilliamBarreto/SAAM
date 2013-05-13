@@ -5,13 +5,21 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.event.ActionEvent;
+
+import org.apache.commons.mail.EmailException;
 
 import br.ucb.saam.beans.AreaBean;
+import br.ucb.saam.beans.PerfilBean;
+import br.ucb.saam.beans.PessoaBean;
+import br.ucb.saam.beans.UsuarioBean;
 import br.ucb.saam.beans.VoluntarioBean;
 import br.ucb.saam.dao.AreaDAO;
 import br.ucb.saam.dao.EnderecoDAO;
+import br.ucb.saam.dao.PerfilDAO;
+import br.ucb.saam.dao.PessoaDAO;
+import br.ucb.saam.dao.UsuarioDAO;
 import br.ucb.saam.dao.VoluntarioDAO;
+import br.ucb.saam.util.EmailUtils;
 import br.ucb.saam.util.Mensagem;
 
 @ManagedBean
@@ -38,19 +46,13 @@ public class VoluntarioMB implements Serializable{
 	public String cadastrar(){
 		new EnderecoDAO().saveOrUpdate(voluntario.getEndereco());
 		voluntarioDAO.saveOrUpdate(voluntario);
+		enviaEmail(voluntario.getEmail(),"Cadastro"," Usuario,\n Estamos testando o envio de e-mail da aplicaï¿½ï¿½o saam.\n \nAtenciosamente,\n \n Equipe SAAM.");
 		voluntario = new VoluntarioBean();
-		enviaEmail();
 		return "sucess";
 	}
 	
 	public String index(){
 		this.voluntarios = voluntarioDAO.findAll(VoluntarioBean.class);
-		for (VoluntarioBean v : voluntarios) {
-			System.out.println(v.getNome());
-			System.out.println(v.getTelefoneComercial());
-			System.out.println(v.getSexo());
-			System.out.println(v.getId());			
-		}
 		return "voluntario/index";
 	}
 	
@@ -59,14 +61,43 @@ public class VoluntarioMB implements Serializable{
 		return "show";
 	}
 	
-	public void reprovar(ActionEvent evento){
-		this.voluntario = (VoluntarioBean) evento.getComponent().getAttributes().get("voluntario");
+	public String reprovar(){
+		PessoaDAO pessoaDao = new PessoaDAO();
+		PessoaBean pessoa = new PessoaBean();
+		
+		pessoa = (PessoaBean) pessoaDao.buscarPorId(PessoaBean.class, voluntario.getId());
+		pessoaDao.delete(pessoa);
 		voluntarioDAO.delete(voluntario);
+		return index();
 	}
 	
 	public String aprovar(){
-		//To do!
-		return "";
+		
+		PessoaBean pessoa = new PessoaBean();
+		PessoaDAO pessoaDao = new PessoaDAO();
+		
+		PerfilDAO perfilDao = new PerfilDAO();
+		PerfilBean perfil = new PerfilBean();
+		
+		UsuarioBean usuario = new UsuarioBean();
+		UsuarioDAO usuarioDao = new UsuarioDAO();
+		
+		
+		perfil = (PerfilBean) perfilDao.buscarPorId(PerfilBean.class, 2);
+		pessoa = (PessoaBean) pessoaDao.buscarPorId(PessoaBean.class, voluntario.getId());
+		
+		usuario.setPerfil(perfil);
+		usuario.setPessoa(pessoa);
+		usuario.setNome(voluntario.getEmail());
+		usuario.setSenha("123456");
+		
+		usuarioDao.saveOrUpdate(usuario);
+		
+		voluntario.setSituacao(true);
+		voluntarioDAO.saveOrUpdate(voluntario);
+		
+		enviaEmail(voluntario.getEmail(), "Cadastro Aprovado", "Seu cadastro foi aprovado!");
+		return index();
 	}
 	
 	
@@ -103,21 +134,21 @@ public class VoluntarioMB implements Serializable{
 		this.voluntarioDAO = voluntarioDAO;
 	}
 	
-	public void enviaEmail(){
+	public void enviaEmail(String destino, String titulo, String msg){
 		Mensagem mensagem = new Mensagem();
 		
-		mensagem.setDestino("bsi.william@gmail.com");
-		mensagem.setTitulo("Testando envio de email");
-		mensagem.setMensagem("Prezado Usuario,\n Estamos testando o envio de e-mail da aplicação saam.\n \nAtenciosamente,\n \n Equipe SAAM.");
+		mensagem.setDestino(destino);
+		mensagem.setTitulo(titulo);
+		mensagem.setMensagem(msg);
 		
-		/*try {
+		try {
 			EmailUtils.enviaEmail(mensagem);
 		} catch (EmailException ex){
 			System.out.println("Erro! Ocorreu um erro ao enviar a mensagem"+ex);
 			
 			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro! Occoreu um erro ao enviar a mensagem.", "Erro"));
 			//Logger.getLogger(IndexController.class.getName()).log(Level.SEVERE, null, ex);
-		}*/
+		}
 	}
 
 }

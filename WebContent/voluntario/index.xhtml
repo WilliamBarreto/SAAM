@@ -59,9 +59,9 @@
 		</h:column>
 		<h:column>
 			<h:form>
-				<h:commandLink value="Reprovar"
-					actionListener="#{voluntarioMB.reprovar}" styleClass="btn">
-					<f:attribute name="voluntario" value="#{item}" />
+				<h:commandLink value="Reprovar" action="#{voluntarioMB.reprovar}" styleClass="btn">
+					<f:setPropertyActionListener value="#{item}"
+						target="#{voluntarioMB.voluntario}" />
 				</h:commandLink>
 				<br />
 			</h:form>
