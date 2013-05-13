@@ -70,6 +70,8 @@ public class UsuarioMB {
 				
 				isAtendente(user);
 				//Redireciona para Home(Menu de Funcionalidades)
+			
+				this.usuario = new UsuarioBean();
 				return "home";
 			}
 		}
