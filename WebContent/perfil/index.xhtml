@@ -18,17 +18,27 @@
 
 		<ui:define name="content">
 			<h3>Lista de Perfis</h3>
+			
+			<h:form>
+				<h:panelGrid>
+
+					<h:outputText value="Pesquisa" />
+					<p:inputText value="#{perfilMB.resultado}" required="true" />
+
+				</h:panelGrid>
+				<h:commandButton value="Pesquisar" action="#{perfilMB.buscaPorNome}"/>
+			</h:form>
 
 			<h:form prependId="false">
+			
 
 				<p:dataTable id="dataTable" var="item" value="#{perfilMB.perfis}"
 					paginatorPosition="top"
 					paginator="true" rows="10"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					rowsPerPageTemplate="5,10,15">
-					<f:facet name="header">  
-            			Perfis
-       			   </f:facet>
+  
+					
 					<p:column>
 						<f:facet name="header">
 							<h:outputText value="Nome" />
@@ -39,22 +49,21 @@
 					<f:facet name="header">
 							<h:outputText value="Nome" />
 						</f:facet>
-							<p:commandLink value="Vizualizar" action="#{perfilMB.show}">
+							<p:commandLink value="Vizualizar" action="#{perfilMB.show}" styleClass="btn">
+								<f:setPropertyActionListener value="#{item}"
+									target="#{perfilMB.perfil}" />
+							</p:commandLink>
+					</p:column>
+
+					<p:column >
+							<p:commandLink value="Editar" action="#{perfilMB.edit}" styleClass="btn">
 								<f:setPropertyActionListener value="#{item}"
 									target="#{perfilMB.perfil}" />
 							</p:commandLink>
 					</p:column>
 
 					<p:column>
-							<p:commandLink value="Editar" action="#{perfilMB.edit}">
-								<f:setPropertyActionListener value="#{item}"
-									target="#{perfilMB.perfil}" />
-							</p:commandLink>
-					</p:column>
-
-					<p:column>
-							<p:commandLink value="Excluir"
-								actionListener="#{perfilMB.delete}">
+							<p:commandLink value="Excluir" actionListener="#{perfilMB.delete}" styleClass="btn">
 								<f:attribute name="perfil" value="#{item}" />
 							</p:commandLink>
 					</p:column>
@@ -64,8 +73,8 @@
 			</h:form>
 
 			<h:form>
-				<p:commandLink value="Novo perfil" action="#{perfilMB.novo}"
-					styleClass="btn" />
+				<h:commandLink value="Novo perfil" action="#{perfilMB.novo}"
+					styleClass="btn btn-success" />
 			</h:form>
 
 		</ui:define>

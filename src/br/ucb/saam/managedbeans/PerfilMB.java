@@ -19,6 +19,7 @@ public class PerfilMB implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+	private String resultado;
 	private PerfilBean perfil;
 	private PerfilDAO perfilDAO;
 	private List<PerfilBean> perfis;
@@ -68,6 +69,12 @@ public class PerfilMB implements Serializable{
 		this.perfis = perfilDAO.findAll(PerfilBean.class);
 	}
 	
+	public String buscaPorNome(){
+		
+		this.perfis = (List<PerfilBean>) perfilDAO.buscarPorNome(PerfilBean.class, resultado);
+		return "/perfil/index";
+	}
+	
 	
 	public PerfilBean getPerfil() {
 		return perfil;
@@ -100,6 +107,14 @@ public class PerfilMB implements Serializable{
 
 	public void setPerfis(List<PerfilBean> perfis) {
 		this.perfis = perfis;
+	}
+
+	public String getResultado() {
+		return resultado;
+	}
+
+	public void setResultado(String resultado) {
+		this.resultado = resultado;
 	}
 	
 }
