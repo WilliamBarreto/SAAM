@@ -19,7 +19,15 @@ public class PerfilMB implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private String resultado;
+	private List<PerfilBean> resultado;
+	public List<PerfilBean> getResultado() {
+		return resultado;
+	}
+
+	public void setResultado(List<PerfilBean> resultado) {
+		this.resultado = resultado;
+	}
+
 	private PerfilBean perfil;
 	private PerfilDAO perfilDAO;
 	private List<PerfilBean> perfis;
@@ -32,11 +40,13 @@ public class PerfilMB implements Serializable{
 		setPerfis(perfilDAO.findAll(PerfilBean.class));
 		setFuncionalidades(new ArrayList<FuncionalidadeBean>());
 		setFuncionalidadeDAO(new FuncionalidadeDAO());
+		setResultado(perfis);
 	}
 	
 	public String index(){
-		this.perfis = perfilDAO.findAll(PerfilBean.class);		
-		return "/perfil/index";
+		this.perfis = perfilDAO.findAll(PerfilBean.class);
+		resultado = perfis;
+		return "/perfil/index?faces-redirect=true";
 	}
 	
 	public String show() {		
@@ -59,7 +69,7 @@ public class PerfilMB implements Serializable{
 	public String edit(){
 		
 		funcionalidades = funcionalidadeDAO.findAll(FuncionalidadeBean.class);
-		return "new";
+		return "new?faces-redirect=true";
 	}
 	
 	public void delete(ActionEvent evento){
@@ -67,12 +77,7 @@ public class PerfilMB implements Serializable{
 		this.perfil = (PerfilBean) evento.getComponent().getAttributes().get("perfil");
 		perfilDAO.delete(perfil);
 		this.perfis = perfilDAO.findAll(PerfilBean.class);
-	}
-	
-	public String buscaPorNome(){
-		
-		this.perfis = (List<PerfilBean>) perfilDAO.buscarPorNome(PerfilBean.class, resultado);
-		return "/perfil/index";
+		resultado = perfis;
 	}
 	
 	
@@ -109,12 +114,5 @@ public class PerfilMB implements Serializable{
 		this.perfis = perfis;
 	}
 
-	public String getResultado() {
-		return resultado;
-	}
-
-	public void setResultado(String resultado) {
-		this.resultado = resultado;
-	}
 	
 }
