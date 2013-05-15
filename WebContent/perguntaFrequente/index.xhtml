@@ -4,68 +4,72 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:body>
 	<ui:composition template="/template/common/layout.xhtml">
 		<ui:param name="title" value="Lista de Voluntarios" />
 		<ui:define name="content">
-			<h:dataTable value="#{perguntaFrequenteMB.perguntasFrequentes}"
-				var="item" styleClass="table">
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Data" />
-					</f:facet>
-					<h:outputText value="#{item.data}">
-						<f:convertDateTime pattern="d/M/yyyy" />
-					</h:outputText>
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Pergunta" />
-					</f:facet>
-					<h:outputText value="#{item.pergunta}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Area" />
-					</f:facet>
-					<h:outputText value="#{item.area.nome}" />
-				</h:column>
-				<h:column>
-					<h:form>
-						<h:commandLink value="Vizualizar"
+
+			<h:form>
+				<p:dataTable value="#{perguntaFrequenteMB.perguntasFrequentes}"
+					var="item" paginatorPosition="bottom" paginator="true" rows="10"
+					paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink} "
+					widgetVar="teste" emptyMessage="Nenhum perfil foi encontrado."
+					filteredValue="#{perguntaFrequenteMB.resultados}">>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Data" />
+						</f:facet>
+						<h:outputText value="#{item.data}">
+							<f:convertDateTime pattern="d/M/yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column id="nomeColumn" filterBy="#{item.pergunta}"
+						headerText="Perfil" styleClass="esquerda"
+						filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="Pergunta" />
+						</f:facet>
+						<h:outputText value="#{item.pergunta}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Area" />
+						</f:facet>
+						<h:outputText value="#{item.area.nome}" />
+					</p:column>
+					<p:column>
+						<p:commandLink value="Vizualizar"
 							action="#{perguntaFrequenteMB.show}" styleClass="btn">
 							<f:setPropertyActionListener value="#{item}"
 								target="#{perguntaFrequenteMB.perguntaFrequente}" />
-						</h:commandLink>
-					</h:form>
-				</h:column>
-				<h:column>
-					<h:form>
-						<h:commandLink value="Editar" action="#{perguntaFrequenteMB.edit}"
+						</p:commandLink>
+					</p:column>
+					<p:column>
+						<p:commandLink value="Editar" action="#{perguntaFrequenteMB.edit}"
 							styleClass="btn">
 							<f:setPropertyActionListener value="#{item}"
 								target="#{perguntaFrequenteMB.perguntaFrequente}" />
-						</h:commandLink>
-					</h:form>
-				</h:column>
-				<h:column>
-					<h:form>
+						</p:commandLink>
+					</p:column>
+					<p:column>
 						<h:commandLink value="Excluir"
 							actionListener="#{perguntaFrequenteMB.delete}" styleClass="btn">
 							<f:attribute name="perguntaFrequente" value="#{item}" />
 						</h:commandLink>
 						<br />
-					</h:form>
-				</h:column>
+					</p:column>
+				</p:dataTable>
+			</h:form>
 
-			</h:dataTable>
 			<h:form>
 				<h:commandLink value="Novo" class="btn btn-success"
 					action="#{perguntaFrequenteMB.novo}" />
 			</h:form>
 		</ui:define>
-	</ui:composition> 
+	</ui:composition>
 </h:body>
 </html>

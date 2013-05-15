@@ -82,6 +82,8 @@ public abstract class GenericDAO<T> {
 		}
 		return object;
 	}
+	
+	@SuppressWarnings("unchecked")
 	public List<T> buscarPorNome(Class<T> classe, String nome){
 		ArrayList<T>  lista = new ArrayList<T>();
 		try {

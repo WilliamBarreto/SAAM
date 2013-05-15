@@ -11,32 +11,31 @@
 		<ui:param name="title" value="Incluir Novo Perfil " />
 
 		<ui:define name="content">
-			<h:form>
+			<h:form id="formulario">
 				<p:panelGrid columns="2">
 					<f:facet name="header">  
        						Novo Perfil
     				</f:facet>
 
 					<h:outputLabel for="nome" value="Nome: *" />
-					<p:inputText id="nome" value="#{perfilMB.perfil.nome}" label="nome" />
+					<p:inputText id="nome" value="#{perfilMB.perfil.nome}" label="nome" required="true" />
 
-					<h:outputText value="Funcionalidades: " />
-					<p:selectManyCheckbox value="#{perfilMB.perfil.funcionalidades}"
-						layout="pageDirection" styleClass="checkbox">
+					<h:outputLabel for="funcionalidades" value="Funcionalidades: " />
+					
+					<p:selectManyCheckbox id="funcionalidades" value="#{perfilMB.perfil.funcionalidades}"
+						layout="pageDirection" styleClass="checkbox" required="true">
 						<f:attribute name="collectionType" value="java.util.ArrayList" />
 						<f:selectItems value="#{perfilMB.funcionalidades}"
 							var="funcionalidade" itemLabel="#{funcionalidade.nomeTecnico}" />
 						<f:converter converterId="funcionalidadeConverter" />
 					</p:selectManyCheckbox>
 				</p:panelGrid>
-				
-				<br />
-				<h:commandButton value="Salvar" action="#{perfilMB.criar}"
-					styleClass="btn btn-success" />
-							&nbsp;
-						<h:commandButton value="Voltar" action="#{perfilMB.index}"
+			<h:commandButton value="Salvar" action="#{perfilMB.criar}"
+				styleClass="btn btn-success" />
+			</h:form>
+			<h:form>
+			<h:commandButton value="Voltar" action="#{perfilMB.index}"
 					styleClass="btn btn-danger" />
-
 			</h:form>
 
 		</ui:define>

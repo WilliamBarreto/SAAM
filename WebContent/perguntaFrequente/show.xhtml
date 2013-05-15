@@ -4,33 +4,35 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
-<h:head>
-	<title>Dados Pergunta Frequente</title>
-</h:head>
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 <h:body>
 	<ui:composition template="/template/common/layout.xhtml">
-		<ui:param name="title" value="Lista de Voluntarios" />
+		<ui:param name="title" value="Dados Perguntas Frequentes" />
 		<ui:define name="content">
+
+<p:panelGrid columns="2">
+		
+		Pergunta:
+		<h:outputText value="#{perguntaFrequenteMB.perguntaFrequente.pergunta}" />
+		
+		Resposta:
+		<h:outputText value="#{perguntaFrequenteMB.perguntaFrequente.resposta}" />
+		
+		Area da pergunta:
+		<h:outputText value="#{perguntaFrequenteMB.perguntaFrequente.area.nome}" />
+		
+		Data:
+		<h:outputText value="#{perguntaFrequenteMB.perguntaFrequente.data}">
+						<f:convertDateTime pattern="d/M/yyyy" />
+	    </h:outputText>
+
+</p:panelGrid>
 	
-	Pergunta:
-	<h:outputText value="#{perguntaFrequenteMB.perguntaFrequente.pergunta}" />
-			<br />
-	Resposta:
-	<h:outputText value="#{perguntaFrequenteMB.perguntaFrequente.resposta}" />
-			<br />
-	Area da pergunta:
-	<h:outputText
-				value="#{perguntaFrequenteMB.perguntaFrequente.area.nome}" />
-			<br />
-	Data:
-	<h:outputText value="#{perguntaFrequenteMB.perguntaFrequente.data}">
-				<f:convertDateTime pattern="d/M/yyyy" />
-			</h:outputText>
-			
-			<h:form>
-				<h:commandLink  class="btn" value="Voltar" action="#{perguntaFrequenteMB.index}" />
-			</h:form>
+	<h:form>
+		<h:commandLink class="btn" value="Voltar" action="#{perguntaFrequenteMB.index}" />
+	</h:form>
+
 
 		</ui:define>
 	</ui:composition>

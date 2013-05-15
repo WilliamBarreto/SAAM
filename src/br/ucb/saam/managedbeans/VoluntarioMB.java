@@ -38,13 +38,14 @@ public class VoluntarioMB implements Serializable{
 		setVoluntario(new VoluntarioBean());
 		setAreas(new AreaDAO().findAll(AreaBean.class));
 		setVoluntarioDAO(new VoluntarioDAO());
-		setVoluntarios(voluntarioDAO.findAll(VoluntarioBean.class));
+		setVoluntarios(voluntarioDAO.buscaInativos());
 	}
 
 	
 	// Methods	
 	public String cadastrar(){
 		new EnderecoDAO().saveOrUpdate(voluntario.getEndereco());
+		voluntario.setSituacao(false);
 		voluntarioDAO.saveOrUpdate(voluntario);
 		enviaEmail(voluntario.getEmail(),"Cadastro"," Usuario,\n Estamos testando o envio de e-mail da aplica��o saam.\n \nAtenciosamente,\n \n Equipe SAAM.");
 		voluntario = new VoluntarioBean();
@@ -52,12 +53,11 @@ public class VoluntarioMB implements Serializable{
 	}
 	
 	public String index(){
-		this.voluntarios = voluntarioDAO.findAll(VoluntarioBean.class);
+		this.voluntarios = voluntarioDAO.buscaInativos();
 		return "voluntario/index";
 	}
 	
 	public String show(){
-		
 		return "show";
 	}
 	
@@ -96,7 +96,7 @@ public class VoluntarioMB implements Serializable{
 		voluntario.setSituacao(true);
 		voluntarioDAO.saveOrUpdate(voluntario);
 		
-		enviaEmail(voluntario.getEmail(), "Cadastro Aprovado", "Seu cadastro foi aprovado!");
+		enviaEmail(voluntario.getEmail(),"Cadastro Aprovado", "Seu cadastro foi aprovado!");
 		return index();
 	}
 	

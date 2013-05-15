@@ -20,14 +20,6 @@ public class PerfilMB implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private List<PerfilBean> resultado;
-	public List<PerfilBean> getResultado() {
-		return resultado;
-	}
-
-	public void setResultado(List<PerfilBean> resultado) {
-		this.resultado = resultado;
-	}
-
 	private PerfilBean perfil;
 	private PerfilDAO perfilDAO;
 	private List<PerfilBean> perfis;
@@ -113,6 +105,14 @@ public class PerfilMB implements Serializable{
 	public void setPerfis(List<PerfilBean> perfis) {
 		this.perfis = perfis;
 	}
+	public List<PerfilBean> getResultado() {
+		return resultado;
+	}
+
+	public void setResultado(List<PerfilBean> resultado) {
+		this.resultado = resultado;
+	}
+
 
 	
 }
