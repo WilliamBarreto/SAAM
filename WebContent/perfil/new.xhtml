@@ -6,38 +6,36 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-
-<h:head>
-	<title>Criar Perfil</title>
-	
-	<style>
-		table{
-			width: 200px;
-		}
-	</style>
-	
-</h:head>
-
 <h:body>
 	<ui:composition template="/template/common/layout.xhtml">
 		<ui:param name="title" value="Incluir Novo Perfil " />
 
 		<ui:define name="content">
-			<h:form>
-				<h:panelGrid>
+			<h:form id="formulario">
+				<p:panelGrid columns="2">
+					<f:facet name="header">  
+       						Novo Perfil
+    				</f:facet>
 
-					<h:outputText value="Nome" />
-					<p:inputText value="#{perfilMB.perfil.nome}" required="true" />
+					<h:outputLabel for="nome" value="Nome: *" />
+					<p:inputText id="nome" value="#{perfilMB.perfil.nome}" label="nome" required="true" />
 
-				</h:panelGrid>
-			
-				<h:selectManyCheckbox value="#{perfilMB.perfil.funcionalidades}" layout="pageDirection" styleClass="checkbox">
-					<f:attribute name="collectionType" value="java.util.ArrayList" />
-					<f:selectItems value="#{perfilMB.funcionalidades}" var="funcionalidade" itemLabel="#{funcionalidade.nomeTecnico}" />
-					<f:converter converterId="funcionalidadeConverter" />
-				</h:selectManyCheckbox>
+					<h:outputLabel for="funcionalidades" value="Funcionalidades: " />
 					
-				<h:commandButton value="Salvar" action="#{perfilMB.criar}" />
+					<p:selectManyCheckbox id="funcionalidades" value="#{perfilMB.perfil.funcionalidades}"
+						layout="pageDirection" styleClass="checkbox" required="true">
+						<f:attribute name="collectionType" value="java.util.ArrayList" />
+						<f:selectItems value="#{perfilMB.funcionalidades}"
+							var="funcionalidade" itemLabel="#{funcionalidade.nomeTecnico}" />
+						<f:converter converterId="funcionalidadeConverter" />
+					</p:selectManyCheckbox>
+				</p:panelGrid>
+			<h:commandButton value="Salvar" action="#{perfilMB.criar}"
+				styleClass="btn btn-success" />
+			</h:form>
+			<h:form>
+			<h:commandButton value="Voltar" action="#{perfilMB.index}"
+					styleClass="btn btn-danger" />
 			</h:form>
 
 		</ui:define>

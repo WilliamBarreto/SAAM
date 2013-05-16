@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 	<title>Criar Pergunta Frequente</title>
@@ -15,39 +16,40 @@
 	<ui:composition template="/template/common/layout.xhtml">
 		<ui:param name="title" value="Nova Pergunta" />
 		<ui:define name="content">
-			<h:form>
+
+			<h:form id="formulario">
 				<h:panelGrid>
-					<h:outputText value="Pergunta" />
-					<h:inputTextarea
-						value="#{perguntaFrequenteMB.perguntaFrequente.pergunta}" />
 
-					<h:outputText value="Resposta" />
-					<h:inputText
-						value="#{perguntaFrequenteMB.perguntaFrequente.resposta}" />
+					<h:outputLabel for="pergunta" value="Pergunta: " />
+					<p:inputTextarea id="pergunta" required="true"
+						value="#{perguntaFrequenteMB.perguntaFrequente.pergunta}" rows="5"
+						cols="30" counter="counter1" maxlength="100"
+						counterTemplate="{0} characters remaining." autoResize="false" />
+						<h:outputText id="counter1" />
 
-					<h:outputText value="Area da pergunta" />
-					<h:selectOneMenu
+
+					<h:outputLabel for="resposta" value="Resposta: " />
+					<p:inputTextarea id="resposta" required="true"
+						value="#{perguntaFrequenteMB.perguntaFrequente.resposta}" rows="5"
+						cols="30" counter="counter2" maxlength="100"
+						counterTemplate="{0} characters remaining." autoResize="false" />
+						<h:outputLabel for="resposta" id="counter2" />
+
+					<h:outputLabel for="area" value="Area da pergunta: " />
+					<h:selectOneMenu id="area" required="true"
 						value="#{perguntaFrequenteMB.perguntaFrequente.area}">
 						<f:selectItems value="#{perguntaFrequenteMB.areas}" var="area"
 							itemLabel="#{area.nome}" />
 					</h:selectOneMenu>
-
-					<h:outputText value="Data" />
-					<h:inputText value="#{perguntaFrequenteMB.perguntaFrequente.data}">
-						<f:convertDateTime pattern="d/M/yyyy" />
-					</h:inputText>
-
 				</h:panelGrid>
 
 				<h:commandButton class="btn btn-success" value="Gravar"
 					action="#{perguntaFrequenteMB.criar}" />
-				&nbsp;
-				&nbsp;
-				<h:commandButton class="btn" value="Voltar" action="#{perguntaFrequenteMB.index}" />
 
 			</h:form>
 			<h:form>
-				
+				<h:commandButton class="btn" value="Voltar"
+					action="#{perguntaFrequenteMB.index}" />
 			</h:form>
 		</ui:define>
 	</ui:composition>

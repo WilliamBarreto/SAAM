@@ -4,35 +4,35 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
-
-<h:head>
-	<title>Perfil</title>
-</h:head>
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:body>
+	<ui:composition template="/template/common/layout.xhtml">
+		<ui:param name="title" value="Perfil" />
+		<ui:define name="content">
+		
 	
-	Perfil:
+	<h:outputText value="Nome do perfil: "/>
 	<h:outputText value="#{perfilMB.perfil.nome}"/>
-	<br />
+
+	<p:separator/>
 	
-	Funcionalidades:
+	<p:panelGrid columns="2">
+	<h:outputText value="Funcionalidades: "/>
 	<h:dataTable value="#{perfilMB.funcionalidades}" var="item">
 			<h:column>
-				<f:facet name="header">
-					<h:outputText value="Nome"/>
-				</f:facet>
 				<h:outputText value="#{item.nomeTecnico}"/>
 			</h:column>
 	</h:dataTable>
+	</p:panelGrid>
+	<p:separator/>
 	
 	<h:form>
-		<h:commandLink value="Editar" action="#"/>
-		
-		<h:commandLink value="Voltar" action="#"/>
+		<h:commandButton value="Voltar" action="#{perfilMB.index}" />
 	</h:form>
-	
-
+	</ui:define>
+	</ui:composition>
 </h:body>
 
 </html>

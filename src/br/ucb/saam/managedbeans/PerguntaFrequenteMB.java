@@ -2,6 +2,7 @@ package br.ucb.saam.managedbeans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -19,6 +20,7 @@ public class PerguntaFrequenteMB implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
+	private List<PerguntaFrequenteBean> resultados;
 	private PerguntaFrequenteBean perguntaFrequente;
 	private List<PerguntaFrequenteBean> perguntasFrequentes;
 	private PerguntaFrequenteDAO perguntaFrequenteDAO;
@@ -31,24 +33,24 @@ public class PerguntaFrequenteMB implements Serializable{
 		setPerguntasFrequentes(perguntaFrequenteDAO.findAll(PerguntaFrequenteBean.class));
 		setAreas(new ArrayList<AreaBean>());
 		setAreaDAO(new AreaDAO());
+		setResultados(perguntasFrequentes);
 	}
 	
-	public List<PerguntaFrequenteBean> getListaPerguntasFrequentes(){
-		return this.perguntasFrequentes = this.perguntaFrequenteDAO.findAll(PerguntaFrequenteBean.class);
-	}
 	
 	public String index(){
-		perguntaFrequente = new PerguntaFrequenteBean();
 		getListaPerguntasFrequentes();
+		resultados = perguntasFrequentes;
 		return "/perguntaFrequente/index";
 	}
 	
 	public String novo(){
+		this.perguntaFrequente = new PerguntaFrequenteBean();
 		areas = areaDAO.findAll(AreaBean.class);		
 		return "new";
 	}
 	
 	public String criar(){
+		perguntaFrequente.setData(new Date(System.currentTimeMillis()));
 		perguntaFrequenteDAO.saveOrUpdate(perguntaFrequente);		
 		perguntaFrequente = new PerguntaFrequenteBean();		
 		return index();
@@ -67,6 +69,7 @@ public class PerguntaFrequenteMB implements Serializable{
 		perguntaFrequente = (PerguntaFrequenteBean) evento.getComponent().getAttributes().get("perguntaFrequente");
 		perguntaFrequenteDAO.delete(perguntaFrequente);
 		getListaPerguntasFrequentes();
+		resultados = perguntasFrequentes;
 	}
 	
 	
@@ -84,6 +87,10 @@ public class PerguntaFrequenteMB implements Serializable{
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	
+	public List<PerguntaFrequenteBean> getListaPerguntasFrequentes(){
+		return this.perguntasFrequentes = this.perguntaFrequenteDAO.findAll(PerguntaFrequenteBean.class);
 	}
 
 
@@ -107,6 +114,14 @@ public class PerguntaFrequenteMB implements Serializable{
 	}
 	public void setAreaDAO(AreaDAO areaDAO) {
 		this.areaDAO = areaDAO;
+	}
+
+	public List<PerguntaFrequenteBean> getResultados() {
+		return resultados;
+	}
+
+	public void setResultados(List<PerguntaFrequenteBean> resultados) {
+		this.resultados = resultados;
 	}
 	
 }

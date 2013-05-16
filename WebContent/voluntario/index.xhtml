@@ -4,72 +4,69 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 <h:body>
-<ui:composition template="/template/common/layout.xhtml">
-	<ui:param name="title" value="Lista de Voluntarios" />
- 	<ui:define name="content">
-	
-	<h:dataTable value="#{voluntarioMB.voluntarios}" var="item" styleClass="table">
-		<h:column>
-			<f:facet name="header">
-				<h:outputText value="Nome" />
-			</f:facet>
-			<h:outputText value="#{item.nome}" />
-		</h:column>
-		<h:column>
-			<f:facet name="header">
-				<h:outputText value="E-mail" />
-			</f:facet>
-			<h:outputText value="#{item.email}" />
-		</h:column>
-		<h:column>
-			<f:facet name="header">
-				<h:outputText value="Telefone Residencial" />
-			</f:facet>
-			<h:outputText value="#{item.telefoneResidencial}" />
-		</h:column>
-		<h:column>
-			<f:facet name="header">
-				<h:outputText value="Sexo" />
-			</f:facet>
-			<h:outputText value="#{item.sexo}" />
-		</h:column>
-		<h:column>
-			<f:facet name="header">
-				<h:outputText value="Area de atendimento" />
-			</f:facet>
-			<h:outputText value="#{item.area.nome}" />
-		</h:column>
-		<h:column>
-			<h:form>
-				<h:commandLink value="Vizualizar" action="#{voluntarioMB.show}" styleClass="btn">
-					<f:setPropertyActionListener value="#{item}"
-						target="#{voluntarioMB.voluntario}" />
-				</h:commandLink>
+	<ui:composition template="/template/common/layout.xhtml">
+		<ui:param name="title" value="Lista de Voluntarios" />
+		<ui:define name="content">
+		<h:form>
+			<p:dataTable value="#{voluntarioMB.voluntarios}" var="item">
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Nome" />
+					</f:facet>
+					<h:outputText value="#{item.nome}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="E-mail" />
+					</f:facet>
+					<h:outputText value="#{item.email}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Telefone Residencial" />
+					</f:facet>
+					<h:outputText value="#{item.telefoneResidencial}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Sexo" />
+					</f:facet>
+					<h:outputText value="#{item.sexo}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Area de atendimento" />
+					</f:facet>
+					<h:outputText value="#{item.area.nome}" />
+				</p:column>
+				<p:column>
+					<h:commandLink value="Vizualizar" action="#{voluntarioMB.show}"
+						styleClass="btn">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{voluntarioMB.voluntario}" />
+					</h:commandLink>
+				</p:column>
+				<p:column>
+					<h:commandLink value="Aprovar" action="#{voluntarioMB.aprovar}"
+						styleClass="btn">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{voluntarioMB.voluntario}" />
+					</h:commandLink>
+				</p:column>
+				<p:column>
+					<h:commandLink value="Reprovar" action="#{voluntarioMB.reprovar}"
+						styleClass="btn">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{voluntarioMB.voluntario}" />
+					</h:commandLink>
+				</p:column>
+			</p:dataTable>
 			</h:form>
-		</h:column>
-		<h:column>
-			<h:form>
-				<h:commandLink value="Aprovar" action="#{voluntarioMB.aprovar}" styleClass="btn">
-					<f:setPropertyActionListener value="#{item}"
-						target="#{voluntarioMB.voluntario}" />
-				</h:commandLink>
-			</h:form>
-		</h:column>
-		<h:column>
-			<h:form>
-				<h:commandLink value="Reprovar"
-					actionListener="#{voluntarioMB.reprovar}" styleClass="btn">
-					<f:attribute name="voluntario" value="#{item}" />
-				</h:commandLink>
-				<br />
-			</h:form>
-		</h:column>
-
-	</h:dataTable>
- </ui:define>
-</ui:composition>
+		</ui:define>
+	</ui:composition>
 
 </h:body>
 

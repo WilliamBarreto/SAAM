@@ -2,14 +2,15 @@ package br.ucb.saam.beans;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-/** Classe para objetos do tipo Voluntário, onde serão contidos, valores e métodos para o mesmo.
- *  Representa os Voluntários(Atendentes) da aplicação.
+/** Classe para objetos do tipo Voluntï¿½rio, onde serï¿½o contidos, valores e mï¿½todos para o mesmo.
+ *  Representa os Voluntï¿½rios(Atendentes) da aplicaï¿½ï¿½o.
  *  
  * @author William Barreto
  * @version 1.0
@@ -22,7 +23,9 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name="COD_VOLUNTARIO")
 public class VoluntarioBean extends PessoaBean implements Serializable{
 	private static final long serialVersionUID = 1L;
-
+	
+	@Column(name="SITUACAO")
+	private Boolean situacao;
 	
 	@ManyToOne
 	@JoinColumn(name="COD_AREA")
@@ -43,6 +46,16 @@ public class VoluntarioBean extends PessoaBean implements Serializable{
 	}
 	public void setArea(AreaBean area) {
 		this.area = area;
+	}
+
+
+	public Boolean getSituacao() {
+		return situacao;
+	}
+
+
+	public void setSituacao(Boolean situacao) {
+		this.situacao = situacao;
 	}
 	
 

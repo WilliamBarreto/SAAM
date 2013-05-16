@@ -6,6 +6,8 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 
 import br.ucb.saam.factory.ConnectionFactory;
 
@@ -79,5 +81,18 @@ public abstract class GenericDAO<T> {
 			this.session.close();
 		}
 		return object;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<T> buscarPorNome(Class<T> classe, String nome){
+		ArrayList<T>  lista = new ArrayList<T>();
+		try {
+			this.session = ConnectionFactory.getSession();
+			lista = (ArrayList<T>) session.createCriteria(classe).add(Restrictions.like("nome", nome, MatchMode.ANYWHERE)
+                    ).list();
+		}finally{
+			this.session.close();
+		}
+		return lista;
 	}
 }
