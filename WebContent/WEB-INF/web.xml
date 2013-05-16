@@ -5,6 +5,7 @@
 	id="WebApp_ID" version="3.0">
 	<display-name>SAAM</display-name>
 	<welcome-file-list>
+		<welcome-file>principal.xhtml</welcome-file>
 		<welcome-file>index.xhtml</welcome-file>
 	</welcome-file-list>
 	<servlet>
@@ -84,13 +85,28 @@
 		<url-pattern>/perfil/*</url-pattern>
 		<url-pattern>/voluntario/*</url-pattern>
 		<url-pattern>/usuario/*</url-pattern>
+		<url-pattern>/home/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
 		<dispatcher>ERROR</dispatcher>
 	</filter-mapping>
 	
+	<!-- Páginas de Erro -->
 	
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/erro/exception.xhtml</location>
+	</error-page>
 	
+	<error-page>
+		<error-code>404</error-code>
+		<location>/erro/404.xhtml</location>
+	</error-page>
+	
+	<error-page>
+		<exception-type>com.sun.faces.context.FacesFileNotFoundException</exception-type>
+		<location>/erro/404.xhtml</location>
+	</error-page>	
 	
 </web-app>

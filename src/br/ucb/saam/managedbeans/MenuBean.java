@@ -46,7 +46,7 @@ public class MenuBean {
 
 		item = new MenuItem();  
 		item.setValue("Sair");  
-		item.setUrl("logout.xhtml");	
+		item.setUrl("/logout.xhtml");	
 		item.setIcon("ui-icon ui-icon-power");
 		submenu.getChildren().add(item);
 		model.addSubmenu(submenu);  

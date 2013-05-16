@@ -11,6 +11,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sun.faces.context.FacesFileNotFoundException;
+
 public class AuthFilter implements Filter{
 
 
@@ -21,13 +23,13 @@ public class AuthFilter implements Filter{
 		HttpServletResponse rp = (HttpServletResponse) response;
 		boolean auth = rq.getSession().getAttribute("usuario") != null;
 		
-		if(!auth && !rq.getRequestURI().toString().contains("index.xhtml")){
-			rp.sendRedirect(rq.getContextPath()+"/index.xhtml");
+		if(!auth && !rq.getRequestURI().toString().contains("principal.xhtml")){
+			rp.sendRedirect(rq.getContextPath()+"/principal.xhtml");
 		}else{
 			try{
 				chain.doFilter(request, response);
 			}catch(Exception e){
-				e.printStackTrace();
+				System.out.print(e);
 			}
 			
 		}

@@ -1,5 +1,6 @@
 package br.ucb.saam.managedbeans;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,12 +84,12 @@ public class UsuarioMB {
 				//Redireciona para Home(Menu de Funcionalidades)
 			
 				this.usuario = new UsuarioBean();
-				return "home";
+				return "/home/home";
 			}
 		}
 		//Caso não encontre envia uma mensagem informando o problema		
 		JSFMensageiro.info("Usuário ou Senha Incorreta");
-		return "index";
+		return "principal";
 	}
 	
 	/**
@@ -104,10 +105,9 @@ public class UsuarioMB {
 		}
 	}
 	
-	
-	public String logout(){
-		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("usuario");
-		return "index";
+	public String logout() throws IOException{
+			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("usuario");
+		return "principal";
 	}
 	public String relembraSenha(){
 		return "relembraSenha";
