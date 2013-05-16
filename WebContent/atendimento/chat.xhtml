@@ -9,6 +9,7 @@
 
 <ui:composition template="/template/common/layout.xhtml">
 	<ui:param name="title" value="Solicitar Atendimento" />
+	<ui:define name="menu"></ui:define>
 	<ui:define name="content">
 
 		<style> 
@@ -59,9 +60,14 @@
 	
 		function handleMessage(data) {
 			var chatContent = $(PrimeFaces.escapeClientId('formchat:public'));
-			chatContent.append(data + '<br />');			
-			//alert(data)
-
+			chatContent.append(data + '<br />');
+			dataFim = 'Atendimento Finalizado';
+			if(dataFim.localeCompare(data)== 0){
+				location.href='avaliacao.xhtml?id=7';
+			}
+				
+			
+			
 			//keep scroll
 			chatContent.scrollTop(chatContent.height());
 

@@ -53,8 +53,11 @@ public class AtendimentoBean implements Serializable{
 	@JoinColumn(name="COD_AREA")	
 	private AreaBean area;
 	
-	@Column(name="DATA")
-	private Date data;
+	@Column(name="DATA_INICIO")
+	private Date dataInicio;
+	
+	@Column(name="DATA_FIM")
+	private Date dataFim;
 	
 	@ManyToMany()
 	@JoinTable(name="aten_mens", joinColumns=@JoinColumn(name="COD_ATENDIMENTO"),
@@ -108,12 +111,21 @@ public class AtendimentoBean implements Serializable{
 	public void setArea(AreaBean area) {
 		this.area = area;
 	}
-	
-	public Date getData() {
-		return data;
+
+	public Date getDataInicio() {
+		return dataInicio;
 	}
-	public void setData(Date data) {
-		this.data = data;
+
+	public void setDataInicio(Date dataInicio) {
+		this.dataInicio = dataInicio;
+	}
+
+	public Date getDataFim() {
+		return dataFim;
+	}
+
+	public void setDataFim(Date dataFim) {
+		this.dataFim = dataFim;
 	}
 
 	public List<MensagemBean> getMensagens() {

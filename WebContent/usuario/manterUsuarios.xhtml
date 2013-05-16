@@ -10,7 +10,7 @@
 	<title></title>
 </h:head>
 
-<h:body>
+<h:body> 
 	<h3>Lista de Usuários do Sistema</h3>
 	<p />
 	<h:form>
@@ -24,10 +24,10 @@
 			<h:column>
 				<h:graphicImage value="/img/editar.gif" title="Editar"/>
 			</h:column>
-			<h:column>
-				<h:commandLink action="#{usuarioMB.deletar(item)}">
+			<h:column> 
+				<!-- <h:commandLink actionListener="#{usuarioMB.deletar(item)}">
 					<h:graphicImage value="/img/excluir.png" title="Excluir"/>
-				</h:commandLink>
+				</h:commandLink> -->
 			</h:column>
 		</h:dataTable>
 		<p />

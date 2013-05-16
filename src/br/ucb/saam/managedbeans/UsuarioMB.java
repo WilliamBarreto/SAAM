@@ -9,8 +9,12 @@ import javax.faces.context.FacesContext;
 
 import org.apache.commons.mail.EmailException;
 
+import br.ucb.saam.beans.PerfilBean;
 import br.ucb.saam.beans.UsuarioBean;
 import br.ucb.saam.beans.VoluntarioBean;
+import br.ucb.saam.dao.EnderecoDAO;
+import br.ucb.saam.dao.PerfilDAO;
+import br.ucb.saam.dao.PessoaDAO;
 import br.ucb.saam.dao.UsuarioDAO;
 import br.ucb.saam.dao.VoluntarioDAO;
 import br.ucb.saam.util.EmailUtils;
@@ -27,8 +31,11 @@ public class UsuarioMB {
 
 	private UsuarioBean usuario;
 	private UsuarioDAO usuarioDAO;
+	private PessoaDAO pessoaDAO;
+	private EnderecoDAO enderecoDAO;
 	private List<UsuarioBean> usuarios;
 	private String email;
+	private PerfilDAO perfilDAO;
 
 
 	public UsuarioMB(){
@@ -36,6 +43,10 @@ public class UsuarioMB {
 		setUsuarioDAO(new UsuarioDAO());
 		setUsuarios(new ArrayList<UsuarioBean>());
 		setEmail(new String());
+		this.pessoaDAO = new PessoaDAO();
+		this.enderecoDAO = new EnderecoDAO();
+		this.perfilDAO = new PerfilDAO();
+		
 	}
 
 
@@ -139,7 +150,11 @@ public class UsuarioMB {
 
 
 	public String salvar(){
-		System.out.println("UAUUUUUUUUUUUUUUUUUUUUU");
+		
+		this.usuario.setPerfil((PerfilBean) perfilDAO.buscarPorId(PerfilBean.class, 1));
+		enderecoDAO.saveOrUpdate(this.usuario.getPessoa().getEndereco());
+		pessoaDAO.saveOrUpdate(this.usuario.getPessoa());
+		usuarioDAO.saveOrUpdate(this.usuario);
 	
 		return "";
 	}

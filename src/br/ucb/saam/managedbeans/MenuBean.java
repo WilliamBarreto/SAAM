@@ -27,11 +27,15 @@ public class MenuBean {
 		submenu.setLabel("Menu");
 
 		MenuItem item = new MenuItem();
-		for (FuncionalidadeBean funcionalidade : getUsuarioSessao().getPerfil().getFuncionalidades()) {
-			item = new MenuItem();
-			item.setValue(funcionalidade.getNomeTecnico());  
-			item.setUrl(funcionalidade.getUrl());
-			submenu.getChildren().add(item); 
+		try{
+			for (FuncionalidadeBean funcionalidade : getUsuarioSessao().getPerfil().getFuncionalidades()) {
+				item = new MenuItem();
+				item.setValue(funcionalidade.getNomeTecnico());  
+				item.setUrl(funcionalidade.getUrl());
+				submenu.getChildren().add(item); 
+			}
+		}catch(Exception e){
+			System.out.println("Usuario não autenticado!");
 		}
 
 		model.addSubmenu(submenu);  

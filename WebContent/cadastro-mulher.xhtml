@@ -12,30 +12,24 @@
 
 <h:body>
 	<h:form>
-		<h:panelGrid>
-			<h:outputText value="Nome"/>
-			<h:inputText value="#{voluntarioMB.voluntario.nome}"/>
-			
-			<h:outputText value="E-mail"/>			
-			<h:inputText value="#{voluntarioMB.voluntario.email}"/>
-						
-			<h:outputText value="Telefone"/>			
-			<h:inputText value="#{voluntarioMB.voluntario.telefone}"/>
-			
-			<h:outputText value="Sexo"/>
-			<h:selectOneMenu value="#{voluntarioMB.voluntario.sexo}">
-				<f:selectItem itemValue="M" itemLabel="Masculino"></f:selectItem>
-				<f:selectItem itemValue="F" itemLabel="Feminino"></f:selectItem>	
-			</h:selectOneMenu>
-			
-			<h:outputText value="Area de Atuação"/>
-			<h:selectOneMenu value="#{voluntarioMB.voluntario.area}">
-				<f:selectItems value="#{voluntarioMB.areas}" var="area" itemLabel="#{area.nome}"/>			
-			</h:selectOneMenu>
-						
-		</h:panelGrid>
+
+		<h:outputText value="Nome"/>
+		<h:inputText value="#{usuarioMB.usuario.pessoa.nome}"/>
 		
-		<h:commandButton value="Gravar" action="#{voluntarioMB.cadastrar}"/>
+		<h:outputText value="E-mail"/>
+		<h:inputText value="#{usuarioMB.usuario.pessoa.nome}"/>
+		
+		<h:outputText value="Nome"/>
+		<h:inputText value="#{usuarioMB.usuario.pessoa.endereco.logradouro}"/>
+		
+		<h:outputText value="Nome"/>
+		<h:inputText value="#{usuarioMB.usuario.nome}"/>
+		
+		<h:outputText value="Nome"/>
+		<h:inputText value="#{usuarioMB.usuario.senha}"/>		
+
+		
+		<h:commandButton value="Gravar" action="#{usuarioMB.salvar}"/>
 		
 	</h:form>
 </h:body>

@@ -9,11 +9,12 @@
 
 <ui:composition template="/template/common/layout.xhtml">
 	<ui:param name="title" value="Solicitar Atendimento" />
+	<ui:define name="menu"></ui:define>
 	<ui:define name="content">
 
 		<style> 
 				.messageInput {
-					width: 420px;
+					width: 600px;
 				}
 				
 				.publicColumn {
@@ -29,8 +30,8 @@
 				}
 				
 				.chatlogs {
-					height: 200px;
-					width: 500px;
+					height: 450px;
+					width: 800px;
 					overflow: auto;
 					padding: 0.5em 1em 0.5em 0.5em;
 				}
@@ -51,7 +52,7 @@
 				oncomplete="$('.messageInput').val('').focus()"/>
 			<p:spacer width="5" />
 		
-			<h:commandButton value="Encerrar Atendimento"/>
+			<h:commandButton value="Encerrar Atendimento" action="#{atendimentoMB.encerrarAtendimento}"/>
 		</h:form>
 
 		<h:outputText value="Canal : /#{sessionScope.usuario.id}"/>
