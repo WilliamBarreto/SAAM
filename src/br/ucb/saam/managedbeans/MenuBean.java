@@ -1,5 +1,7 @@
 package br.ucb.saam.managedbeans;
 
+import javax.el.ExpressionFactory;
+import javax.el.MethodExpression;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -20,6 +22,12 @@ public class MenuBean {
 	private MenuModel model;  
 
 	public MenuBean() {  
+		
+		String metodo;
+		FacesContext fc = FacesContext.getCurrentInstance();
+		ExpressionFactory ef = fc.getApplication().getExpressionFactory();
+		MethodExpression actionExpression;
+		
 		model = new DefaultMenuModel();  
 
 		//First submenu  
@@ -28,10 +36,16 @@ public class MenuBean {
 
 		MenuItem item = new MenuItem();
 		try{
+			
 			for (FuncionalidadeBean funcionalidade : getUsuarioSessao().getPerfil().getFuncionalidades()) {
+				metodo =  funcionalidade.getUrl();
+				actionExpression = ef.createMethodExpression(fc.getELContext(),metodo,String.class,new Class[0]);
+				
 				item = new MenuItem();
 				item.setValue(funcionalidade.getNomeTecnico());  
-				item.setUrl(funcionalidade.getUrl());				
+				item.setAjax(false);
+				item.setActionExpression(actionExpression);
+
 				submenu.getChildren().add(item); 
 			}
 		}catch(Exception e){
@@ -69,6 +83,11 @@ public class MenuBean {
 		return model;  
 	}     
 
+	public String vai(){
+		return "/atendimento/index";
+		
+	}
+	
 	public void save() {  
 		addMessage("Data saved");  
 	}  

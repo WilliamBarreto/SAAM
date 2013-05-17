@@ -348,7 +348,9 @@ public class AtendimentoMB implements Serializable{
 		return null;
 	}
 
-
+	public void menuDoido(){
+		System.out.println("Funfou putaiada!");
+	}
 	
 	public AreaBean getArea() {
 		return area;

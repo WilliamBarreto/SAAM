@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 
 import org.apache.commons.mail.EmailException;
 
@@ -23,7 +23,7 @@ import br.ucb.saam.util.EmailUtils;
 import br.ucb.saam.util.Mensagem;
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class VoluntarioMB implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -54,7 +54,7 @@ public class VoluntarioMB implements Serializable{
 	
 	public String index(){
 		this.voluntarios = voluntarioDAO.buscaInativos();
-		return "voluntario/index";
+		return "/voluntario/index";
 	}
 	
 	public String show(){
