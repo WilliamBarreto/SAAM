@@ -113,30 +113,31 @@ public class UsuarioMB {
 		return "relembraSenha";
 	}
 
-	public String procuraUsuario(){
+	public String relembrarSenha(){
 		
 		Mensagem mensagem = new Mensagem();
 		
 		getListUsuarios();
-		for (UsuarioBean user : usuarios) {	
+		for (UsuarioBean user : usuarios) {
+			System.out.println(user.getPessoa().getEmail());
 			if(email.equals(user.getPessoa().getEmail())){
 		
 				mensagem.setDestino(user.getPessoa().getEmail());
-				mensagem.setTitulo("Relembra Senha SAAM");
-				mensagem.setMensagem("Prezado Usuario,\n Suas Informações de acesso são \n\nUsuario:"+user.getNome()+"\nSenha:"+user.getSenha()+" \nAtenciosamente,\n \n Equipe SAAM.");
-				
+				mensagem.setTitulo("Credencias de Acesso - SAAM");
+				mensagem.setMensagem("Prezado(a) "+user.getPessoa().getNome()+",\n\nConforme solicitado seguem informações de acesso:\n\nUsuario: "+user.getNome()+"\nSenha: "+user.getSenha()+" \n\nAtenciosamente,\n\n Associação das Mulheres Empreendedoras.");
+								
 				try {
 					EmailUtils.enviaEmail(mensagem);
-					JSFMensageiro.info("Sua senha será enviada em instantes. Acesse seu e-mail para visualizar","Detalhada");
+					JSFMensageiro.info("Sua senha será enviada em instantes. Acesse seu e-mail para visualizar");
 					this.email = new String();
 				} catch (EmailException ex){
 					System.out.println("Erro! Ocorreu um erro ao enviar a mensagem"+ex);
 				}
 				
-				return "relembraUsuario";
+				return "relembraSenha";
 			}
 		}
-		JSFMensageiro.info("Sua senha será enviada em instantes. Acesse seu e-mail para visualizar","Detalhada");
+		JSFMensageiro.info("Sua senha será enviada em instantes. Acesse seu e-mail para visualizar");
 		this.email = new String();
 		return "relembraUsario";
 		
@@ -169,7 +170,10 @@ public class UsuarioMB {
 		this.usuario = new UsuarioBean();
 		return "formUsuario";
 	}
-
+	
+	public String principal(){
+		return "principal";
+	}
 
 
 
@@ -211,13 +215,6 @@ public class UsuarioMB {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-
-
-
-
-
-
 
 
 }

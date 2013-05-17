@@ -18,19 +18,25 @@
 
 
 			<p:messages id="messages" autoUpdate="true" closable="true"/>
-			
-			<h:form>
-				<h:panelGrid>
-				
-					<h:outputLabel value="E-mail" for="email"/>			
+			<h:panelGrid>
+				<h:form>
 					
-					<p:inputText id="email" value="#{usuarioMB.email}" size="30" maxlength="30" required="true" label="E-mail">
-						<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
-					</p:inputText>
-					<h:commandButton value="Enviar" action="#{usuarioMB.procuraUsuario}"/>				
+					
+						<h:outputLabel value="E-mail" for="email"/>			
+						
+						<p:inputText id="email" value="#{usuarioMB.email}" size="30" maxlength="30" required="true" label="E-mail">
+							<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+						</p:inputText>
+						&nbsp;
+						<h:commandButton styleClass="btn btn-small btn-success" value="Enviar" action="#{usuarioMB.relembrarSenha}"/> 
+			
 				
-				</h:panelGrid>
-			</h:form>
+				</h:form>
+				
+				<h:form>
+					<h:commandButton styleClass="btn btn-small"  value="Voltar" action="#{usuarioMB.principal}"/>
+				</h:form>
+			</h:panelGrid>
 					
 		</ui:define>
 </ui:composition>

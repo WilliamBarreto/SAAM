@@ -4,70 +4,103 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
-	<h:head>
-		<title>Cadastro de Voluntário</title>
-	</h:head>
 
-	<h:body>
-		<h:form>
-			<h:panelGrid>
-				<h:outputText value="Nome"/>
-				<h:inputText value="#{voluntarioMB.voluntario.nome}"/>
-				
-				<h:outputText value="E-mail"/>			
-				<h:inputText value="#{voluntarioMB.voluntario.email}"/>
-				
-				<h:outputText value="Sexo"/>
-				<h:selectOneMenu value="#{voluntarioMB.voluntario.sexo}">
-					<f:selectItem itemValue="M" itemLabel="Masculino"></f:selectItem>
-					<f:selectItem itemValue="F" itemLabel="Feminino"></f:selectItem>	
-				</h:selectOneMenu>
-				
-				<h:outputText value="Estado Civil"/>
-				<h:selectOneMenu value="#{voluntarioMB.voluntario.estadoCivil}">
-					<f:selectItem itemValue="Solteiro" itemLabel="Solteiro(a)"></f:selectItem>
-					<f:selectItem itemValue="Casado" itemLabel="Casado(a)"></f:selectItem>	
-				</h:selectOneMenu>
+	<ui:composition template="/template/common/layout.xhtml">
+ 		
 
-				<h:outputText value="Celular"/>			
-				<h:inputText value="#{voluntarioMB.voluntario.celular}"/>
+ 		<ui:define name="menu">
+ 		
+ 		</ui:define>
+		
+    	<ui:define name="content">
+		    <style>
+			    .ui-widget {  
+				          
+				    font-size: 13px !important;  
+				 }  
+				.ui-fieldset-legend{
+				    font-family: Verdana,Arial,sans-serif; 
+				    font-size: 90% !important;
+				    font-size: 13px;  
+				    width: 180px;
+				    height: 25px;
+				  }
+				 .ui-widget-content{
+				 	width: 400px;
+				 }
+				 
+	 			</style>
+			 <h:form id="formulario">
+			 	<p:messages id="msg" autoUpdate="true" closable="true"/>
+				<p:fieldset legend="Cadastro de Voluntário">
+					<h:panelGrid>
+						<p:outputLabel for="nome" value="Nome"/>
+						<p:inputText id="nome" required="true" value="#{voluntarioMB.voluntario.nome}"/>
+						
+						<p:outputLabel for="email" value="E-mail"/>			
+						<p:inputText id="email" required="true" value="#{voluntarioMB.voluntario.email}"/>
+						
+						<p:outputLabel for="Sexo" value="Sexo"/>
+						<p:selectOneMenu id="Sexo" required="true" value="#{voluntarioMB.voluntario.sexo}">
+							<f:selectItem itemLabel="Selecione" itemValue="" />
+							<f:selectItem itemValue="M" itemLabel="Masculino"></f:selectItem>
+							<f:selectItem itemValue="F" itemLabel="Feminino"></f:selectItem>	
+						</p:selectOneMenu>
+						
+						<p:outputLabel value="Estado Civil"/>
+						<p:selectOneMenu value="#{voluntarioMB.voluntario.estadoCivil}">
+							<f:selectItem itemLabel="Selecione" itemValue="" />
+							<f:selectItem itemValue="Solteiro" itemLabel="Solteiro(a)"></f:selectItem>
+							<f:selectItem itemValue="Casado" itemLabel="Casado(a)"></f:selectItem>	
+						</p:selectOneMenu>
+					
+					<p:outputLabel for="celular" value="Celular"/>			
+					<p:inputMask id="celular" required="true" value="#{voluntarioMB.voluntario.celular}" mask="(99) 9999-9999"/>
+					
+					<p:outputLabel for="telefoneResidencial" value="Telefone Residencial"/>			
+					<p:inputMask id="telefoneResidencial" required="true" value="#{voluntarioMB.voluntario.telefoneResidencial}" mask="(99) 9999 - 9999"/>
+					
+					<p:outputLabel value="Telefone Comercial"/>			
+					<p:inputMask value="#{voluntarioMB.voluntario.telefoneComercial}" mask="(99) 9999 - 9999"/>
+
 				
-				<h:outputText value="Telefone Residencial"/>			
-				<h:inputText value="#{voluntarioMB.voluntario.telefoneResidencial}"/>
+
+					<p:outputLabel for="area" value="Area de Atuação"/>
+					<p:selectOneMenu id="area" required="true" value="#{voluntarioMB.voluntario.area}">
+						<f:selectItem itemLabel="Selecione" itemValue="" />
+						<f:selectItems value="#{voluntarioMB.areas}" var="area" itemLabel="#{area.nome}"/>			
+					</p:selectOneMenu>
+
 				
-				<h:outputText value="Telefone Comercial"/>			
-				<h:inputText value="#{voluntarioMB.voluntario.telefoneComercial}"/>
-				
-				<h:outputText value="Area de Atuação"/>
-				<h:selectOneMenu value="#{voluntarioMB.voluntario.area}">
-					<f:selectItems value="#{voluntarioMB.areas}" var="area" itemLabel="#{area.nome}"/>			
-				</h:selectOneMenu>
-				
-				<h:outputText value="Logradouro"/>			
-				<h:inputText value="#{voluntarioMB.voluntario.endereco.logradouro}"/>
-				
-				<h:outputText value="Bairro"/>			
-				<h:inputText value="#{voluntarioMB.voluntario.endereco.bairro}"/>
-				
-				<h:outputText value="Cidade"/>			
-				<h:inputText value="#{voluntarioMB.voluntario.endereco.cidade}"/>
-				
-				<h:outputText value="CEP"/>			
-				<h:inputText value="#{voluntarioMB.voluntario.endereco.cep}"/>
-				
-				<h:outputText value="Estado"/>			
-				<h:inputText value="#{voluntarioMB.voluntario.endereco.estado}"/>
-				
-				<h:outputText value="Logradouro"/>			
-				<h:inputText value="#{voluntarioMB.voluntario.endereco.pais}"/>		
-				
-							
-			</h:panelGrid>
+
+					<h:outputText value="Logradouro"/>			
+					<h:inputText value="#{voluntarioMB.voluntario.endereco.logradouro}"/>
+					
+					<h:outputText value="Bairro"/>			
+					<h:inputText value="#{voluntarioMB.voluntario.endereco.bairro}"/>
+					
+					<h:outputText value="Cidade"/>			
+					<h:inputText value="#{voluntarioMB.voluntario.endereco.cidade}"/>
+					
+					<h:outputText value="CEP"/>			
+					<h:inputText value="#{voluntarioMB.voluntario.endereco.cep}"/>
+					
+					<h:outputText value="Estado"/>			
+					<h:inputText value="#{voluntarioMB.voluntario.endereco.estado}"/>
+					
+					<h:outputText value="Pais"/>			
+					<h:inputText value="#{voluntarioMB.voluntario.endereco.pais}"/>		
+				</h:panelGrid>
+			</p:fieldset>							
+
 			
 			<h:commandButton value="Gravar" action="#{voluntarioMB.cadastrar}"/>
 			
 		</h:form>
-	</h:body>
+		</ui:define>
+	</ui:composition>
+		
 </html>

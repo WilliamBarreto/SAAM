@@ -31,7 +31,7 @@ public class MenuBean {
 			for (FuncionalidadeBean funcionalidade : getUsuarioSessao().getPerfil().getFuncionalidades()) {
 				item = new MenuItem();
 				item.setValue(funcionalidade.getNomeTecnico());  
-				item.setUrl(funcionalidade.getUrl());
+				item.setUrl(funcionalidade.getUrl());				
 				submenu.getChildren().add(item); 
 			}
 		}catch(Exception e){
