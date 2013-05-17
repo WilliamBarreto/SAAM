@@ -175,6 +175,9 @@ public class UsuarioMB {
 		return "principal";
 	}
 
+	public void cadastrarMulher(){
+		
+	}
 
 
 	//getters and setters
