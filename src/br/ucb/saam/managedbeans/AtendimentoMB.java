@@ -37,6 +37,7 @@ public class AtendimentoMB implements Serializable{
 	
 	private AreaBean area;
 	private List<AreaBean> areas;
+	private AreaDAO areaDao;
 	private Chat chat;
 	private List<Chat> chats;
 	private Fila fila;
@@ -63,7 +64,7 @@ public class AtendimentoMB implements Serializable{
 	
 	public AtendimentoMB(){
 		this.atendimento = new AtendimentoBean();
-		this.areas = new AreaDAO().findAll(AreaBean.class);
+		this.areas = new ArrayList<AreaBean>();
 		this.atendentesDisponiveis = new ArrayList<UsuarioBean>();
 		this.chat = new Chat();
 		this.chats = new ArrayList<Chat>();
@@ -76,9 +77,20 @@ public class AtendimentoMB implements Serializable{
 		this.voluntario = new VoluntarioBean();
 		this.atendimentoDao = new AtendimentoDAO();
 		this.mensagemDao = new MensagemDAO();
+		this.areaDao = new AreaDAO();
 	}
 	
-
+	public String solicitar(){
+		this.area = new AreaBean();
+		this.areas = this.areaDao.findAll(AreaBean.class);
+		return "/atendimento/index";
+	}
+	
+	public String atender(){
+		return "/atendimento/iniciarAtendimento";
+	}
+	
+	
 	/**Metodo para capturar o usuário logado na sessão
 	 * 
 	 * @return UsuarioBean - Usuário da Sessão
@@ -98,7 +110,7 @@ public class AtendimentoMB implements Serializable{
 		AreaBean a = (AreaBean)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("area");
 		System.out.println("Area do Atendente : "+ a.getNome());
 		// Verifica se o usuário da sessão é atendente
-		if(getUsuarioSessao().getPerfil().getNome().equalsIgnoreCase("atendente")){
+		if(getUsuarioSessao().getPerfil().getId()== 2){
 			//Adiciona o usuário da sessão na lista
 			this.atendentesDisponiveis.add(getUsuarioSessao());
 		}else{
@@ -164,10 +176,10 @@ public class AtendimentoMB implements Serializable{
 		VoluntarioBean voluntario = new VoluntarioBean();
 		voluntario = (VoluntarioBean) new VoluntarioDAO().buscarPorId(VoluntarioBean.class, getUsuarioSessao().getPessoa().getId());
 		
-		if(voluntario.getArea().getNome().equalsIgnoreCase("Jurídica")){
+		if(voluntario.getArea().getId() == 1){
 			item = this.filaJ.remove();
 		} else {
-			if(voluntario.getArea().getNome().equalsIgnoreCase("Psicológica")){
+			if(voluntario.getArea().getId() == 2){
 				item = this.filaP.remove();
 			}else{
 				item = this.filaS.remove();
@@ -183,6 +195,7 @@ public class AtendimentoMB implements Serializable{
 		return "chatAtedente";		
 	}
 	
+
 	
 	/**Metodo para um usuário solicitar um atendimento. * 
 	 * 
@@ -201,7 +214,7 @@ public class AtendimentoMB implements Serializable{
 			
 				ItemFila item = new ItemFila();
 				item.setUsuario(getUsuarioSessao());
-				item.setArea(this.area);
+				item.setArea(this.area);	
 				
 				// Insere na fila de acordo com area solicitada
 				if(this.area.getNome().equals("JURÍDICA")){

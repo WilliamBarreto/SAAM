@@ -98,7 +98,7 @@ public class UsuarioMB {
 	 */
 	
 	public void isAtendente(UsuarioBean usuario){
-		if(usuario.getPerfil().getNome().equalsIgnoreCase("atendente")){
+		if(usuario.getPerfil().getId() == 2){
 			VoluntarioBean voluntario = (VoluntarioBean) new VoluntarioDAO().buscarPorId(VoluntarioBean.class, usuario.getPessoa().getId());
 			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("area",voluntario.getArea());
 			voluntario = new VoluntarioBean();

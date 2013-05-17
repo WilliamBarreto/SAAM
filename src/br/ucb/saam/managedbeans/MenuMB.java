@@ -1,91 +1,107 @@
 package br.ucb.saam.managedbeans;
 
+import javax.el.ExpressionFactory;
+import javax.el.MethodExpression;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.component.menuitem.MenuItem;
+import org.primefaces.component.submenu.Submenu;
+import org.primefaces.model.DefaultMenuModel;
+import org.primefaces.model.MenuModel;
 
 import br.ucb.saam.beans.FuncionalidadeBean;
+import br.ucb.saam.beans.UsuarioBean;
 
-
-@ManagedBean(name="menuMB")
+@ManagedBean
 @RequestScoped
-public class MenuMB {
+public class MenuMB {  
 
-	private FuncionalidadeBean funcionalidade;
-	private String resultado;
+	private MenuModel model;  
 
-	public MenuMB(){
-		setFuncionalidade(new FuncionalidadeBean());
-	}
+	public MenuMB() {  
+		
+		String metodo;
+		FacesContext fc = FacesContext.getCurrentInstance();
+		ExpressionFactory ef = fc.getApplication().getExpressionFactory();
+		MethodExpression actionExpression;
+		
+		model = new DefaultMenuModel();  
 
-	public String navegar(){
-		this.resultado = getPagina(this.funcionalidade.getId());
-		return this.resultado;
-	}
-	
-	private String getPagina(int id){
-		 
-		 String pagina = new String();
-		 
-		 switch ( id ) {
-			case 1:
-				pagina = "solicitar";
-				break;
-			case 2:
-				pagina = "iniciarAtendimento";
-				break;
-			case 3:
-				pagina = "naoProgramado";
-				break;
-			case 4:
-				pagina = "naoProgramado";
-				break;			
-			case 5:
-				pagina = "naoProgramado";
-				break;
-			case 6:
-				// Manter Usuarios
-				System.out.println("Caso 6");
-				pagina = "usuario";
-				break;
-			case 7:
-				pagina = "perfil";
-				break;
-			case 8:
-				pagina = "voluntario";
-				break;
-			case 9:
-				pagina = "naoProgramado";
-				break;
-			case 10:
-				pagina = "perguntaFrequente";
-				break;
-			case 11:
-				pagina = "naoProgramado";
-				break;
-			case 12:
-				pagina = "naoProgramado";
-				break;
-			case 13:
-				pagina = "naoProgramado";
-				break;
-			case 14:
-				pagina = "naoProgramado";
-				break;	
-			default:
-				break;
+		//First submenu  
+		Submenu submenu = new Submenu();  
+		submenu.setLabel("Menu");
+
+		MenuItem item = new MenuItem();
+		try{
+			
+			for (FuncionalidadeBean funcionalidade : getUsuarioSessao().getPerfil().getFuncionalidades()) {
+				metodo =  funcionalidade.getUrl();
+				actionExpression = ef.createMethodExpression(fc.getELContext(),metodo,String.class,new Class[0]);
+				
+				item = new MenuItem();
+				item.setValue(funcionalidade.getNomeTecnico());  
+				item.setAjax(false);
+				item.setActionExpression(actionExpression);
+
+				submenu.getChildren().add(item); 
+			}
+		}catch(Exception e){
+			System.out.println("Usuario não autenticado!");
 		}
-		return pagina;
+
+		model.addSubmenu(submenu);  
+
+		//Second submenu  
+		submenu = new Submenu();  
+		submenu.setLabel("");  
+
+		item = new MenuItem();  
+		item.setValue("Sair");  
+		item.setUrl("/logout.xhtml");	
+		item.setIcon("ui-icon ui-icon-power");
+		submenu.getChildren().add(item);
+		model.addSubmenu(submenu);  
+		//          
+		//        item = new MenuItem();  
+		//        item.setValue("Dynamic Menuitem 2.2");  
+		//        item.setUrl("#");  
+		//        submenu.getChildren().add(item);  
+		//          
+
+	}  
+
+	public UsuarioBean getUsuarioSessao(){
+		UsuarioBean usuario = new UsuarioBean();
+		usuario = (UsuarioBean)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+		return usuario;		
 	}
 
+	public MenuModel getModel() {  
+		return model;  
+	}     
 
-	public FuncionalidadeBean getFuncionalidade() {
-		return funcionalidade;
-	}
-
-
-	public void setFuncionalidade(FuncionalidadeBean funcionalidade) {
-		this.funcionalidade = funcionalidade;
+	public String naoProgramado(){
+		return "/naoProgramado";
+		
 	}
 	
+	public void save() {  
+		addMessage("Data saved");  
+	}  
 
-}
+	public void update() {  
+		addMessage("Data updated");  
+	}  
+
+	public void delete() {  
+		addMessage("Data deleted");  
+	}  
+
+	public void addMessage(String summary) {  
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  null);  
+		FacesContext.getCurrentInstance().addMessage(null, message);  
+	}  
+}  

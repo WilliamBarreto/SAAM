@@ -13,7 +13,9 @@
 		<ui:define name="content">
 			<h:outputText value="Desejar realmente sair do sistema?"/>
 			<h:form>
-				<h:commandButton value="Sim" action="#{usuarioMB.logout}"/>
+				<h:panelGrid>
+					<h:commandButton value="Sim" action="#{usuarioMB.logout}" styleClass="btn btn-small btn-danger"/>
+				</h:panelGrid>
 			</h:form>
 		</ui:define>
 			
