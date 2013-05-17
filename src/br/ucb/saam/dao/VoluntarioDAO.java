@@ -25,8 +25,7 @@ public class VoluntarioDAO extends GenericDAO<VoluntarioBean>{
 		} catch (Exception e){
 		System.out.println(e);
 			return null;
-		}
-			
+		}		
 	}
 
 }

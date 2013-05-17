@@ -30,12 +30,12 @@ public class MenuBean {
 		try{
 			for (FuncionalidadeBean funcionalidade : getUsuarioSessao().getPerfil().getFuncionalidades()) {
 				item = new MenuItem();
-				item.setValue(funcionalidade.getNomeTecnico());  
+				item.setValue(funcionalidade.getNomeTecnico());
 				item.setUrl(funcionalidade.getUrl());				
 				submenu.getChildren().add(item); 
 			}
 		}catch(Exception e){
-			System.out.println("Usuario não autenticado!");
+			System.out.println("Usuario nï¿½o autenticado!");
 		}
 
 		model.addSubmenu(submenu);  

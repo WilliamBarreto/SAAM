@@ -19,8 +19,8 @@
 
 			<h:form id="formulario">
 				<h:panelGrid>
-
-					<h:outputLabel for="pergunta" value="Pergunta: " />
+					<p:messages id="msg" autoUpdate="true" closable="true"/>
+					<p:outputLabel for="pergunta" value="Pergunta: " />
 					<p:inputTextarea id="pergunta" required="true"
 						value="#{perguntaFrequenteMB.perguntaFrequente.pergunta}" rows="5"
 						cols="30" counter="counter1" maxlength="100"
@@ -28,14 +28,14 @@
 						<h:outputText id="counter1" />
 
 
-					<h:outputLabel for="resposta" value="Resposta: " />
+					<p:outputLabel for="resposta" value="Resposta: " />
 					<p:inputTextarea id="resposta" required="true"
 						value="#{perguntaFrequenteMB.perguntaFrequente.resposta}" rows="5"
 						cols="30" counter="counter2" maxlength="100"
 						counterTemplate="{0} characters remaining." autoResize="false" />
 						<h:outputLabel for="resposta" id="counter2" />
 
-					<h:outputLabel for="area" value="Area da pergunta: " />
+					<p:outputLabel for="area" value="Area da pergunta: " />
 					<h:selectOneMenu id="area" required="true"
 						value="#{perguntaFrequenteMB.perguntaFrequente.area}">
 						<f:selectItems value="#{perguntaFrequenteMB.areas}" var="area"
