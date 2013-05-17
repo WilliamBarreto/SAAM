@@ -97,6 +97,7 @@ public class VoluntarioMB implements Serializable{
 		voluntarioDAO.saveOrUpdate(voluntario);
 		
 		enviaEmail(voluntario.getEmail(),"Cadastro Aprovado", "Seu cadastro foi aprovado!");
+		this.voluntarios = voluntarioDAO.buscaInativos();
 		return index();
 	}
 	

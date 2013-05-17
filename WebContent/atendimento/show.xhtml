@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/template/common/layout.xhtml">
+		<ui:param name="title" value="Atendimento" />
+		<ui:define name="content">
+		
+	
+	<h:outputText value="Data Atendimento: "/>
+	<h:outputText value="#{atendimentoMB.atendimento.dataInicio}"/>
+	<br />
+	<h:outputText value="Data Atendimento: "/>
+	<h:outputText value="#{atendimentoMB.atendimento.dataFim}"/>
+	<br />
+	<h:outputText value="Area: "/>
+	<h:outputText value="#{atendimentoMB.atendimento.area.nome}"/>
+	<br />
+	<h:outputText value="Tipo de atendimento: "/>
+	<h:outputText value="#{atendimentoMB.atendimento.tipoAtendimento.nome}"/>
+	<br />
+	<h:outputText value="Atendente: "/>
+	<h:outputText value="#{atendimentoMB.atendimento.atendente.nome}"/>
+	<br />
+	<h:outputText value="Atendido: "/>
+	<h:outputText value="#{atendimentoMB.atendimento.atendido.nome}"/>
+
+	<p:separator/>
+	
+	<p:panelGrid columns="2">
+	<h:outputText value="Mensagens "/>
+	<h:dataTable value="#{atendimentoMB.atendimento.mensagens}" var="item">
+			<h:column>
+				<h:outputText value="#{item.usuario.nome}"/>
+			</h:column>
+			<h:column>
+				<h:outputText value="#{item.texto}"/>
+			</h:column>
+	</h:dataTable>
+	</p:panelGrid>
+	<p:separator/>
+
+	<h:form>
+		<h:commandButton value="Voltar" action="#{atendimentoMB.historico}" /> 
+	</h:form>
+	
+	</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

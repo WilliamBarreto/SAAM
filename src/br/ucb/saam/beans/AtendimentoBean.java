@@ -14,8 +14,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-/** Classe para objetos do tipo Atendimento, onde serão contidos, valores e métodos para o mesmo.
- *  Representa os Atendimentos realizados pela aplicação.
+/** Classe para objetos do tipo Atendimento, onde serï¿½o contidos, valores e mï¿½todos para o mesmo.
+ *  Representa os Atendimentos realizados pela aplicaï¿½ï¿½o.
  *  
  * @author William Barreto
  * @version 1.0
