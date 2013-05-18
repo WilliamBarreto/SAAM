@@ -1,8 +1,11 @@
 package br.ucb.saam.managedbeans;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javassist.bytecode.stackmap.BasicBlock.Catch;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -10,7 +13,9 @@ import javax.faces.context.FacesContext;
 
 import org.apache.commons.mail.EmailException;
 
+import br.ucb.saam.beans.EnderecoBean;
 import br.ucb.saam.beans.PerfilBean;
+import br.ucb.saam.beans.PessoaBean;
 import br.ucb.saam.beans.UsuarioBean;
 import br.ucb.saam.beans.VoluntarioBean;
 import br.ucb.saam.dao.EnderecoDAO;
@@ -32,8 +37,13 @@ public class UsuarioMB {
 
 	private UsuarioBean usuario;
 	private UsuarioDAO usuarioDAO;
+	
+	private PessoaBean pessoa;
 	private PessoaDAO pessoaDAO;
+	
+	private EnderecoBean endereco;
 	private EnderecoDAO enderecoDAO;
+	
 	private List<UsuarioBean> usuarios;
 	private String email;
 	private PerfilDAO perfilDAO;
@@ -44,6 +54,10 @@ public class UsuarioMB {
 		setUsuarioDAO(new UsuarioDAO());
 		setUsuarios(new ArrayList<UsuarioBean>());
 		setEmail(new String());
+		
+		this.pessoa = new PessoaBean();
+		this.endereco = new EnderecoBean();
+		
 		this.pessoaDAO = new PessoaDAO();
 		this.enderecoDAO = new EnderecoDAO();
 		this.perfilDAO = new PerfilDAO();
@@ -176,9 +190,64 @@ public class UsuarioMB {
 	}
 
 	public void cadastrarMulher(){
-		
-	}
 
+			if(isCadastrado()){
+				JSFMensageiro.error("O e-mail informado já possui cadastro no sistema.");
+			}else{
+				enderecoDAO.saveOrUpdate(this.endereco);
+				
+				this.pessoa.setEndereco(endereco);				
+				pessoaDAO.saveOrUpdate(this.pessoa);
+				usuario.setPessoa(this.pessoa);
+				
+				usuario.setNome(this.pessoa.getEmail());
+				usuario.setSenha(UsuarioBean.geraSenha());
+				usuario.setPerfil((PerfilBean) perfilDAO.buscarPorId(PerfilBean.class, 5));
+				
+				usuarioDAO.saveOrUpdate(usuario);
+				
+				Mensagem msg = new Mensagem();
+				msg.setDestino(this.usuario.getPessoa().getEmail());
+				msg.setMensagem("Prezado(a) "+this.usuario.getPessoa().getNome()+", \n\n" +
+								"Para ter acesso aos atendimentos, utilize as seguintes informações: \n\n" +
+								"\t Usuário: "+this.usuario.getNome()+"\n"+
+								"\t Senha: "+this.usuario.getSenha()+"\n\n" +
+								"\nImportante:\n\n" +
+								"\t1. Ao informar o login e senha, por favor, verifique se não há espaços em branco.\n" +
+								"\t2. Evite copiar e colar o login e a senha, pois este procedimento, geralmente, " +
+								"acrescenta um espaço em branco nos dados, dificultando seu acesso." +
+								"\n\nAtenciosamente,\n\n" +
+								"\nAssociação de Mulheres Empreendedoras.");
+								
+				msg.setTitulo("Cadastro - SAAM");
+				
+				enviarEmail(msg);				
+				JSFMensageiro.info("Seu cadastro foi realizado com sucesso! As informações de acesso serão enviadas para o e-mail cadastrado");
+				
+				this.usuario = new UsuarioBean();
+				this.endereco = new EnderecoBean();
+				this.pessoa = new PessoaBean();
+			}
+
+	}
+	
+	public boolean isCadastrado(){
+		for (PessoaBean p : pessoaDAO.findAll(PessoaBean.class)) {
+			if(p.getEmail().equalsIgnoreCase(this.pessoa.getEmail())){
+				return true;
+			}
+		}
+		return false;
+	}
+	public void enviarEmail(Mensagem msg){
+		try {
+			EmailUtils.enviaEmail(msg);
+		} catch (EmailException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 
 	//getters and setters
 	public UsuarioBean getUsuario() {
@@ -217,6 +286,26 @@ public class UsuarioMB {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+
+	public PessoaBean getPessoa() {
+		return pessoa;
+	}
+
+
+	public void setPessoa(PessoaBean pessoa) {
+		this.pessoa = pessoa;
+	}
+
+
+	public EnderecoBean getEndereco() {
+		return endereco;
+	}
+
+
+	public void setEndereco(EnderecoBean endereco) {
+		this.endereco = endereco;
 	}
 
 
