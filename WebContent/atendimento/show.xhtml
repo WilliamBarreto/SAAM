@@ -14,28 +14,28 @@
 		
 	
 	<h:outputText value="Data Atendimento: "/>
-	<h:outputText value="#{atendimentoMB.atendimento.dataInicio}"/>
+	<h:outputText value="#{relatorioMB.atendimento.dataInicio}"/>
 	<br />
 	<h:outputText value="Data Atendimento: "/>
-	<h:outputText value="#{atendimentoMB.atendimento.dataFim}"/>
+	<h:outputText value="#{relatorioMB.atendimento.dataFim}"/>
 	<br />
 	<h:outputText value="Area: "/>
-	<h:outputText value="#{atendimentoMB.atendimento.area.nome}"/>
+	<h:outputText value="#{relatorioMB.atendimento.area.nome}"/>
 	<br />
 	<h:outputText value="Tipo de atendimento: "/>
-	<h:outputText value="#{atendimentoMB.atendimento.tipoAtendimento.nome}"/>
+	<h:outputText value="#{relatorioMB.atendimento.tipoAtendimento.nome}"/>
 	<br />
 	<h:outputText value="Atendente: "/>
-	<h:outputText value="#{atendimentoMB.atendimento.atendente.nome}"/>
+	<h:outputText value="#{relatorioMB.atendimento.atendente.nome}"/>
 	<br />
 	<h:outputText value="Atendido: "/>
-	<h:outputText value="#{atendimentoMB.atendimento.atendido.nome}"/>
+	<h:outputText value="#{relatorioMB.atendimento.atendido.nome}"/>
 
 	<p:separator/>
 	
 	<p:panelGrid columns="2">
 	<h:outputText value="Mensagens "/>
-	<h:dataTable value="#{atendimentoMB.atendimento.mensagens}" var="item">
+	<h:dataTable value="#{relatorioMB.atendimento.mensagens}" var="item">
 			<h:column>
 				<h:outputText value="#{item.usuario.nome}"/>
 			</h:column>
@@ -47,7 +47,7 @@
 	<p:separator/>
 
 	<h:form>
-		<h:commandButton value="Voltar" action="#{atendimentoMB.historico}" /> 
+		<h:commandButton value="Voltar" action="#{relatorioMB.historico}" /> 
 	</h:form>
 	
 	</ui:define>

@@ -80,7 +80,6 @@ public class AtendimentoMB implements Serializable{
 		this.mensagemDao = new MensagemDAO();
 
 		this.areaDao = new AreaDAO();
-		this.atendimentos = historico();
 	}
 	
 	public String solicitar(){
@@ -123,24 +122,6 @@ public class AtendimentoMB implements Serializable{
 			return "index";
 		}
 		return "fila";
-	}
-	
-	public List<AtendimentoBean> historico(){
-		if (getUsuarioSessao().getPerfil().getId() == 2){
-				atendimentos = atendimentoDao.findAllByAtendente(getUsuarioSessao());
-			return atendimentos;
-		}else{
-			if (getUsuarioSessao().getPerfil().getId() == 5){
-					atendimentos = atendimentoDao.findAllByAtendido(getUsuarioSessao());
-			return atendimentos;
-			}
-		}
-		return null;
-	}
-	
-	public String show(){
-		
-		return "show";
 	}
 	
 

@@ -49,7 +49,7 @@ public class MenuMB {
 				submenu.getChildren().add(item); 
 			}
 		}catch(Exception e){
-			System.out.println("Usuario não autenticado!");
+			System.out.println(e);
 		}
 
 		model.addSubmenu(submenu);  
