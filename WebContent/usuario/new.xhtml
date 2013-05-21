@@ -7,114 +7,92 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-
+<h:body>
 <ui:composition template="/template/common/layout.xhtml">
 
-
-	<ui:define name="menu">
-
-	</ui:define>
-
 	<ui:define name="content">
-		<style>
-.ui-widget {
-	font-size: 80% !important;
-	font-size: 13px !important;
-}
-
-.ui-fieldset-legend {
-	font-family: Verdana, Arial, sans-serif;
-	font-size: 80%!important;
-	font-size: 13px;
-	width: 120px;
-	height: 25px;
-}
-
-.ui-widget-content {
-	width: 400px;
-}
-
-.ui-selectonemenu-items{
-	width: 90%;
-}
-.ui-selectonemenu-panel{
-	width: 10%;
-}
-
-</style>
 
 		<h:form id="formulario">
-			<p:separator title="testando"/>
+			<p:separator title="testando" />
 			<p:messages id="msg" autoUpdate="true" closable="true" />
-			
+
 			<p:fieldset>
 				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 					<p:outputLabel for="nome" value="Nome" />
 					<p:inputText id="nome" required="true"
-						value="#{voluntarioMB.voluntario.nome}" />
+						value="#{usuarioMB.pessoa.nome}" />
 
-					<p:outputLabel for="email" value="E-mail" />
-					<p:inputText id="email" required="true"
-						value="#{voluntarioMB.voluntario.email}" />
+					<p:outputLabel for="perfil" value="Perfil" />
+					<p:selectOneMenu id="perfil" value="#{usuarioMB.usuario.perfil}"
+						effect="fade" converter="converterPerfil">
+						<f:selectItem itemLabel="Selecione"/>
+						<f:selectItems value="#{usuarioMB.perfis}" var="item"
+							itemLabel="#{item.nome}" itemValue="#{item.id}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel for="nomeUsuario" value="Nome de Usuario: " />
+					<p:inputText id="nomeUsuario" require="true" value="#{usuarioMB.usuario.nome}" />
+					
+					<p:outputLabel for="senha" value="Senha " />
+					<p:password id="senha" require="true" value="#{usuarioMB.usuario.senha}" />
+
+					<p:outputLabel value="E-mail" for="email" />
+					<p:inputText id="email" value="#{usuarioMB.pessoa.email}" size="30"
+						maxlength="30" required="true" label="E-mail">
+						<f:validateRegex
+							pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+					</p:inputText>
 
 					<p:outputLabel for="Sexo" value="Sexo" />
 					<p:selectOneMenu id="Sexo" required="true"
-						value="#{voluntarioMB.voluntario.sexo}">
+						value="#{usuarioMB.pessoa.sexo}">
 						<f:selectItem itemLabel="Selecione" itemValue="" />
 						<f:selectItem itemValue="M" itemLabel="Masculino"></f:selectItem>
 						<f:selectItem itemValue="F" itemLabel="Feminino"></f:selectItem>
 					</p:selectOneMenu>
 
 					<p:outputLabel value="Estado Civil" />
-					<p:selectOneMenu value="#{voluntarioMB.voluntario.estadoCivil}">
+					<p:selectOneMenu value="#{usuarioMB.pessoa.estadoCivil}">
 						<f:selectItem itemLabel="Selecione" itemValue="" />
 						<f:selectItem itemValue="Solteiro" itemLabel="Solteiro(a)"></f:selectItem>
 						<f:selectItem itemValue="Casado" itemLabel="Casado(a)"></f:selectItem>
+						<f:selectItem itemValue="Divorciado" itemLabel="Divorciado(a)"></f:selectItem>
+						<f:selectItem itemValue="Viuvo" itemLabel="Viuvo(a)"></f:selectItem>
 					</p:selectOneMenu>
 
 					<p:outputLabel for="celular" value="Celular" />
 					<p:inputMask id="celular" required="true"
-						value="#{voluntarioMB.voluntario.celular}" mask="(99) 9999-9999" />
+						value="#{usuarioMB.pessoa.celular}" mask="(99) 9999-9999" />
 
 					<p:outputLabel for="telefoneResidencial"
 						value="Telefone Residencial" />
 					<p:inputMask id="telefoneResidencial" required="true"
-						value="#{voluntarioMB.voluntario.telefoneResidencial}"
+						value="#{usuarioMB.pessoa.telefoneResidencial}"
 						mask="(99) 9999 - 9999" />
 
 					<p:outputLabel value="Telefone Comercial" />
-					<p:inputMask value="#{voluntarioMB.voluntario.telefoneComercial}"
+					<p:inputMask value="#{usuarioMB.pessoa.telefoneComercial}"
 						mask="(99) 9999 - 9999" />
-
-
-
-					<p:outputLabel for="area" value="Area de Atuação" />
-					<p:selectOneMenu id="area" required="true"
-						value="#{voluntarioMB.voluntario.area}">
-						<f:selectItem itemLabel="Selecione" itemValue="" />
-						<f:selectItems value="#{voluntarioMB.areas}" var="area"
-							itemLabel="#{area.nome}" itemValue="#{area}"/>
-					</p:selectOneMenu>
 
 					<p:outputLabel for="logradouro" value="Logradouro" />
 					<p:inputText id="logradouro" required="true"
-						value="#{voluntarioMB.voluntario.endereco.logradouro}" />
+						value="#{usuarioMB.endereco.logradouro}" />
 
 					<p:outputLabel for="bairro" value="Bairro" />
 					<p:inputText id="bairro" required="true"
-						value="#{voluntarioMB.voluntario.endereco.bairro}" />
+						value="#{usuarioMB.endereco.bairro}" />
 
 					<p:outputLabel for="cidade" value="Cidade" />
 					<p:inputText id="cidade" required="true"
-						value="#{voluntarioMB.voluntario.endereco.cidade}" />
+						value="#{usuarioMB.endereco.cidade}" />
 
 					<p:outputLabel for="cep" value="CEP" />
 					<p:inputText id="cep" required="true"
-						value="#{voluntarioMB.voluntario.endereco.cep}" />
+						value="#{usuarioMB.endereco.cep}" />
 
 					<p:outputLabel for="estado" value="Estado" />
 					<p:selectOneMenu id="estado" required="true"
-						value="#{voluntarioMB.voluntario.endereco.estado}">
+						value="#{usuarioMB.endereco.estado}">
 						<f:selectItem itemLabel="Selecione" itemValue="" />
 						<f:selectItem itemValue="AC" itemLabel="Acre"></f:selectItem>
 						<f:selectItem itemValue="AL" itemLabel="Alagoas"></f:selectItem>
@@ -143,16 +121,17 @@
 						<f:selectItem itemValue="SP" itemLabel="São Paulo"></f:selectItem>
 						<f:selectItem itemValue="SE" itemLabel="Sergipe"></f:selectItem>
 						<f:selectItem itemValue="TO" itemLabel="Tocantins"></f:selectItem>
-
 					</p:selectOneMenu>
 
 					<p:outputLabel value="Pais" />
-					<p:inputText value="#{voluntarioMB.voluntario.endereco.pais}" />
+					<p:inputText value="#{usuarioMB.endereco.pais}" />
 				</h:panelGrid>
 			</p:fieldset>
-			<h:commandButton value="Gravar" action="#{voluntarioMB.cadastrar}" styleClass="btn btn-success"/>
+			<h:commandButton value="Gravar"
+				actionListener="#{usuarioMB.criar}"
+				styleClass="btn btn-success" />
 		</h:form>
 	</ui:define>
 </ui:composition>
-
+</h:body>
 </html>

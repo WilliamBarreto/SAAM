@@ -13,18 +13,12 @@
 </h:head>
 
 <h:body>
-
-	<style>
-.esquerda {
-	padding-left: 50px;
-}
-</style>
 	<ui:composition template="/template/common/layout.xhtml">
 		<ui:param name="title" value="Lista de perfis" />
 
 		<ui:define name="content">
-			<h:form prependId="false">
-
+			<h:form id="form">
+				<p:messages id="msg" autoUpdate="true" closable="true" />
 
 				<p:dataTable id="dataTable" var="item" value="#{perfilMB.perfis}"
 					paginatorPosition="bottom" paginator="true" rows="10"
@@ -38,8 +32,7 @@
 
 
 					<p:column id="nomeColumn" filterBy="#{item.nome}"
-						headerText="Perfil" styleClass="esquerda"
-						filterMatchMode="contains">
+						headerText="Perfil" filterMatchMode="contains">
 						<f:facet name="Perfil"></f:facet>
 						<h:outputText value="#{item.nome}" />
 					</p:column>
@@ -61,13 +54,23 @@
 					</p:column>
 
 					<p:column>
-						<p:commandLink value="Excluir" actionListener="#{perfilMB.delete}"
-							styleClass="btn" ajax="false">
-							<f:attribute name="perfil" value="#{item}" />
+						<p:commandLink id="deletar" value="Deletar"
+							onclick="confirmation.show()" type="button" styleClass="btn">
+							<f:setPropertyActionListener value="#{item}"
+								target="#{perfilMB.perfil}" />
 						</p:commandLink>
 					</p:column>
-
 				</p:dataTable>
+				<p:confirmDialog id="confirmDialog"
+					message="Tem certeza que deseja apagar este perfil?"
+					header="Deletando perfil" severity="alert" widgetVar="confirmation">
+
+					<p:commandButton id="confirm" value="Sim" update=":form"
+						oncomplete="confirmation.hide()"
+						actionListener="#{perfilMB.delete}" />
+					<p:commandButton id="decline" value="Não"
+						onclick="confirmation.hide()" type="button" />
+				</p:confirmDialog>
 
 			</h:form>
 

@@ -15,8 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-/** Classe para objetos do tipo Pessoa, onde serão contidos, valores e métodos para o mesmo.
- *  Representa uma Pessoa na aplicação.
+/** Classe para objetos do tipo Pessoa, onde serï¿½o contidos, valores e mï¿½todos para o mesmo.
+ *  Representa uma Pessoa na aplicaï¿½ï¿½o.
  *  
  * @author William Barreto
  * @version 1.0
@@ -139,11 +139,5 @@ public class PessoaBean implements Serializable{
 	public void setEndereco(EnderecoBean endereco) {
 		this.endereco = endereco;
 	}
-	
-	
-	
-	
-	
-	
-	
+
 }

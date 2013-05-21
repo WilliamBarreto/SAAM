@@ -1,11 +1,8 @@
 package br.ucb.saam.managedbeans;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javassist.bytecode.stackmap.BasicBlock.Catch;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -27,9 +24,6 @@ import br.ucb.saam.util.EmailUtils;
 import br.ucb.saam.util.JSFMensageiro;
 import br.ucb.saam.util.Mensagem;
 
-
-
-
 @ManagedBean(name="usuarioMB")
 @SessionScoped
 public class UsuarioMB {
@@ -47,13 +41,16 @@ public class UsuarioMB {
 	private List<UsuarioBean> usuarios;
 	private String email;
 	private PerfilDAO perfilDAO;
+	private List<PerfilBean> perfis;
+	private PerfilBean perfil;
+
 
 
 	public UsuarioMB(){
-		setUsuario(new UsuarioBean());
-		setUsuarioDAO(new UsuarioDAO());
-		setUsuarios(new ArrayList<UsuarioBean>());
-		setEmail(new String());
+		this.usuario = new UsuarioBean();
+		this.usuarioDAO = new UsuarioDAO();
+		this.usuarios = new ArrayList<UsuarioBean>();
+		this.email = new String();
 		
 		this.pessoa = new PessoaBean();
 		this.endereco = new EnderecoBean();
@@ -61,7 +58,7 @@ public class UsuarioMB {
 		this.pessoaDAO = new PessoaDAO();
 		this.enderecoDAO = new EnderecoDAO();
 		this.perfilDAO = new PerfilDAO();
-		
+		this.perfil = new PerfilBean();
 	}
 
 
@@ -157,33 +154,46 @@ public class UsuarioMB {
 		
 		
 	}
+	
+	public String index(){
+		getListUsuarios();
+		return "/usuario/index.xhtml";
+	}
 
-	public String deletar(UsuarioBean usuario){
-		this.usuarios.remove(usuario);
-		return null;
+	public void delete(){
+		usuarioDAO.delete(usuario);
+		usuario = new UsuarioBean();
+		JSFMensageiro.info("Usuario excluido com sucesso");
 	}
 
 
-	public String salvar(){
-		
-		this.usuario.setPerfil((PerfilBean) perfilDAO.buscarPorId(PerfilBean.class, 1));
+	public String criar(){
+		this.pessoa.setEndereco(endereco);
+		usuario.setPessoa(this.pessoa);
 		enderecoDAO.saveOrUpdate(this.usuario.getPessoa().getEndereco());
 		pessoaDAO.saveOrUpdate(this.usuario.getPessoa());
 		usuarioDAO.saveOrUpdate(this.usuario);
-	
-		return "";
-	}
-
-	
-	
-	
-	/*Neste m�todo � necess�rio uma nova inst�ncia do usu�rio
-	 *Para que o valor acessado pelo m�todo getUsu�rio esteja null
-	 */
-	public String incluir(){
 		this.usuario = new UsuarioBean();
-		return "formUsuario";
+		JSFMensageiro.info("Usuario Cadastro com sucesso!");
+		return index();
 	}
+	
+	public String show(){
+		return "show";
+	}
+	
+	
+	public String novo(){
+		this.usuario = new UsuarioBean();
+		this.perfis = new PerfilDAO().findAll(PerfilBean.class);
+		return "/usuario/new";
+	}
+	
+	public String edit(){
+		return  "new";
+	}
+	
+	
 	
 	public String principal(){
 		return "principal";
@@ -286,5 +296,44 @@ public class UsuarioMB {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+
+	public List<PerfilBean> getPerfis() {
+		return perfis;
+	}
+
+
+	public PessoaBean getPessoa() {
+		return pessoa;
+	}
+
+
+	public void setPessoa(PessoaBean pessoa) {
+		this.pessoa = pessoa;
+	}
+
+
+	public EnderecoBean getEndereco() {
+		return endereco;
+	}
+
+
+	public void setEndereco(EnderecoBean endereco) {
+		this.endereco = endereco;
+	}
+
+
+	public void setPerfis(List<PerfilBean> perfis) {
+		this.perfis = perfis;
+	}
+	
+	public PerfilBean getPerfil() {
+		return perfil;
+	}
+
+
+	public void setPerfil(PerfilBean perfil) {
+		this.perfil = perfil;
 	}
 }

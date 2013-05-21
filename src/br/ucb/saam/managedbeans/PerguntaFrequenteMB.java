@@ -7,12 +7,12 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.event.ActionEvent;
 
 import br.ucb.saam.beans.AreaBean;
 import br.ucb.saam.beans.PerguntaFrequenteBean;
 import br.ucb.saam.dao.AreaDAO;
 import br.ucb.saam.dao.PerguntaFrequenteDAO;
+import br.ucb.saam.util.JSFMensageiro;
 
 @ManagedBean(name="perguntaFrequenteMB")
 @SessionScoped
@@ -30,15 +30,15 @@ public class PerguntaFrequenteMB implements Serializable{
 	public PerguntaFrequenteMB(){
 		setPerguntaFrequente(new PerguntaFrequenteBean());
 		setPerguntaFrequenteDAO(new PerguntaFrequenteDAO());
-		setPerguntasFrequentes(perguntaFrequenteDAO.findAll(PerguntaFrequenteBean.class));
+		setPerguntasFrequentes(new ArrayList<PerguntaFrequenteBean>());
 		setAreas(new ArrayList<AreaBean>());
 		setAreaDAO(new AreaDAO());
-		setResultados(perguntasFrequentes);
+		setResultados(new ArrayList<PerguntaFrequenteBean>());
 	}
 	
 	
 	public String index(){
-		getListaPerguntasFrequentes();
+		perguntasFrequentes = perguntaFrequenteDAO.findAll(PerguntaFrequenteBean.class);
 		resultados = perguntasFrequentes;
 		return "/perguntaFrequente/index";
 	}
@@ -51,7 +51,8 @@ public class PerguntaFrequenteMB implements Serializable{
 	
 	public String criar(){
 		perguntaFrequente.setData(new Date(System.currentTimeMillis()));
-		perguntaFrequenteDAO.saveOrUpdate(perguntaFrequente);		
+		perguntaFrequenteDAO.saveOrUpdate(perguntaFrequente);
+		JSFMensageiro.info("A pergunta frequente foi gravada com sucesso!");
 		perguntaFrequente = new PerguntaFrequenteBean();		
 		return index();
 	}
@@ -65,10 +66,11 @@ public class PerguntaFrequenteMB implements Serializable{
 		return "new";
 	}
 	
-	public void delete(ActionEvent evento){
-		perguntaFrequente = (PerguntaFrequenteBean) evento.getComponent().getAttributes().get("perguntaFrequente");
+	public void delete(){
 		perguntaFrequenteDAO.delete(perguntaFrequente);
-		getListaPerguntasFrequentes();
+		JSFMensageiro.info("A Pergunta frequente foi excluida com sucesso!");
+		perguntaFrequente = new PerguntaFrequenteBean();
+		perguntasFrequentes = perguntaFrequenteDAO.findAll(PerguntaFrequenteBean.class);
 		resultados = perguntasFrequentes;
 	}
 	

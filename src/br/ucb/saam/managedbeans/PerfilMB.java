@@ -6,12 +6,12 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.event.ActionEvent;
 
 import br.ucb.saam.beans.FuncionalidadeBean;
 import br.ucb.saam.beans.PerfilBean;
 import br.ucb.saam.dao.FuncionalidadeDAO;
 import br.ucb.saam.dao.PerfilDAO;
+import br.ucb.saam.util.JSFMensageiro;
 
 @ManagedBean(name="perfilMB")
 @SessionScoped
@@ -38,7 +38,7 @@ public class PerfilMB implements Serializable{
 	public String index(){
 		this.perfis = perfilDAO.findAll(PerfilBean.class);
 		resultado = perfis;
-		return "/perfil/index?faces-redirect=true";
+		return "/perfil/index.xhtml";
 	}
 	
 	public String show() {		
@@ -55,6 +55,8 @@ public class PerfilMB implements Serializable{
 	
 	public String criar(){
 		perfilDAO.saveOrUpdate(perfil);
+		perfil = new PerfilBean();
+		JSFMensageiro.info("O perfil foi criado com sucesso!");
 		return index();
 	}
 	
@@ -64,12 +66,12 @@ public class PerfilMB implements Serializable{
 		return "new?faces-redirect=true";
 	}
 	
-	public void delete(ActionEvent evento){
-		
-		this.perfil = (PerfilBean) evento.getComponent().getAttributes().get("perfil");
+	public void delete(){
 		perfilDAO.delete(perfil);
 		this.perfis = perfilDAO.findAll(PerfilBean.class);
 		resultado = perfis;
+		perfil = new PerfilBean();
+		JSFMensageiro.info("O Perfil foi excluido com sucesso!");
 	}
 	
 	
