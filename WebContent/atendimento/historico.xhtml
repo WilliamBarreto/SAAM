@@ -10,7 +10,7 @@
  	<ui:define name="content">
  	
  	<h:form>
-				<p:dataTable value="#{atendimentoMB.atendimentos}"
+				<p:dataTable value="#{relatorioMB.atendimentos}"
 					var="item" paginatorPosition="bottom" paginator="true" rows="10"
 					paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink} ">
 					
@@ -42,14 +42,13 @@
 					</p:column>
 					<p:column>
 						<h:commandLink value="Vizualizar"
-							action="#{atendimentoMB.show}" styleClass="btn">
+							action="#{relatorioMB.show}" styleClass="btn">
 							<f:setPropertyActionListener value="#{item}"
-								target="#{atendimentoMB.atendimento}" />
+								target="#{relatorioMB.atendimento}" />
 						</h:commandLink>
 					</p:column>
 				</p:dataTable>
 			</h:form>
-
  </ui:define>
 </ui:composition>
 

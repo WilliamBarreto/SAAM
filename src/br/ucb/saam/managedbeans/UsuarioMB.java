@@ -66,7 +66,7 @@ public class UsuarioMB {
 
 
 	//Methods
-	/**Metodo para buscar todos os usuário cadastrados no banco de dados
+	/**Metodo para buscar todos os usuï¿½rio cadastrados no banco de dados
 	 * 
 	 * @return ArrayList<UsuarioBean>
 	 */
@@ -74,24 +74,24 @@ public class UsuarioMB {
 		return this.usuarios = this.usuarioDAO.findAll(UsuarioBean.class);
 	}
 	
-	/**Metodo para autenticar o usuário no sistema.
+	/**Metodo para autenticar o usuï¿½rio no sistema.
 	 *  
-	 * @return String - Página que será redirecionada.
+	 * @return String - Pï¿½gina que serï¿½ redirecionada.
 	 */
 	public String login(){
 		
-		//Busca a lista de usuários gravados no banco de dados
+		//Busca a lista de usuï¿½rios gravados no banco de dados
 		getListUsuarios();
 
-		//Percorre a lista de usuários		
+		//Percorre a lista de usuï¿½rios		
 		for (UsuarioBean user : usuarios) {	
 			
-			//Compara se o usuário informado é igual ao da vez
+			//Compara se o usuï¿½rio informado ï¿½ igual ao da vez
 			if(user.equals(this.usuario)){
-				//Sicroniza o objeto usuário
+				//Sicroniza o objeto usuï¿½rio
 				user = (UsuarioBean) usuarioDAO.buscarPorId(UsuarioBean.class, user.getId());				
 				
-				//Adiciona o usuário na Sessão
+				//Adiciona o usuï¿½rio na Sessï¿½o
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", user);
 				
 				isAtendente(user);
@@ -101,13 +101,13 @@ public class UsuarioMB {
 				return "/home/home";
 			}
 		}
-		//Caso não encontre envia uma mensagem informando o problema		
-		JSFMensageiro.info("Usuário ou Senha Incorreta");
+		//Caso nï¿½o encontre envia uma mensagem informando o problema		
+		JSFMensageiro.info("Usuï¿½rio ou Senha Incorreta");
 		return "principal";
 	}
 	
 	/**
-	 * Metodo para verificar se o usuário é atendente. Caso seja atendente adiciona a area do atendente na sua sessão
+	 * Metodo para verificar se o usuï¿½rio ï¿½ atendente. Caso seja atendente adiciona a area do atendente na sua sessï¿½o
 	 * @param usuario
 	 */
 	
@@ -138,11 +138,11 @@ public class UsuarioMB {
 		
 				mensagem.setDestino(user.getPessoa().getEmail());
 				mensagem.setTitulo("Credencias de Acesso - SAAM");
-				mensagem.setMensagem("Prezado(a) "+user.getPessoa().getNome()+",\n\nConforme solicitado seguem informações de acesso:\n\nUsuario: "+user.getNome()+"\nSenha: "+user.getSenha()+" \n\nAtenciosamente,\n\n Associação das Mulheres Empreendedoras.");
+				mensagem.setMensagem("Prezado(a) "+user.getPessoa().getNome()+",\n\nConforme solicitado seguem informaï¿½ï¿½es de acesso:\n\nUsuario: "+user.getNome()+"\nSenha: "+user.getSenha()+" \n\nAtenciosamente,\n\n Associaï¿½ï¿½o das Mulheres Empreendedoras.");
 								
 				try {
 					EmailUtils.enviaEmail(mensagem);
-					JSFMensageiro.info("Sua senha será enviada em instantes. Acesse seu e-mail para visualizar");
+					JSFMensageiro.info("Sua senha serï¿½ enviada em instantes. Acesse seu e-mail para visualizar");
 					this.email = new String();
 				} catch (EmailException ex){
 					System.out.println("Erro! Ocorreu um erro ao enviar a mensagem"+ex);
@@ -151,7 +151,7 @@ public class UsuarioMB {
 				return "relembraSenha";
 			}
 		}
-		JSFMensageiro.info("Sua senha será enviada em instantes. Acesse seu e-mail para visualizar");
+		JSFMensageiro.info("Sua senha serï¿½ enviada em instantes. Acesse seu e-mail para visualizar");
 		this.email = new String();
 		return "relembraUsario";
 		
@@ -177,8 +177,8 @@ public class UsuarioMB {
 	
 	
 	
-	/*Neste método é necessário uma nova instância do usuário
-	 *Para que o valor acessado pelo método getUsuário esteja null
+	/*Neste mï¿½todo ï¿½ necessï¿½rio uma nova instï¿½ncia do usuï¿½rio
+	 *Para que o valor acessado pelo mï¿½todo getUsuï¿½rio esteja null
 	 */
 	public String incluir(){
 		this.usuario = new UsuarioBean();
@@ -192,7 +192,7 @@ public class UsuarioMB {
 	public void cadastrarMulher(){
 
 			if(isCadastrado()){
-				JSFMensageiro.error("O e-mail informado já possui cadastro no sistema.");
+				JSFMensageiro.error("O e-mail informado jï¿½ possui cadastro no sistema.");
 			}else{
 				enderecoDAO.saveOrUpdate(this.endereco);
 				
@@ -209,20 +209,20 @@ public class UsuarioMB {
 				Mensagem msg = new Mensagem();
 				msg.setDestino(this.usuario.getPessoa().getEmail());
 				msg.setMensagem("Prezado(a) "+this.usuario.getPessoa().getNome()+", \n\n" +
-								"Para ter acesso aos atendimentos, utilize as seguintes informações: \n\n" +
-								"\t Usuário: "+this.usuario.getNome()+"\n"+
+								"Para ter acesso aos atendimentos, utilize as seguintes informaï¿½ï¿½es: \n\n" +
+								"\t Usuï¿½rio: "+this.usuario.getNome()+"\n"+
 								"\t Senha: "+this.usuario.getSenha()+"\n\n" +
 								"\nImportante:\n\n" +
-								"\t1. Ao informar o login e senha, por favor, verifique se não há espaços em branco.\n" +
+								"\t1. Ao informar o login e senha, por favor, verifique se nï¿½o hï¿½ espaï¿½os em branco.\n" +
 								"\t2. Evite copiar e colar o login e a senha, pois este procedimento, geralmente, " +
-								"acrescenta um espaço em branco nos dados, dificultando seu acesso." +
+								"acrescenta um espaï¿½o em branco nos dados, dificultando seu acesso." +
 								"\n\nAtenciosamente,\n\n" +
-								"\nAssociação de Mulheres Empreendedoras.");
+								"\nAssociaï¿½ï¿½o de Mulheres Empreendedoras.");
 								
 				msg.setTitulo("Cadastro - SAAM");
 				
 				enviarEmail(msg);				
-				JSFMensageiro.info("Seu cadastro foi realizado com sucesso! As informações de acesso serão enviadas para o e-mail cadastrado");
+				JSFMensageiro.info("Seu cadastro foi realizado com sucesso! As informaï¿½ï¿½es de acesso serï¿½o enviadas para o e-mail cadastrado");
 				
 				this.usuario = new UsuarioBean();
 				this.endereco = new EnderecoBean();
@@ -287,26 +287,4 @@ public class UsuarioMB {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-
-	public PessoaBean getPessoa() {
-		return pessoa;
-	}
-
-
-	public void setPessoa(PessoaBean pessoa) {
-		this.pessoa = pessoa;
-	}
-
-
-	public EnderecoBean getEndereco() {
-		return endereco;
-	}
-
-
-	public void setEndereco(EnderecoBean endereco) {
-		this.endereco = endereco;
-	}
-
-
 }
