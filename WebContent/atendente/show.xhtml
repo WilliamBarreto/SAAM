@@ -8,7 +8,7 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:body>
 	<ui:composition template="/template/common/layout.xhtml">
-		<ui:param name="title" value="Dados do Usuario" />
+		<ui:param name="title" value="Dados do Atendente" />
 		<ui:define name="content">
 
 <p:panelGrid columns="2">
@@ -18,6 +18,12 @@
 		
 		Perfil:
 		<h:outputText value="#{usuarioMB.usuario.perfil.nome}" />
+		
+		Indicador de ativo
+		<h:outputText value="#{usuarioMB.voluntario.situacao == 'true'? 'Ativo':'Inativo'}" />
+		
+		Area de atendimento:
+		<h:outputText value="#{usuarioMB.voluntario.area.nome}" />
 		
 		Nome de usuario:
 		<h:outputText value="#{usuarioMB.usuario.nome}" />
@@ -61,7 +67,7 @@
 </p:panelGrid>
 	
 	<h:form>
-		<h:commandLink class="btn" value="Voltar" action="#{usuarioMB.index}" />
+		<h:commandLink class="btn" value="Voltar" action="#{usuarioMB.atendenteIndex}" />
 	</h:form>
 
 

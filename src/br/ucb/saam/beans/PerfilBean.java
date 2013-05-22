@@ -14,8 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-/** Classe para objetos do tipo Perfil, onde serão contidos, valores e métodos para o mesmo.
- *  Representa os possíveis perfis suportados pela aplicação.
+/** Classe para objetos do tipo Perfil, onde serï¿½o contidos, valores e mï¿½todos para o mesmo.
+ *  Representa os possï¿½veis perfis suportados pela aplicaï¿½ï¿½o.
  *  
  * @author William Barreto
  * @version 1.0
@@ -86,6 +86,31 @@ public class PerfilBean implements Serializable{
 		this.funcionalidades = funcionalidades;
 	}
 
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PerfilBean other = (PerfilBean) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
 
 
 

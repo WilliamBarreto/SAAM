@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/template/common/layout.xhtml">
+		<ui:param name="title" value="Lista de Atendentes" />
+		<ui:define name="content">
+			<h:form id="form">
+				<p:messages id="msg" autoUpdate="true" closable="true" />
+				<p:dataTable value="#{usuarioMB.usuarios}" var="item"
+					paginatorPosition="bottom" paginator="true" rows="10"
+					paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink} "
+					widgetVar="teste" emptyMessage="Nenhum Usuario foi encontrado."
+					filteredValue="#{usuarioMB.resultado}">
+					
+					<p:column id="nomeUsuarioColumn" filterBy="#{item.pessoa.nome}"
+						headerText="Nome" filterMatchMode="contains">
+						<h:outputText value="#{item.pessoa.nome}" />
+					</p:column>
+
+					<p:column id="nomeColumn" filterBy="#{item.nome}"
+						headerText="Nome de usuario" filterMatchMode="contains">
+						<h:outputText value="#{item.nome}" />
+					</p:column>
+
+					<p:column>
+						<p:commandLink value="Vizualizar"
+							action="#{usuarioMB.atendenteShow}" styleClass="btn">
+							<f:setPropertyActionListener value="#{item}"
+								target="#{usuarioMB.usuario}" />
+						</p:commandLink>
+					</p:column>
+
+					<p:column>
+						<p:commandLink value="Editar" action="#{usuarioMB.atendenteEdit}"
+							styleClass="btn">
+							<f:setPropertyActionListener value="#{item}"
+								target="#{usuarioMB.usuario}" />
+						</p:commandLink>
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

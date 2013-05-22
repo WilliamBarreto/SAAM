@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-    
+
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -13,29 +13,30 @@
 		<ui:define name="content">
 			<h:form id="form">
 				<p:messages id="msg" autoUpdate="true" closable="true" />
-				<p:dataTable value="#{usuarioMB.usuarios}" var="item">
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Nome" />
-						</f:facet>
+				<p:dataTable value="#{usuarioMB.usuarios}" var="item"
+					paginatorPosition="bottom" paginator="true" rows="10"
+					paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink} "
+					widgetVar="teste" emptyMessage="Nenhum Usuario foi encontrado."
+					filteredValue="#{usuarioMB.resultado}">
+					
+					<p:column id="nomeUsuarioColumn" filterBy="#{item.pessoa.nome}"
+						headerText="Nome" filterMatchMode="contains">
 						<h:outputText value="#{item.pessoa.nome}" />
 					</p:column>
-					
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Nome de usuario" />
-						</f:facet>
+
+					<p:column id="nomeColumn" filterBy="#{item.nome}"
+						headerText="Nome de usuario" filterMatchMode="contains">
 						<h:outputText value="#{item.nome}" />
 					</p:column>
-					
+
 					<p:column>
-						<p:commandLink value="Vizualizar"
-							action="#{usuarioMB.show}" styleClass="btn">
+						<p:commandLink value="Vizualizar" action="#{usuarioMB.show}"
+							styleClass="btn">
 							<f:setPropertyActionListener value="#{item}"
 								target="#{usuarioMB.usuario}" />
 						</p:commandLink>
 					</p:column>
-					
+
 					<p:column>
 						<p:commandLink value="Editar" action="#{usuarioMB.edit}"
 							styleClass="btn">
@@ -43,7 +44,7 @@
 								target="#{usuarioMB.usuario}" />
 						</p:commandLink>
 					</p:column>
-					
+
 					<p:column>
 						<p:commandLink id="delete" value="Excluir"
 							onclick="confirmation.show()" type="button" styleClass="btn">
@@ -51,7 +52,7 @@
 								target="#{usuarioMB.usuario}" />
 						</p:commandLink>
 					</p:column>
-					
+
 				</p:dataTable>
 				<p:confirmDialog id="confirmDialog"
 					message="Tem certeza que deseja apagar este usuario?"
@@ -59,12 +60,14 @@
 					widgetVar="confirmation">
 
 					<p:commandButton id="confirm" value="Sim" update=":form"
-						oncomplete="confirmation.hide()" actionListener="#{usuarioMB.delete}"/>
+						oncomplete="confirmation.hide()"
+						actionListener="#{usuarioMB.delete}" />
 					<p:commandButton id="decline" value="Não"
 						onclick="confirmation.hide()" type="button" />
 				</p:confirmDialog>
-				
-				<h:commandLink value="Incluir" action="#{usuarioMB.novo}" styleClass="btn"/>
+				<br />
+				<h:commandLink value="Incluir" action="#{usuarioMB.novo}"
+					styleClass="btn" />
 			</h:form>
 		</ui:define>
 	</ui:composition>
