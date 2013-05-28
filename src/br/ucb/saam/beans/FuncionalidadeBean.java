@@ -35,8 +35,8 @@ public class FuncionalidadeBean implements Serializable{
 	
 	@Column(name="url")
 	private String url;
-
-
+	
+	
 	public String getUrl() {
 		return url;
 	}

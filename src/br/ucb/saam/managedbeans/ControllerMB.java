@@ -41,10 +41,13 @@ public class ControllerMB implements Serializable{
 			}
 				
 		}
-		return "index";
+		return "principal";
 		
 	}
 	
+	public String voltar(){
+		return "principal";
+	}
 	public String cadastrarVoluntario(){
 		return "cadastro-voluntario?faces-redirect=true";
 	}

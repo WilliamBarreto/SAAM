@@ -8,9 +8,10 @@
 	xmlns:p="http://primefaces.org/ui">
 
 
+
 <ui:composition template="/template/common/layout.xhtml">
 
-
+	<ui:param name="title" value="Cadastro da Mulher" />
 	<ui:define name="menu">
 
 	</ui:define>
@@ -43,8 +44,7 @@
 
 </style>
 
-		<h:form id="formulario">
-			<p:separator title="testando"/>
+		<h:form id="formulario">			
 			<p:messages id="msg" autoUpdate="true" closable="true" />
 			
 			<p:fieldset>
@@ -144,7 +144,10 @@
 				</h:panelGrid>
 			</p:fieldset>
 			<br/>
-			<h:commandButton value="Gravar" actionListener="#{usuarioMB.cadastrarMulher}" styleClass="btn btn-success"/>
+			<h:commandButton value="Gravar" actionListener="#{usuarioMB.cadastrarMulher}" styleClass="btn btn-small btn-success"/>
+		</h:form>
+		<h:form>
+			<h:commandButton value="Voltar" action="#{controllerMB.voltar}" styleClass="btn btn-small btn-danger"/>
 		</h:form>
 	</ui:define>
 </ui:composition>

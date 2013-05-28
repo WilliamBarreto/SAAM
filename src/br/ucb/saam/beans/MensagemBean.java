@@ -31,7 +31,7 @@ public class MensagemBean implements Serializable{
 	@Column(name="COD_MENSAGEM")
 	private int id;
 	
-	@Column(name="DATA")
+	@Column(name="DATA_CRIACAO")
 	private Date data;
 	
 	@Column(name="TEXTO")

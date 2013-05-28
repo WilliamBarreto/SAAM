@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<title>Lista de Perfis</title>
+</h:head>
+
+<h:body>
+
+	<style>
+.esquerda {
+	padding-left: 50px;
+}
+</style>
+	<ui:composition template="/template/common/layout.xhtml">
+		<ui:param name="title" value="Relatório de Avaliaçao" />
+
+		<ui:define name="content">
+		
+		<h:form>
+				<p:dataTable id="tbl2" var="item" value="#{relatorioMB.avaliacaoByClassificacaoGroups}">	
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Classificação"/>
+						</f:facet>
+						<h:outputText value="#{item.classificacao.nome}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Quantidade"/>
+						</f:facet>
+						<h:outputText value="#{item.qtd}" />
+					</p:column>
+					
+				</p:dataTable>
+				
+				<h:panelGrid>
+			<p:panel header="Export Page Data">				
+				<h:commandLink action="#{relatorioMB.}">  
+				    <p:graphicImage library="img" name="pdf.png" />
+				</h:commandLink> 
+
+			</p:panel>
+		</h:panelGrid>
+		</h:form>
+		</ui:define>
+
+	</ui:composition>
+
+
+</h:body>
+
+</html>

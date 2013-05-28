@@ -26,6 +26,14 @@
 		<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
 		<param-value>resources.application</param-value>
 	</context-param>
+	
+ 
+	
+	<context-param>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>delta</param-value>
+	</context-param>
+	
 	<listener>
 		<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
 	</listener>
@@ -84,12 +92,28 @@
 		<url-pattern>/atendimento/*</url-pattern>
 		<url-pattern>/perfil/*</url-pattern>
 		<url-pattern>/voluntario/*</url-pattern>
+		<url-pattern>/perguntaFrequente/*</url-pattern>
 		<url-pattern>/usuario/*</url-pattern>
 		<url-pattern>/home/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
 		<dispatcher>ERROR</dispatcher>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>permissao</filter-name>
+		<filter-class>br.ucb.saam.util.PermissaoFilter</filter-class>
+	</filter>
+		<filter-mapping>
+		<filter-name>permissao</filter-name>
+		<url-pattern>/atendimento/*</url-pattern>
+		<url-pattern>/perfil/*</url-pattern>
+		<url-pattern>/perguntaFrequente/*</url-pattern>		
+		<url-pattern>/voluntario/*</url-pattern>
+		<url-pattern>/usuario/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
 	</filter-mapping>
 	
 	<!-- Páginas de Erro -->
@@ -105,11 +129,11 @@
 		<location>/erro/404.xhtml</location>
 	</error-page>
 	
-	<!--
+
 		<error-page>
 			<exception-type>com.sun.faces.context.FacesFileNotFoundException</exception-type>
 			<location>/erro/404.xhtml</location>
 		</error-page>
-	 -->
+
 	
 </web-app>

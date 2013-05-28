@@ -9,7 +9,7 @@
 
 
 <ui:composition template="/template/common/layout.xhtml">
-
+	<ui:param name="title" value="Cadastro do Voluntario" />
 
 	<ui:define name="menu">
 
@@ -42,9 +42,7 @@
 }
 
 </style>
-
 		<h:form id="formulario">
-			<p:separator title="testando"/>
 			<p:messages id="msg" autoUpdate="true" closable="true" />
 			
 			<p:fieldset>
@@ -110,11 +108,11 @@
 
 					<p:outputLabel for="cep" value="CEP" />
 					<p:inputText id="cep" required="true"
-						value="#{voluntarioMB.voluntario.endereco.cep}" />
+						value="#{voluntarioMB.voluntario.endereco.cep}" mask="99999-999" />
 
 					<p:outputLabel for="estado" value="Estado" />
 					<p:selectOneMenu id="estado" required="true"
-						value="#{voluntarioMB.voluntario.sexo}">
+						value="#{voluntarioMB.voluntario.endereco.estado}">
 						<f:selectItem itemLabel="Selecione" itemValue="" />
 						<f:selectItem itemValue="AC" itemLabel="Acre"></f:selectItem>
 						<f:selectItem itemValue="AL" itemLabel="Alagoas"></f:selectItem>
@@ -150,7 +148,11 @@
 					<p:inputText value="#{voluntarioMB.voluntario.endereco.pais}" />
 				</h:panelGrid>
 			</p:fieldset>
-			<h:commandButton value="Gravar" action="#{voluntarioMB.cadastrar}" styleClass="btn btn-success"/>
+			<br />
+			<h:commandButton value="Gravar" action="#{voluntarioMB.cadastrar}" styleClass="btn btn-small btn-success"/>
+		</h:form>
+		<h:form>
+			<h:commandButton value="Voltar" action="#{controllerMB.voltar}" styleClass="btn btn-small btn-danger"/>
 		</h:form>
 	</ui:define>
 </ui:composition>

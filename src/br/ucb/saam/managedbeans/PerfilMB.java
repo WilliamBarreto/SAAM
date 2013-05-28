@@ -27,12 +27,12 @@ public class PerfilMB implements Serializable{
 	private FuncionalidadeDAO funcionalidadeDAO;
 	
 	public PerfilMB(){
-		setPerfil(new PerfilBean());
-		setPerdilDAO(new PerfilDAO());
-		setPerfis(perfilDAO.findAll(PerfilBean.class));
-		setFuncionalidades(new ArrayList<FuncionalidadeBean>());
-		setFuncionalidadeDAO(new FuncionalidadeDAO());
-		setResultado(perfis);
+		resultado = new ArrayList<PerfilBean>();
+		perfil = new PerfilBean();
+		perfilDAO = new PerfilDAO();
+		perfis = new ArrayList<PerfilBean>();
+		funcionalidades = new ArrayList<FuncionalidadeBean>();
+		funcionalidadeDAO = new FuncionalidadeDAO();
 	}
 	
 	public String index(){

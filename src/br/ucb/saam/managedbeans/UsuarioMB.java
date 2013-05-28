@@ -1,11 +1,8 @@
 package br.ucb.saam.managedbeans;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javassist.bytecode.stackmap.BasicBlock.Catch;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -14,11 +11,14 @@ import javax.faces.context.FacesContext;
 import org.apache.commons.mail.EmailException;
 
 import br.ucb.saam.beans.EnderecoBean;
+import br.ucb.saam.beans.FuncionalidadeBean;
+import br.ucb.saam.beans.PaginaBean;
 import br.ucb.saam.beans.PerfilBean;
 import br.ucb.saam.beans.PessoaBean;
 import br.ucb.saam.beans.UsuarioBean;
 import br.ucb.saam.beans.VoluntarioBean;
 import br.ucb.saam.dao.EnderecoDAO;
+import br.ucb.saam.dao.PaginaDAO;
 import br.ucb.saam.dao.PerfilDAO;
 import br.ucb.saam.dao.PessoaDAO;
 import br.ucb.saam.dao.UsuarioDAO;
@@ -37,16 +37,15 @@ public class UsuarioMB {
 
 	private UsuarioBean usuario;
 	private UsuarioDAO usuarioDAO;
-	
 	private PessoaBean pessoa;
 	private PessoaDAO pessoaDAO;
-	
 	private EnderecoBean endereco;
 	private EnderecoDAO enderecoDAO;
-	
 	private List<UsuarioBean> usuarios;
 	private String email;
 	private PerfilDAO perfilDAO;
+	
+	private List<String> paginasPermitidas;
 
 
 	public UsuarioMB(){
@@ -61,6 +60,7 @@ public class UsuarioMB {
 		this.pessoaDAO = new PessoaDAO();
 		this.enderecoDAO = new EnderecoDAO();
 		this.perfilDAO = new PerfilDAO();
+		this.paginasPermitidas = new ArrayList<String>();
 		
 	}
 
@@ -81,7 +81,9 @@ public class UsuarioMB {
 	public String login(){
 		
 		//Busca a lista de usuários gravados no banco de dados
-		getListUsuarios();
+		//getListUsuarios();
+		
+		this.usuarios = usuarioDAO.findAll(UsuarioBean.class);
 
 		//Percorre a lista de usuários		
 		for (UsuarioBean user : usuarios) {	
@@ -89,15 +91,17 @@ public class UsuarioMB {
 			//Compara se o usuário informado é igual ao da vez
 			if(user.equals(this.usuario)){
 				//Sicroniza o objeto usuário
-				user = (UsuarioBean) usuarioDAO.buscarPorId(UsuarioBean.class, user.getId());				
+				user = (UsuarioBean) usuarioDAO.buscarPorId(UsuarioBean.class, user.getId());
 				
 				//Adiciona o usuário na Sessão
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", user);
-				
+				carregaPaginas(user);
+				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("permissao", this.paginasPermitidas);
 				isAtendente(user);
-				//Redireciona para Home(Menu de Funcionalidades)
-			
+				
+				//Redireciona para Home(Menu de Funcionalidades)			
 				this.usuario = new UsuarioBean();
+				this.paginasPermitidas = new ArrayList<String>();
 				return "/home/home";
 			}
 		}
@@ -118,6 +122,17 @@ public class UsuarioMB {
 			voluntario = new VoluntarioBean();
 		}
 	}
+
+	public void carregaPaginas(UsuarioBean usuario){		
+		List<PaginaBean>paginas;		
+		for ( FuncionalidadeBean f : usuario.getPerfil().getFuncionalidades()) {
+			paginas = new PaginaDAO().findAllByFuncionalidade(f);
+			for (PaginaBean pagina : paginas) {
+				this.paginasPermitidas.add(pagina.getUrl());
+			}
+		}
+	}
+	
 	
 	public String logout() throws IOException{
 			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("usuario");
@@ -156,6 +171,20 @@ public class UsuarioMB {
 		return "relembraUsario";
 		
 		
+	}
+	
+	public String loginAnonimo(){
+		
+		this.pessoa.setNome("Usuário Anônimo");
+		this.usuario.setPessoa(pessoa);
+		this.usuario.setNome("anonimo");
+		this.usuario.setSenha("");
+		this.usuario.setPerfil((PerfilBean) this.perfilDAO.buscarPorId(PerfilBean.class, 6));
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", this.usuario);
+		
+		this.pessoa = new PessoaBean();
+		this.usuario = new UsuarioBean();
+		return "/home/home";
 	}
 
 	public String deletar(UsuarioBean usuario){

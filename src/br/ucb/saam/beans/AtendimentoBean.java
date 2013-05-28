@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -59,7 +60,7 @@ public class AtendimentoBean implements Serializable{
 	@Column(name="DATA_FIM")
 	private Date dataFim;
 	
-	@ManyToMany()
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="aten_mens", joinColumns=@JoinColumn(name="COD_ATENDIMENTO"),
 	inverseJoinColumns=@JoinColumn(name="COD_MENSAGEM"))
 	private List<MensagemBean> mensagens;

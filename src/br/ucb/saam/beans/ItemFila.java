@@ -4,6 +4,7 @@ public class ItemFila {
 
 	private UsuarioBean usuario;
 	private AreaBean area;
+	private String canal;
 	
 	
 	public ItemFila(){
@@ -22,6 +23,14 @@ public class ItemFila {
 	}
 	public void setArea(AreaBean area) {
 		this.area = area;
+	}
+
+	public String getCanal() {
+		return canal;
+	}
+
+	public void setCanal(String canal) {
+		this.canal = canal;
 	}
 	
 }

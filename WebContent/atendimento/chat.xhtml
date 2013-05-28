@@ -8,13 +8,12 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/template/common/layout.xhtml">
-	<ui:param name="title" value="Solicitar Atendimento" />
+	<ui:param name="title" value="Chat" />
 	<ui:define name="menu"></ui:define>
 	<ui:define name="content">
-
 		<style> 
 				.messageInput {
-					width: 420px;
+					width: 720px;
 				}
 				
 				.publicColumn {
@@ -30,8 +29,8 @@
 				}
 				
 				.chatlogs {
-					height: 200px;
-					width: 500px;
+					height: 350px;
+					width: 800px;
 					overflow: auto;
 					padding: 0.5em 1em 0.5em 0.5em;
 				}
@@ -48,26 +47,24 @@
 		
 		<p:commandButton value="Enviar"
 			actionListener="#{atendimentoMB.sendMensagem}"
-			oncomplete="$('.messageInput').val('').focus()" />
+			oncomplete="$('.messageInput').val('').focus()" icon="ui-icon-comment"/>
 		<p:spacer width="5" />
 
 	</h:form>
 
-	<h:outputText value="Canal : /#{sessionScope.usuario.id}"/>
-	<p:socket onMessage="handleMessage" channel="/#{sessionScope.usuario.id}" autoConnect="true" widgetVar="subscriber"/>
+	<h:outputText value="Canal : /#{facesContext.externalContext.requestHeaderMap.cookie}"/>
+	<p:socket onMessage="handleMessage" channel="/#{facesContext.externalContext.requestHeaderMap.cookie}" autoConnect="true" widgetVar="subscriber"/>
 
 	<script type="text/javascript">
 	
 		function handleMessage(data) {
 			var chatContent = $(PrimeFaces.escapeClientId('formchat:public'));
 			chatContent.append(data + '<br />');
-			dataFim = 'Atendimento Finalizado';
-			if(dataFim.localeCompare(data)== 0){
-				location.href='avaliacao.xhtml?id=7';
+			var p = data.split('.');
+			
+			if(p[0].localeCompare('atendimento-finalizado')== 0){
+				location.href='avaliacao.xhtml?id='+p[2];
 			}
-				
-			
-			
 			//keep scroll
 			chatContent.scrollTop(chatContent.height());
 

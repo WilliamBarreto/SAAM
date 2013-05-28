@@ -14,6 +14,7 @@ import org.primefaces.model.MenuModel;
 
 import br.ucb.saam.beans.FuncionalidadeBean;
 import br.ucb.saam.beans.UsuarioBean;
+import br.ucb.saam.util.JSFMensageiro;
 
 @ManagedBean
 @RequestScoped
@@ -33,7 +34,7 @@ public class MenuMB {
 		//First submenu  
 		Submenu submenu = new Submenu();  
 		submenu.setLabel("Menu");
-
+		
 		MenuItem item = new MenuItem();
 		try{
 			
@@ -49,7 +50,7 @@ public class MenuMB {
 				submenu.getChildren().add(item); 
 			}
 		}catch(Exception e){
-			System.out.println("Usuario não autenticado!");
+			System.out.println(e);
 		}
 
 		model.addSubmenu(submenu);  
@@ -103,5 +104,14 @@ public class MenuMB {
 	public void addMessage(String summary) {  
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  null);  
 		FacesContext.getCurrentInstance().addMessage(null, message);  
-	}  
+	} 
+	
+	public String mensagem(){
+		JSFMensageiro.error("Mensagem de erro");
+		JSFMensageiro.info("Mensagem sucesso");
+		JSFMensageiro.warn("Mensagem alerta");
+		JSFMensageiro.fatal("Mensagem de erro fatal");
+		
+		return "printmsg";
+	}
 }  

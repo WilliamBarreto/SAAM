@@ -20,7 +20,7 @@
 		          <f:selectItems value="#{atendimentoMB.areas}" var="area" itemLabel="&nbsp;#{area.nome}" style="padding:5px;" /> 
 		        </p:selectOneRadio>
 		        
-		        <h:commandButton action="#{atendimentoMB.solicitarAtendimento}" value="Continuar" styleClass="btn btn-small btn-inverse"/>
+		        <p:commandButton action="#{atendimentoMB.solicitarAtendimento}" icon="ui-icon-circle-check" value="Continuar" styleClass="btn btn-small btn-inverse"/>
 	        </h:panelGrid>
 	 	</h:form>
  	

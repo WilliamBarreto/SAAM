@@ -8,7 +8,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/template/common/layout.xhtml">
-	<ui:param name="title" value="Solicitar Atendimento" />
+	<ui:param name="title" value="Chat" />
 	<ui:define name="content">
 
 		<style> 
@@ -45,15 +45,24 @@
 			
 		</h:form>
 
-		<h:outputText value="Canal : /#{sessionScope.usuario.id}"/>
-		<p:socket onMessage="handleMessage" channel="/2" autoConnect="true" widgetVar="subscriber" />
+		<h:outputText value="Canal : /#{atendimentoMB.canalAcompanha}"/>
+		<p:socket onMessage="handleMessage" channel="/#{atendimentoMB.canalAcompanha}" autoConnect="true" widgetVar="subscriber" />
 
 		<script type="text/javascript">
 	
 		function handleMessage(data) {
 			var chatContent = $(PrimeFaces.escapeClientId('formchat:public'));
-			chatContent.append(data + '<br />');			
-			//alert(data)
+			var p = data.split('.');
+			if((data.localeCompare('atendimento-finalizado:')== 0)||(p[0].localeCompare('atendimento-finalizado')==0)){
+				data = 'Terminado';
+			}else{
+				chatContent.append(data + '<br />');
+			}
+			
+						
+			
+
+			
 			//keep scroll
 			chatContent.scrollTop(chatContent.height());
 

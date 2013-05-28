@@ -10,6 +10,7 @@
 <h:body>
 	
 	<ui:composition template="/template/common/layout.xhtml">
+    		<ui:param name="title" value="Login"/>
     		<ui:define name="menu">
     			
     		
@@ -55,7 +56,7 @@
 
 
 					
-					<h:form target="_blank">
+					<h:form>
 						<h:commandButton class="btn btn-small btn-danger" rendered="#{controllerMB.area == 'mulher' ? true:false}" value="Cadastre-se" action="#{controllerMB.cadastrarMulher}"/>
 						<h:commandButton class="btn btn-small btn-danger" rendered="#{controllerMB.area == 'voluntario'? true:false}" value="Cadastre-se" action="#{controllerMB.cadastrarVoluntario}"/>
 					</h:form>
@@ -77,6 +78,11 @@
 							</h:panelGrid>
 						</div>
 					</h:form>
+					
+					<h:form>
+						<h:commandButton class="btn btn-small btn-info" rendered="#{controllerMB.area == 'mulher' ? true:false}" value="Entrar Anônimo" action="#{usuarioMB.loginAnonimo}"/>
+					</h:form>
+					
 					<h:form rendered="#{controllerMB.renderFormLogin}">
 						<h:commandLink  value="Esqueceu sua senha?" action="#{usuarioMB.relembraSenha}"/>
 					</h:form>

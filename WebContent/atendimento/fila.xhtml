@@ -11,7 +11,7 @@
 	<ui:param name="title" value="Fila de Atendimento" />
  	<ui:define name="content">
  	 	
-	<h:form rendered="#{sessionScope.area.nome == 'JURÍDICA'?true:false}"> 	 
+	<h:form rendered="#{sessionScope.area.id == '1'?true:false}"> 	 
 	 
 	 	<h:dataTable id="txt_count" value="#{atendimentoMB.filaJ.itens}" var="item" >
 			<h:column>
@@ -29,7 +29,7 @@
 		<h:commandButton class="btn" value="Chamar Próximo" action="#{atendimentoMB.chamarFila}"/>
 	</h:form>
 	
-	<h:form rendered="#{sessionScope.area.nome == 'PSICOLÓGICA'?true:false}"> 	 
+	<h:form rendered="#{sessionScope.area.id == '2'?true:false}"> 	 
 	 	<h:dataTable id="txt_count" value="#{atendimentoMB.filaP.itens}" var="item" >
 			<h:column>
 				<f:facet name="header">
@@ -45,7 +45,7 @@
 	
 		<h:commandButton class="btn" value="Chamar Próximo" action="#{atendimentoMB.chamarFila}"/>
 	</h:form>
-	<h:form rendered="#{sessionScope.area.nome == 'Social'?true:false}"> 	 
+	<h:form rendered="#{sessionScope.area.id == '3'?true:false}"> 	 
 	 	<h:dataTable id="txt_count" value="#{atendimentoMB.filaS.itens}" var="item" >
 			<h:column>
 				<f:facet name="header">

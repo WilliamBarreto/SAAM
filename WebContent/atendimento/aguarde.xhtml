@@ -9,7 +9,7 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:body>
 <ui:composition template="/template/common/layout.xhtml">
-	<ui:param name="title" value="Solicitar Atendimento" />
+	<ui:param name="title" value="Fila de Atendimento" />
  	<ui:define name="content">
  	
  	<style>
@@ -40,7 +40,7 @@
  	
  	<h:form id="form">
 	 	<h:outputText value="Todos os atendentes estão ocupados no momento, aguarde em instates você será atendido."/><br/>
-	 	<h:outputText value="Situação do Atendimento:" />
+	 	<h:outputText value="Posição:" />
 	 	<b>
 	 		<h:outputText id="txt_count" value="#{atendimentoMB.posicao} " />  
 	    </b>

@@ -9,6 +9,7 @@ import java.util.List;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.push.PushContext;
 import org.primefaces.push.PushContextFactory;
@@ -34,35 +35,37 @@ import br.ucb.saam.util.JSFMensageiro;
 public class AtendimentoMB implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private AreaBean area;
 	private List<AreaBean> areas;
 	private AreaDAO areaDao;
 	private Chat chat;
 	private List<Chat> chats;
 	private Fila fila;
-	
-	
+
+
 	private Fila filaJ;
 	private Fila filaP;
 	private Fila filaS;
 	private List<UsuarioBean> atendentesDisponiveis;
-	
-	
+
+
 	private String posicao;
 	private MensagemBean mensagem;
 	private AtendimentoBean atendimento;
 	private List<AtendimentoBean> atendimentos;
-	
+
 	private VoluntarioBean voluntario;
 	private VoluntarioDAO voluntarioDao;
-	
+
 	private AtendimentoDAO atendimentoDao;
 	private MensagemDAO mensagemDao;
-	
-	
-	 
-	
+
+	String canalAcompanha;
+
+
+
+
 	public AtendimentoMB(){
 		this.atendimento = new AtendimentoBean();
 		this.areas = new ArrayList<AreaBean>();
@@ -78,22 +81,25 @@ public class AtendimentoMB implements Serializable{
 		this.voluntario = new VoluntarioBean();
 		this.atendimentoDao = new AtendimentoDAO();
 		this.mensagemDao = new MensagemDAO();
+		this.canalAcompanha = new String();
 
 		this.areaDao = new AreaDAO();
-		this.atendimentos = historico();
 	}
-	
+
 	public String solicitar(){
 		this.area = new AreaBean();
 		this.areas = this.areaDao.findAll(AreaBean.class);
 		return "/atendimento/index";
 	}
-	
+
 	public String atender(){
 		return "/atendimento/iniciarAtendimento";
 	}
-	
-	
+
+	public String acompanhar(){
+		return "/atendimento/acompanhaAtendimento";
+	}
+
 	/**Metodo para capturar o usuário logado na sessão
 	 * 
 	 * @return UsuarioBean - Usuï¿½rio da Sessï¿½o
@@ -102,8 +108,8 @@ public class AtendimentoMB implements Serializable{
 		UsuarioBean usuario = (UsuarioBean)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
 		return usuario;		
 	}
-	
-	
+
+
 	/**Metodo para adicionar o usuï¿½rio na lista de atendentesDisponiveis
 	 * 
 	 * @return String - Pï¿½gina que serï¿½ redirecionada
@@ -124,56 +130,51 @@ public class AtendimentoMB implements Serializable{
 		}
 		return "fila";
 	}
-	
-	public List<AtendimentoBean> historico(){
-		if (getUsuarioSessao().getPerfil().getId() == 2){
-				atendimentos = atendimentoDao.findAllByAtendente(getUsuarioSessao());
-			return atendimentos;
-		}else{
-			if (getUsuarioSessao().getPerfil().getId() == 5){
-					atendimentos = atendimentoDao.findAllByAtendido(getUsuarioSessao());
-			return atendimentos;
-			}
-		}
-		return null;
-	}
-	
-	public String show(){
-		
-		return "show";
-	}
-	
 
-	
+
+
 	/**Metodo para finalizar um atendimento de chat 
 	 * 
 	 * @return
 	 */
 	public String encerrarAtendimento(){
+
+
 		//Captura o chat que o atendete deseja finalizar
-		this.chat = getChat();		
-		TipoAtendimentoBean tipoAtendimento = (TipoAtendimentoBean) new TipoAtendimentoDAO().buscarPorId(TipoAtendimentoBean.class, 1);
-		
-		this.atendimento.setArea(buscaArea(chat.getAtendente()));
-		this.atendimento.setAtendente(chat.getAtendente());
-		this.atendimento.setAtendido(chat.getAtendido());
-		this.atendimento.setDataInicio(chat.getData());
-		this.atendimento.setDataFim(new Date(System.currentTimeMillis()));
-		this.atendimento.setMensagens(chat.getMsgs());
-		this.atendimento.setTipoAtendimento(tipoAtendimento);
-		
-		this.mensagemDao.saveOrUpdateMensagens(atendimento.getMensagens());
-		this.atendimentoDao.saveOrUpdate(this.atendimento);
-		
-		PushContext pushContext = PushContextFactory.getDefault().getPushContext();
-		//pushContext.push(""+getChat().getAtendente().getId(), getUsuarioSessao().getNome()+" : " + mensagem.getTexto());
-		pushContext.push(""+this.atendimento.getAtendido().getId(), "Atendimento Finalizado");
-		this.atendimento = new AtendimentoBean();
-		this.chats.remove(chat);
+		this.chat = getChat();
+
+
+		if(this.chat.getAtendido().getPerfil().getId() == 6){
+			PushContext pushContext = PushContextFactory.getDefault().getPushContext();
+			pushContext.push(getChat().getCanalAtendido(), "Atendimento Finalizado.");
+			pushContext.push(getChat().getCanalAtendido(), "atendimento-finalizado:");
+			this.chats.remove(chat);
+			JSFMensageiro.info("Atendimento Finalizado!");
+			return "fila";	
+
+		}else{
+			TipoAtendimentoBean tipoAtendimento = (TipoAtendimentoBean) new TipoAtendimentoDAO().buscarPorId(TipoAtendimentoBean.class, 1);
+
+			this.atendimento.setArea(buscaArea(chat.getAtendente()));
+			this.atendimento.setAtendente(chat.getAtendente());
+			this.atendimento.setAtendido(chat.getAtendido());
+			this.atendimento.setDataInicio(chat.getData());
+			this.atendimento.setDataFim(new Date(System.currentTimeMillis()));
+			this.atendimento.setMensagens(chat.getMsgs());
+			this.atendimento.setTipoAtendimento(tipoAtendimento);
+
+			this.mensagemDao.saveOrUpdateMensagens(atendimento.getMensagens());
+			this.atendimentoDao.saveOrUpdate(this.atendimento);
+			PushContext pushContext = PushContextFactory.getDefault().getPushContext();
+			pushContext.push(getChat().getCanalAtendido(), "Atendimento Finalizado.");
+			pushContext.push(chat.getCanalAtendido(), "atendimento-finalizado.id."+this.atendimento.getId()+"");
+			this.atendimento = new AtendimentoBean();
+			this.chats.remove(chat);
+		}
 		return "fila";
 	}
-	
-	
+
+
 	/**Metodo para retirar o usuï¿½rio da lista de atendentesDisponiveis 
 	 * 
 	 * @return void
@@ -183,8 +184,8 @@ public class AtendimentoMB implements Serializable{
 		this.atendentesDisponiveis.remove(getUsuarioSessao());
 		JSFMensageiro.info("Vocï¿½ saiu da area de atendimento de chats");
 	}
-	
-	
+
+
 	/**Metodo para chamar um usuï¿½rio da fila de atendimento.<br/>
 	 * Retira o usuï¿½rio da vez da fila<br/>
 	 * Cria um objeto do tipo Chat<br/>
@@ -195,11 +196,11 @@ public class AtendimentoMB implements Serializable{
 	 */
 	public String chamarFila(){
 
-		ItemFila item; //Remove o usuï¿½rio da fila
-		
+		ItemFila item;
+
 		VoluntarioBean voluntario = new VoluntarioBean();
 		voluntario = (VoluntarioBean) new VoluntarioDAO().buscarPorId(VoluntarioBean.class, getUsuarioSessao().getPessoa().getId());
-		
+
 		if(voluntario.getArea().getId() == 1){
 			item = this.filaJ.remove();
 		} else {
@@ -209,48 +210,52 @@ public class AtendimentoMB implements Serializable{
 				item = this.filaS.remove();
 			}
 		}
-		
-		Chat chat = new Chat(getUsuarioSessao(),item.getUsuario(),new Date(System.currentTimeMillis())); //Cria objeto para o CHAT, com o atendente e atendido	
+
+		Chat chat = new Chat(getUsuarioSessao(),String.valueOf(getUsuarioSessao().getId()),item.getUsuario(),item.getCanal(),new Date(System.currentTimeMillis())); //Cria objeto para o CHAT, com o atendente e atendido	
 		chats.add(chat); //Adiciona na lista de chats
 
 		PushContext pushContext = PushContextFactory.getDefault().getPushContext();
-		pushContext.push(""+chat.getAtendido().getId(), "Atendente Conectado");
-		
+		pushContext.push(chat.getCanalAtendido(), "Atendente Conectado.");
+
 		return "chatAtedente";		
 	}
-	
 
-	
+
+
 	/**Metodo para um usuï¿½rio solicitar um atendimento. * 
 	 * 
 	 * @return String - Pï¿½gina que serï¿½ redirecionada
 	 */
 	public String solicitarAtendimento(){
-		
+
 		//Verifica se existe a lista de atendentes disponiveis estï¿½ vazia
 		if(this.atendentesDisponiveis.isEmpty()){
 			//Caso a lista de atendentes esteja vazia(isEmpty) o usuï¿½rio ï¿½ redirecionado para o 
 			//formulï¿½rio para enviar uma mensagem off-line.
+			if(getUsuarioSessao().getPerfil().getId() == 6){
+				JSFMensageiro.error("Não existe atendete disponivel no momento, tente mais tarde.");
+				return "index";
+			}			
 			return "mensagem";		
 		}else {
 			if (verificaAtendenteParaArea()){
-				
-			
+
 				ItemFila item = new ItemFila();
 				item.setUsuario(getUsuarioSessao());
-				item.setArea(this.area);	
-				
+				item.setArea(this.area);
+				item.setCanal(MySession());
+
 				// Insere na fila de acordo com area solicitada
-				if(this.area.getNome().equals("JURï¿½DICA")){
+				if(this.area.getId() == 1){
 					filaJ.insere(item);
 					System.out.println("FilaJ - Solicitar ");
-	
+
 				} else{
-					if(this.area.getNome().equals("PSICOLï¿½GICA")){
+					if(this.area.getId() == 2){
 						filaP.insere(item);
 						System.out.println("FilaP - Solicitar ");
-						
-	
+
+
 					}else{
 						filaS.insere(item);
 						System.out.println("FilaS - Solicitar ");
@@ -258,7 +263,7 @@ public class AtendimentoMB implements Serializable{
 				}			
 				//Atualiza o status do atendimento
 				setPosicao("Adicionando na fila de atendimento ...");
-				
+
 				// Limpa o Objeto Area
 				setArea(new AreaBean());
 				return "aguarde";
@@ -266,13 +271,19 @@ public class AtendimentoMB implements Serializable{
 			return "mensagem";
 		}	
 	}
-	
+
+	public String MySession(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
+		return "JSESSIONID="+session.getId();		
+	}
+
 	/**Metodo para verificar se existe um atendente disponivel para a area solicitada
 	 * @return boolean - True: existe, False: nï¿½o existe
 	 */
-	
+
 	public boolean verificaAtendenteParaArea(){
-		
+
 		for (UsuarioBean atendente : atendentesDisponiveis) {
 			this.voluntario = (VoluntarioBean) voluntarioDao.buscarPorId(VoluntarioBean.class, atendente.getPessoa().getId());
 			if(voluntario.getArea().equals(area)){
@@ -280,37 +291,41 @@ public class AtendimentoMB implements Serializable{
 			}
 		}
 		return false;
-		
+
 	}
-	
-	
+
+
 	/**Metodo para notificar a posicao do usuario da fila.<br/>
 	 * Utilizado pelo ajax de uma pagina xhtml para notificar usuarios sobre sua posiï¿½ï¿½o
 	 * 
 	 */
 	public void atualizaPosicao(){
-		
+
 		if(buscaFila(getUsuarioSessao()) == null){
 			setPosicao("Em Atendimento");
-		
-		//Se a posicao do usuï¿½rio for igual a 0, significa que ele estï¿½ em atendimento
-		//if(fila.posicao(getUsuarioSessao()) == 0){
+
+			//Se a posicao do usuï¿½rio for igual a 0, significa que ele estï¿½ em atendimento
+			//if(fila.posicao(getUsuarioSessao()) == 0){
 			//setPosicao("Em Atendimento");
-			
+
 			try {
-				FacesContext.getCurrentInstance().getExternalContext().redirect("chat.xhtml");
-				
+				if(getUsuarioSessao().getPerfil().getId()== 6){
+					FacesContext.getCurrentInstance().getExternalContext().redirect("/SAAM/atendimento/chatAnonimo.xhtml");
+				}else{
+					FacesContext.getCurrentInstance().getExternalContext().redirect("/SAAM/atendimento/chat.xhtml");
+				}
+
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}else{
 			setPosicao(String.valueOf(buscaFila(getUsuarioSessao()).posicao(getUsuarioSessao())));
 		}
 	}
 
-	
+
 	/** Metodo para buscar a fila em que um usuï¿½rio foi adicionado
 	 * @param usuario
 	 * @return Fila
@@ -334,8 +349,8 @@ public class AtendimentoMB implements Serializable{
 			}
 		}
 	}
-	
-	
+
+
 	/**Metodo para buscar a area do atendente
 	 * 
 	 * @param atendente
@@ -346,8 +361,8 @@ public class AtendimentoMB implements Serializable{
 		VoluntarioBean voluntario = (VoluntarioBean) new VoluntarioDAO().buscarPorId(VoluntarioBean.class, id);
 		return voluntario.getArea();
 	}
-	
-	
+
+
 	/**Metodo utilizado apenas para manter a fila atualizada na pï¿½gina dos usuï¿½rios
 	 * 
 	 */
@@ -355,23 +370,35 @@ public class AtendimentoMB implements Serializable{
 		//O componente do p:poll do primefaces necessita de um metodo para atualizar a fila.
 		//Como a fila sempre estar atualizada, este metodo ï¿½ apenas para satisfazer o componente
 	}
-	
+
 	/**Metodo para enviar mensagens para a pï¿½gina html
 	 *
 	 */
 	public synchronized void sendMensagem(){
-		
+
 		this.mensagem.setUsuario(getUsuarioSessao());
 		this.mensagem.setData(new Date(System.currentTimeMillis()));
 		getChat().getMsgs().add(mensagem);
-		
+
 		PushContext pushContext = PushContextFactory.getDefault().getPushContext();
-		pushContext.push(""+getChat().getAtendente().getId(), getUsuarioSessao().getNome()+" : " + mensagem.getTexto());
-		pushContext.push(""+getChat().getAtendido().getId(), getUsuarioSessao().getNome()+" : " + mensagem.getTexto());
-		
+		pushContext.push(getChat().getCanalAtendente(), getUsuarioSessao().getNome()+" : " + mensagem.getTexto());
+		pushContext.push(getChat().getCanalAtendido(), getUsuarioSessao().getNome()+" : " + mensagem.getTexto());
+
 		this.mensagem = new MensagemBean();
 	}
-	
+
+
+	public String acompanharAtendimento(){
+		this.canalAcompanha = new String();
+		this.canalAcompanha = chat.getCanalAtendido();
+		
+		this.chat = new Chat();
+		
+		return "chatGerente";
+
+	}
+
+
 	/**Metodo para procurar o canal do usuario da sessï¿½o
 	 * 
 	 * @return Chat - chat correspondente ao usuario da sessï¿½o
@@ -385,17 +412,13 @@ public class AtendimentoMB implements Serializable{
 		return null;
 	}
 
-	public void menuDoido(){
-		System.out.println("Funfou putaiada!");
-	}
-	
 	public AreaBean getArea() {
 		return area;
 	}
 	public void setArea(AreaBean area) {
 		this.area = area;
 	}
-	
+
 	public List<AreaBean> getAreas() {
 		return areas;
 	}
@@ -444,7 +467,7 @@ public class AtendimentoMB implements Serializable{
 	public void setAtendimento(AtendimentoBean atendimento) {
 		this.atendimento = atendimento;
 	}
-	
+
 	public Fila getFilaJ() {
 		return filaJ;
 	}
@@ -458,7 +481,7 @@ public class AtendimentoMB implements Serializable{
 	public void setFilaP(Fila filaP) {
 		this.filaP = filaP;
 	}
-	
+
 	public Fila getFilaS() {
 		return filaS;
 	}
@@ -476,5 +499,16 @@ public class AtendimentoMB implements Serializable{
 		this.atendimentos = atendimentos;
 	}
 
-	
+	public String getCanalAcompanha() {
+		return canalAcompanha;
+	}
+
+	public void setCanalAcompanha(String canalAcompanha) {
+		this.canalAcompanha = canalAcompanha;
+	}
+
+	public void setChat(Chat chat) {
+		this.chat = chat;
+	}
+
 }
