@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
- *  Classe para objetos do tipo Area, onde serão contidos, valores e métodos para o mesmo.
+ *  Classe para objetos do tipo Area, onde serï¿½o contidos, valores e mï¿½todos para o mesmo.
  *  Representa modelo para um obejto do tipo Usuario.
  *  
  * @author Thiago R. Pereira
@@ -37,7 +37,7 @@ public class UsuarioBean implements Serializable{
 	@Column(name="SENHA")
 	private String senha;
 	
-	@ManyToOne()
+	@ManyToOne
 	@JoinColumn(name="COD_PERFIL")
 	private PerfilBean perfil;
 	

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -60,7 +61,7 @@ public class AtendimentoBean implements Serializable{
 	@Column(name="DATA_FIM")
 	private Date dataFim;
 	
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	@JoinTable(name="aten_mens", joinColumns=@JoinColumn(name="COD_ATENDIMENTO"),
 	inverseJoinColumns=@JoinColumn(name="COD_MENSAGEM"))
 	private List<MensagemBean> mensagens;

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.apache.commons.mail.EmailException;
 
@@ -20,10 +20,11 @@ import br.ucb.saam.dao.PessoaDAO;
 import br.ucb.saam.dao.UsuarioDAO;
 import br.ucb.saam.dao.VoluntarioDAO;
 import br.ucb.saam.util.EmailUtils;
+import br.ucb.saam.util.JSFMensageiro;
 import br.ucb.saam.util.Mensagem;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class VoluntarioMB implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -61,14 +62,16 @@ public class VoluntarioMB implements Serializable{
 		return "show";
 	}
 	
-	public String reprovar(){
+	public void reprovar(){
 		PessoaDAO pessoaDao = new PessoaDAO();
 		PessoaBean pessoa = new PessoaBean();
 		
 		pessoa = (PessoaBean) pessoaDao.buscarPorId(PessoaBean.class, voluntario.getId());
 		pessoaDao.delete(pessoa);
 		voluntarioDAO.delete(voluntario);
-		return index();
+		this.voluntarios = voluntarioDAO.buscaInativos();
+		voluntario = new VoluntarioBean();
+		JSFMensageiro.info("O cadastro do voluntario foi reprovado com sucesso!");
 	}
 	
 	public String aprovar(){
@@ -98,6 +101,7 @@ public class VoluntarioMB implements Serializable{
 		
 		enviaEmail(voluntario.getEmail(),"Cadastro Aprovado", "Seu cadastro foi aprovado!");
 		this.voluntarios = voluntarioDAO.buscaInativos();
+		JSFMensageiro.info("O cadastro do voluntario foi aprovado com sucesso!");
 		return index();
 	}
 	

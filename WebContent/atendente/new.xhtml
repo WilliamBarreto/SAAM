@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/template/common/layout.xhtml">
+
+		<ui:define name="content">
+
+			<h:form id="formulario">
+				<p:separator title="testando" />
+				<p:messages id="msg" autoUpdate="true" closable="true" />
+				<p:fieldset>
+					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+
+						<p:outputLabel for="nome" value="Nome" />
+						<p:inputText id="nome" required="true"
+							value="#{usuarioMB.usuario.pessoa.nome}" />
+
+						<p:outputLabel for="perfil" value="Area de Atendimento" />
+						<p:selectOneMenu id="perfil" value="#{usuarioMB.voluntario.area}"
+							effect="fade" converter="areaConverter" required="true">
+							<f:selectItem itemLabel="Selecione" itemValue=" "
+								noSelectionOption="true" />
+							<f:selectItems value="#{usuarioMB.areas}" var="item"
+								itemLabel="#{item.nome}" itemValue="#{item}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel for="situacao" value="Indicador de ativo" />
+						<p:selectBooleanButton id="situacao"
+							value="#{usuarioMB.voluntario.situacao}" onLabel="Ativo"
+							offLabel="Inativo" onIcon="ui-icon-check" offIcon="ui-icon-close"/>
+
+						<p:outputLabel for="nomeUsuario" value="Nome de Usuario: " />
+						<p:inputText id="nomeUsuario" require="true"
+							value="#{usuarioMB.usuario.nome}" />
+
+
+						<p:outputLabel value="E-mail" for="email" />
+						<p:inputText id="email" value="#{usuarioMB.usuario.pessoa.email}"
+							size="30" maxlength="30" required="true" label="E-mail">
+							<f:validateRegex
+								pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+						</p:inputText>
+
+						<p:outputLabel for="Sexo" value="Sexo" />
+						<p:selectOneMenu id="Sexo" required="true"
+							value="#{usuarioMB.usuario.pessoa.sexo}">
+							<f:selectItem itemLabel="Selecione" itemValue="" />
+							<f:selectItem itemValue="M" itemLabel="Masculino"></f:selectItem>
+							<f:selectItem itemValue="F" itemLabel="Feminino"></f:selectItem>
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Estado Civil" />
+						<p:selectOneMenu value="#{usuarioMB.usuario.pessoa.estadoCivil}">
+							<f:selectItem itemLabel="Selecione" itemValue="" />
+							<f:selectItem itemValue="Solteiro" itemLabel="Solteiro(a)"></f:selectItem>
+							<f:selectItem itemValue="Casado" itemLabel="Casado(a)"></f:selectItem>
+							<f:selectItem itemValue="Divorciado" itemLabel="Divorciado(a)"></f:selectItem>
+							<f:selectItem itemValue="Viuvo" itemLabel="Viuvo(a)"></f:selectItem>
+						</p:selectOneMenu>
+
+						<p:outputLabel for="celular" value="Celular" />
+						<p:inputMask id="celular" required="true"
+							value="#{usuarioMB.usuario.pessoa.celular}" mask="(99) 9999-9999" />
+
+						<p:outputLabel for="telefoneResidencial"
+							value="Telefone Residencial" />
+						<p:inputMask id="telefoneResidencial" required="true"
+							value="#{usuarioMB.usuario.pessoa.telefoneResidencial}"
+							mask="(99) 9999 - 9999" />
+
+						<p:outputLabel value="Telefone Comercial" />
+						<p:inputMask value="#{usuarioMB.usuario.pessoa.telefoneComercial}"
+							mask="(99) 9999 - 9999" />
+
+						<p:outputLabel for="logradouro" value="Logradouro" />
+						<p:inputText id="logradouro" required="true"
+							value="#{usuarioMB.usuario.pessoa.endereco.logradouro}" />
+
+						<p:outputLabel for="bairro" value="Bairro" />
+						<p:inputText id="bairro" required="true"
+							value="#{usuarioMB.usuario.pessoa.endereco.bairro}" />
+
+						<p:outputLabel for="cidade" value="Cidade" />
+						<p:inputText id="cidade" required="true"
+							value="#{usuarioMB.usuario.pessoa.endereco.cidade}" />
+
+						<p:outputLabel for="cep" value="CEP" />
+						<p:inputText id="cep" required="true"
+							value="#{usuarioMB.usuario.pessoa.endereco.cep}" />
+
+						<p:outputLabel for="estado" value="Estado" />
+						<p:selectOneMenu id="estado" required="true"
+							value="#{usuarioMB.usuario.pessoa.endereco.estado}">
+							<f:selectItem itemLabel="Selecione" itemValue="" />
+							<f:selectItem itemValue="AC" itemLabel="Acre"></f:selectItem>
+							<f:selectItem itemValue="AL" itemLabel="Alagoas"></f:selectItem>
+							<f:selectItem itemValue="AP" itemLabel="Amapá"></f:selectItem>
+							<f:selectItem itemValue="AM" itemLabel="Amazonas"></f:selectItem>
+							<f:selectItem itemValue="BA" itemLabel="Bahia"></f:selectItem>
+							<f:selectItem itemValue="CE" itemLabel="Ceará"></f:selectItem>
+							<f:selectItem itemValue="DF" itemLabel="Distrito Federal"></f:selectItem>
+							<f:selectItem itemValue="ES" itemLabel="Espírito Santo"></f:selectItem>
+							<f:selectItem itemValue="GO" itemLabel="Goiás"></f:selectItem>
+							<f:selectItem itemValue="MA" itemLabel="Maranhão"></f:selectItem>
+							<f:selectItem itemValue="MT" itemLabel="Mato Grosso"></f:selectItem>
+							<f:selectItem itemValue="MS" itemLabel="Mato Grosso do Sul"></f:selectItem>
+							<f:selectItem itemValue="MG" itemLabel="Minas Gerais"></f:selectItem>
+							<f:selectItem itemValue="PA" itemLabel="Pará"></f:selectItem>
+							<f:selectItem itemValue="PB" itemLabel="Paraíba"></f:selectItem>
+							<f:selectItem itemValue="PR" itemLabel="Paraná"></f:selectItem>
+							<f:selectItem itemValue="PE" itemLabel="Pernambuco"></f:selectItem>
+							<f:selectItem itemValue="PI" itemLabel="Piauí"></f:selectItem>
+							<f:selectItem itemValue="RJ" itemLabel="Rio de Janeiro"></f:selectItem>
+							<f:selectItem itemValue="RN" itemLabel="Rio Grande do Norte"></f:selectItem>
+							<f:selectItem itemValue="RS" itemLabel="Rio Grande do Sul"></f:selectItem>
+							<f:selectItem itemValue="RO" itemLabel="Rondônia"></f:selectItem>
+							<f:selectItem itemValue="RR" itemLabel="Rorâima"></f:selectItem>
+							<f:selectItem itemValue="SC" itemLabel="Santa Catarina"></f:selectItem>
+							<f:selectItem itemValue="SP" itemLabel="São Paulo"></f:selectItem>
+							<f:selectItem itemValue="SE" itemLabel="Sergipe"></f:selectItem>
+							<f:selectItem itemValue="TO" itemLabel="Tocantins"></f:selectItem>
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Pais" />
+						<p:inputText value="#{usuarioMB.usuario.pessoa.endereco.pais}" />
+					</h:panelGrid>
+				</p:fieldset>
+				<h:commandButton value="Gravar" action="#{usuarioMB.atendenteCriar}"
+					styleClass="btn btn-success" />
+			</h:form>
+
+			<h:form>
+				<h:commandLink class="btn" value="Voltar"
+					action="#{usuarioMB.index}" />
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="/template/common/layout.xhtml">
+		<ui:param name="title" value="Dados do Atendente" />
+		<ui:define name="content">
+
+<p:panelGrid columns="2">
+		
+		Nome:
+		<h:outputText value="#{usuarioMB.usuario.pessoa.nome}" />
+		
+		Perfil:
+		<h:outputText value="#{usuarioMB.usuario.perfil.nome}" />
+		
+		Indicador de ativo
+		<h:outputText value="#{usuarioMB.voluntario.situacao == 'true'? 'Ativo':'Inativo'}" />
+		
+		Area de atendimento:
+		<h:outputText value="#{usuarioMB.voluntario.area.nome}" />
+		
+		Nome de usuario:
+		<h:outputText value="#{usuarioMB.usuario.nome}" />
+		
+		E-mail:
+		<h:outputText value="#{usuarioMB.usuario.pessoa.email}" />
+		
+		Sexo:
+		<h:outputText value="#{usuarioMB.usuario.pessoa.sexo}" />
+		
+		Estado Civil:
+		<h:outputText value="#{usuarioMB.usuario.pessoa.estadoCivil}" />
+		
+		Telefone Residencial:
+		<h:outputText value="#{usuarioMB.usuario.pessoa.telefoneResidencial}" />
+		
+		Telefone Celular:
+		<h:outputText value="#{usuarioMB.usuario.pessoa.celular}" />
+		
+		Telefone Comercial:
+		<h:outputText value="#{usuarioMB.usuario.pessoa.telefoneComercial}" />
+		
+		Logradouro:
+		<h:outputText value="#{usuarioMB.usuario.pessoa.endereco.logradouro}" />
+		
+		Bairro:
+		<h:outputText value="#{usuarioMB.usuario.pessoa.endereco.bairro}" />
+		
+		Cidade:
+		<h:outputText value="#{usuarioMB.usuario.pessoa.endereco.cidade}" />
+		
+		Estado:
+		<h:outputText value="#{usuarioMB.usuario.pessoa.endereco.estado}" />
+		
+		CEP:
+		<h:outputText value="#{usuarioMB.usuario.pessoa.endereco.cep}" />
+		
+		Pais:
+		<h:outputText value="#{usuarioMB.usuario.pessoa.endereco.pais}" />
+
+</p:panelGrid>
+	
+	<h:form>
+		<h:commandLink class="btn" value="Voltar" action="#{usuarioMB.atendenteIndex}" />
+	</h:form>
+
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

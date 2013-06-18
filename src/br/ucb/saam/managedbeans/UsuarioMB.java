@@ -1,7 +1,10 @@
 package br.ucb.saam.managedbeans;
 
 import java.io.IOException;
+import java.io.Serializable;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -10,33 +13,38 @@ import javax.faces.context.FacesContext;
 
 import org.apache.commons.mail.EmailException;
 
+import br.ucb.saam.beans.AreaBean;
 import br.ucb.saam.beans.EnderecoBean;
 import br.ucb.saam.beans.FuncionalidadeBean;
+import br.ucb.saam.beans.LogBean;
 import br.ucb.saam.beans.PaginaBean;
 import br.ucb.saam.beans.PerfilBean;
 import br.ucb.saam.beans.PessoaBean;
+import br.ucb.saam.beans.TipoLogBean;
 import br.ucb.saam.beans.UsuarioBean;
 import br.ucb.saam.beans.VoluntarioBean;
+import br.ucb.saam.dao.AreaDAO;
 import br.ucb.saam.dao.EnderecoDAO;
+import br.ucb.saam.dao.LogDAO;
 import br.ucb.saam.dao.PaginaDAO;
 import br.ucb.saam.dao.PerfilDAO;
 import br.ucb.saam.dao.PessoaDAO;
+import br.ucb.saam.dao.TipoLogDAO;
 import br.ucb.saam.dao.UsuarioDAO;
 import br.ucb.saam.dao.VoluntarioDAO;
 import br.ucb.saam.util.EmailUtils;
 import br.ucb.saam.util.JSFMensageiro;
 import br.ucb.saam.util.Mensagem;
 
-
-
-
 @ManagedBean(name="usuarioMB")
 @SessionScoped
-public class UsuarioMB {
+public class UsuarioMB implements Serializable{
 
 
+	private static final long serialVersionUID = 1L;
 	private UsuarioBean usuario;
 	private UsuarioDAO usuarioDAO;
+
 	private PessoaBean pessoa;
 	private PessoaDAO pessoaDAO;
 	private EnderecoBean endereco;
@@ -47,49 +55,150 @@ public class UsuarioMB {
 	
 	private List<String> paginasPermitidas;
 
+	private List<PerfilBean> perfis;
+	private PerfilBean perfil;
+	private List<UsuarioBean> resultado;
+	private VoluntarioBean voluntario;
+	private List<AreaBean> areas;
+	
+	private LogBean log;
+	private TipoLogBean tipoLog;
+	private LogDAO logDao;
+	private TipoLogDAO tipoLogDao;
+
+
 
 	public UsuarioMB(){
-		setUsuario(new UsuarioBean());
-		setUsuarioDAO(new UsuarioDAO());
-		setUsuarios(new ArrayList<UsuarioBean>());
-		setEmail(new String());
-		
+		this.usuario = new UsuarioBean();
+		this.usuarioDAO = new UsuarioDAO();
+		this.usuarios = new ArrayList<UsuarioBean>();
+		this.email = new String();
+
 		this.pessoa = new PessoaBean();
 		this.endereco = new EnderecoBean();
-		
+		this.voluntario = new VoluntarioBean();
+
 		this.pessoaDAO = new PessoaDAO();
 		this.enderecoDAO = new EnderecoDAO();
 		this.perfilDAO = new PerfilDAO();
+
 		this.paginasPermitidas = new ArrayList<String>();
 		
+		this.perfil = new PerfilBean();
+		this.resultado = new ArrayList<UsuarioBean>();
+		this.areas = new ArrayList<AreaBean>();
+		
+		this.logDao = new LogDAO();
+		this.tipoLogDao = new TipoLogDAO();
+		this.log = new LogBean();
+		this.tipoLog = new TipoLogBean();
+
 	}
 
 
 	//Methods
-	/**Metodo para buscar todos os usuário cadastrados no banco de dados
+
+	//Manter Usuario
+	public String index(){
+		this.usuarios = new ArrayList<UsuarioBean>();
+		this.resultado = new ArrayList<UsuarioBean>();
+		this.usuarios = this.usuarioDAO.findAll(UsuarioBean.class);
+		this.resultado = this.usuarios;
+		return "/usuario/index.xhtml";
+	}
+
+	public void delete(){
+		usuarioDAO.delete(usuario);
+		usuario = new UsuarioBean();
+		this.usuarios = this.usuarioDAO.findAll(UsuarioBean.class);
+		this.resultado = this.usuarios;
+		JSFMensageiro.info("Usuario excluido com sucesso");
+	}
+
+
+	public String criar(){
+		
+		enderecoDAO.saveOrUpdate(this.usuario.getPessoa().getEndereco());
+		pessoaDAO.saveOrUpdate(this.usuario.getPessoa());
+		usuarioDAO.saveOrUpdate(this.usuario);
+		this.usuario = new UsuarioBean();
+		JSFMensageiro.info("Usuario Cadastro com sucesso!");
+		return index();
+	}
+
+	public String show(){
+		return "show";
+	}
+
+
+	public String novo(){
+		this.usuario = new UsuarioBean();
+		this.perfis = new PerfilDAO().findAll(PerfilBean.class);
+		return "/usuario/new";
+	}
+
+	public String edit(){
+		this.perfis = new PerfilDAO().findAll(PerfilBean.class);
+		return  "new";
+	}
+
+	//Manter atendentes
+	public String atendenteIndex(){
+		this.usuarios = new ArrayList<UsuarioBean>();
+		this.resultado = new ArrayList<UsuarioBean>();
+		this.usuarios = (List<UsuarioBean>) new UsuarioDAO().buscaAtendentes();
+		this.resultado = this.usuarios;
+		return "/atendente/index";
+	}
+
+	public String atendenteShow(){
+		this.voluntario = (VoluntarioBean) new VoluntarioDAO().buscarPorId(VoluntarioBean.class, this.usuario.getPessoa().getId());
+		return "show";
+	}
+
+	public String atendenteEdit(){
+		this.voluntario = new VoluntarioBean();
+		this.voluntario = (VoluntarioBean) new VoluntarioDAO().buscarPorId(VoluntarioBean.class, this.usuario.getPessoa().getId());
+		this.areas = new AreaDAO().findAll(AreaBean.class);
+		return "new";
+	}
+
+	public String atendenteCriar(){
+		enderecoDAO.saveOrUpdate(this.usuario.getPessoa().getEndereco());
+		pessoaDAO.saveOrUpdate(this.usuario.getPessoa());
+		usuarioDAO.saveOrUpdate(this.usuario);
+		new VoluntarioDAO().saveOrUpdate(this.voluntario);
+		this.usuario = new UsuarioBean();
+		JSFMensageiro.info("Usuario Cadastro com sucesso!");
+		return atendenteIndex();
+	}
+
+
+	/**Metodo para buscar todos os usuï¿½rio cadastrados no banco de dados
 	 * 
 	 * @return ArrayList<UsuarioBean>
 	 */
 	public  List<UsuarioBean> getListUsuarios(){
 		return this.usuarios = this.usuarioDAO.findAll(UsuarioBean.class);
 	}
-	
-	/**Metodo para autenticar o usuário no sistema.
+
+	/**Metodo para autenticar o usuï¿½rio no sistema.
 	 *  
-	 * @return String - Página que será redirecionada.
+	 * @return String - Pï¿½gina que serï¿½ redirecionada.
 	 */
 	public String login(){
-		
+
 		//Busca a lista de usuários gravados no banco de dados
 		//getListUsuarios();
 		
 		this.usuarios = usuarioDAO.findAll(UsuarioBean.class);
 
-		//Percorre a lista de usuários		
+		//Percorre a lista de usuï¿½rios		
 		for (UsuarioBean user : usuarios) {	
-			
+
 			//Compara se o usuário informado é igual ao da vez
 			if(user.equals(this.usuario)){
+
 				//Sicroniza o objeto usuário
 				user = (UsuarioBean) usuarioDAO.buscarPorId(UsuarioBean.class, user.getId());
 				
@@ -100,21 +209,43 @@ public class UsuarioMB {
 				isAtendente(user);
 				
 				//Redireciona para Home(Menu de Funcionalidades)			
+
+				//Sicroniza o objeto usuï¿½rio
+				user = (UsuarioBean) usuarioDAO.buscarPorId(UsuarioBean.class, user.getId());				
+
+				//Adiciona o usuï¿½rio na Sessão
+				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", user);
+
+				isAtendente(user);
+				//Redireciona para Home(Menu de Funcionalidades)
+
+				this.tipoLog = (TipoLogBean) tipoLogDao.buscarPorId(TipoLogBean.class, 1);
+				
+				log.setData(new Date(System.currentTimeMillis()));
+				log.setMensagem("O usuário"+this.usuario.getNome()+" entrou no sistema");
+				log.setUsuario(user);
+				log.setTipoLog(tipoLog);
+				
+				logDao.saveOrUpdate(log);
+				
+				this.log = new LogBean();
+				this.tipoLog = new TipoLogBean();
 				this.usuario = new UsuarioBean();
 				this.paginasPermitidas = new ArrayList<String>();
+				
 				return "/home/home";
 			}
 		}
-		//Caso não encontre envia uma mensagem informando o problema		
+		//Caso nï¿½o encontre envia uma mensagem informando o problema		
 		JSFMensageiro.info("Usuário ou Senha Incorreta");
 		return "principal";
 	}
-	
+
 	/**
-	 * Metodo para verificar se o usuário é atendente. Caso seja atendente adiciona a area do atendente na sua sessão
+	 * Metodo para verificar se o usuï¿½rio ï¿½ atendente. Caso seja atendente adiciona a area do atendente na sua sessï¿½o
 	 * @param usuario
 	 */
-	
+
 	public void isAtendente(UsuarioBean usuario){
 		if(usuario.getPerfil().getId() == 2){
 			VoluntarioBean voluntario = (VoluntarioBean) new VoluntarioDAO().buscarPorId(VoluntarioBean.class, usuario.getPessoa().getId());
@@ -122,6 +253,7 @@ public class UsuarioMB {
 			voluntario = new VoluntarioBean();
 		}
 	}
+
 
 	public void carregaPaginas(UsuarioBean usuario){		
 		List<PaginaBean>paginas;		
@@ -134,8 +266,9 @@ public class UsuarioMB {
 	}
 	
 	
+
 	public String logout() throws IOException{
-			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("usuario");
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("usuario");
 		return "principal";
 	}
 	public String relembraSenha(){
@@ -143,32 +276,33 @@ public class UsuarioMB {
 	}
 
 	public String relembrarSenha(){
-		
+
 		Mensagem mensagem = new Mensagem();
-		
+
 		getListUsuarios();
 		for (UsuarioBean user : usuarios) {
 			System.out.println(user.getPessoa().getEmail());
 			if(email.equals(user.getPessoa().getEmail())){
-		
+
 				mensagem.setDestino(user.getPessoa().getEmail());
 				mensagem.setTitulo("Credencias de Acesso - SAAM");
-				mensagem.setMensagem("Prezado(a) "+user.getPessoa().getNome()+",\n\nConforme solicitado seguem informações de acesso:\n\nUsuario: "+user.getNome()+"\nSenha: "+user.getSenha()+" \n\nAtenciosamente,\n\n Associação das Mulheres Empreendedoras.");
-								
+				mensagem.setMensagem("Prezado(a) "+user.getPessoa().getNome()+",\n\nConforme solicitado seguem informaï¿½ï¿½es de acesso:\n\nUsuario: "+user.getNome()+"\nSenha: "+user.getSenha()+" \n\nAtenciosamente,\n\n Associaï¿½ï¿½o das Mulheres Empreendedoras.");
+
 				try {
 					EmailUtils.enviaEmail(mensagem);
-					JSFMensageiro.info("Sua senha será enviada em instantes. Acesse seu e-mail para visualizar");
+					JSFMensageiro.info("Sua senha serï¿½ enviada em instantes. Acesse seu e-mail para visualizar");
 					this.email = new String();
 				} catch (EmailException ex){
 					System.out.println("Erro! Ocorreu um erro ao enviar a mensagem"+ex);
 				}
-				
+
 				return "relembraSenha";
 			}
 		}
-		JSFMensageiro.info("Sua senha será enviada em instantes. Acesse seu e-mail para visualizar");
+		JSFMensageiro.info("Sua senha serï¿½ enviada em instantes. Acesse seu e-mail para visualizar");
 		this.email = new String();
 		return "relembraUsario";
+
 		
 		
 	}
@@ -193,81 +327,62 @@ public class UsuarioMB {
 	}
 
 
-	public String salvar(){
-		
-		this.usuario.setPerfil((PerfilBean) perfilDAO.buscarPorId(PerfilBean.class, 1));
-		enderecoDAO.saveOrUpdate(this.usuario.getPessoa().getEndereco());
-		pessoaDAO.saveOrUpdate(this.usuario.getPessoa());
-		usuarioDAO.saveOrUpdate(this.usuario);
-	
-		return "";
-	}
 
-	
-	
-	
-	/*Neste método é necessário uma nova instância do usuário
-	 *Para que o valor acessado pelo método getUsuário esteja null
-	 */
-	public String incluir(){
-		this.usuario = new UsuarioBean();
-		return "formUsuario";
-	}
-	
+
 	public String principal(){
 		return "principal";
 	}
 
 	public void cadastrarMulher(){
 
-			if(isCadastrado()){
-				JSFMensageiro.error("O e-mail informado já possui cadastro no sistema.");
-			}else{
-				enderecoDAO.saveOrUpdate(this.endereco);
-				
-				this.pessoa.setEndereco(endereco);				
-				pessoaDAO.saveOrUpdate(this.pessoa);
-				usuario.setPessoa(this.pessoa);
-				
-				usuario.setNome(this.pessoa.getEmail());
-				usuario.setSenha(UsuarioBean.geraSenha());
-				usuario.setPerfil((PerfilBean) perfilDAO.buscarPorId(PerfilBean.class, 5));
-				
-				usuarioDAO.saveOrUpdate(usuario);
-				
-				Mensagem msg = new Mensagem();
-				msg.setDestino(this.usuario.getPessoa().getEmail());
-				msg.setMensagem("Prezado(a) "+this.usuario.getPessoa().getNome()+", \n\n" +
-								"Para ter acesso aos atendimentos, utilize as seguintes informações: \n\n" +
-								"\t Usuário: "+this.usuario.getNome()+"\n"+
-								"\t Senha: "+this.usuario.getSenha()+"\n\n" +
-								"\nImportante:\n\n" +
-								"\t1. Ao informar o login e senha, por favor, verifique se não há espaços em branco.\n" +
-								"\t2. Evite copiar e colar o login e a senha, pois este procedimento, geralmente, " +
-								"acrescenta um espaço em branco nos dados, dificultando seu acesso." +
-								"\n\nAtenciosamente,\n\n" +
-								"\nAssociação de Mulheres Empreendedoras.");
-								
-				msg.setTitulo("Cadastro - SAAM");
-				
-				enviarEmail(msg);				
-				JSFMensageiro.info("Seu cadastro foi realizado com sucesso! As informações de acesso serão enviadas para o e-mail cadastrado");
-				
-				this.usuario = new UsuarioBean();
-				this.endereco = new EnderecoBean();
-				this.pessoa = new PessoaBean();
-			}
+		if(isCadastrado() == true){
+			JSFMensageiro.error("O e-mail informado já possui cadastro no sistema.");
+		}else{
+			
+			usuario.setSenha(UsuarioBean.geraSenha());
+			usuario.setPerfil((PerfilBean) perfilDAO.buscarPorId(PerfilBean.class, 5));
+			usuario.setNome(this.usuario.getPessoa().getEmail());
+			enderecoDAO.saveOrUpdate(this.usuario.getPessoa().getEndereco());
+			pessoaDAO.saveOrUpdate(this.usuario.getPessoa());
+			usuarioDAO.saveOrUpdate(this.usuario);
+
+
+			Mensagem msg = new Mensagem();
+			msg.setDestino(this.usuario.getPessoa().getEmail());
+			msg.setMensagem("Prezado(a) "+this.usuario.getPessoa().getNome()+", \n\n" +
+					"Para ter acesso aos atendimentos, utilize as seguintes informações: \n\n" +
+					"\t Usuário: "+this.usuario.getNome()+"\n"+
+					"\t Senha: "+this.usuario.getSenha()+"\n\n" +
+					"\nImportante:\n\n" +
+					"\t1. Ao informar o login e senha, por favor, verifique se não tem espaços em branco.\n" +
+					"\t2. Evite copiar e colar o login e a senha, pois este procedimento, geralmente, " +
+					"acrescenta um espaço em branco nos dados, dificultando seu acesso." +
+					"\n\nAtenciosamente,\n\n" +
+					"\nAssociação de Mulheres Empreendedoras.");
+
+			msg.setTitulo("Cadastro - SAAM");
+
+			enviarEmail(msg);				
+			JSFMensageiro.info("Seu cadastro foi realizado com sucesso! As informações de acesso serão enviadas para o e-mail cadastrado");
+
+			this.usuario = new UsuarioBean();
+		}
 
 	}
-	
+
 	public boolean isCadastrado(){
-		for (PessoaBean p : pessoaDAO.findAll(PessoaBean.class)) {
-			if(p.getEmail().equalsIgnoreCase(this.pessoa.getEmail())){
+		List<PessoaBean> pessoas = pessoaDAO.findAll(PessoaBean.class);
+		for (PessoaBean p : pessoas) {
+			System.out.println(this.usuario.getPessoa().getEmail());
+			if(p.getEmail().equalsIgnoreCase(this.usuario.getPessoa().getEmail())){
+				pessoas = new ArrayList<PessoaBean>();
 				return true;
 			}
 		}
+		pessoas = new ArrayList<PessoaBean>();
 		return false;
 	}
+	
 	public void enviarEmail(Mensagem msg){
 		try {
 			EmailUtils.enviaEmail(msg);
@@ -276,7 +391,7 @@ public class UsuarioMB {
 			e.printStackTrace();
 		}
 	}
-	
+
 
 	//getters and setters
 	public UsuarioBean getUsuario() {
@@ -318,6 +433,12 @@ public class UsuarioMB {
 	}
 
 
+	public List<PerfilBean> getPerfis() {
+		return perfis;
+	}
+
+
+
 	public PessoaBean getPessoa() {
 		return pessoa;
 	}
@@ -336,6 +457,47 @@ public class UsuarioMB {
 	public void setEndereco(EnderecoBean endereco) {
 		this.endereco = endereco;
 	}
+	
+	public void setPerfis(List<PerfilBean> perfis) {
+		this.perfis = perfis;
+	}
+
+	public PerfilBean getPerfil() {
+		return perfil;
+	}
 
 
+	public void setPerfil(PerfilBean perfil) {
+		this.perfil = perfil;
+	}
+
+
+	public List<UsuarioBean> getResultado() {
+		return resultado;
+	}
+
+
+	public void setResultado(List<UsuarioBean> resultado) {
+		this.resultado = resultado;
+	}
+
+
+	public VoluntarioBean getVoluntario() {
+		return voluntario;
+	}
+
+
+	public void setVoluntario(VoluntarioBean voluntario) {
+		this.voluntario = voluntario;
+	}
+
+
+	public List<AreaBean> getAreas() {
+		return areas;
+	}
+
+
+	public void setAreas(List<AreaBean> areas) {
+		this.areas = areas;
+	}
 }

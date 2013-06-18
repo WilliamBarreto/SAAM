@@ -9,15 +9,18 @@
 
 <h:body>
 	<ui:composition template="/template/common/layout.xhtml">
-		<ui:param name="title" value="Lista de Voluntarios" />
+		<ui:param name="title" value="Lista de Perguntas Frequentes" />
 		<ui:define name="content">
 
-			<h:form>
+			<h:form id="form">
+				
+				<p:messages id="msg" autoUpdate="true" closable="true" />
+				
 				<p:dataTable value="#{perguntaFrequenteMB.perguntasFrequentes}"
 					var="item" paginatorPosition="bottom" paginator="true" rows="10"
 					paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink} "
-					widgetVar="teste" emptyMessage="Nenhum perfil foi encontrado."
-					filteredValue="#{perguntaFrequenteMB.resultados}">>
+					widgetVar="teste" emptyMessage="Nenhuma pegunta frequente foi encontrada."
+					filteredValue="#{perguntaFrequenteMB.resultados}">
 					
 					<p:column>
 						<f:facet name="header">
@@ -28,8 +31,7 @@
 						</h:outputText>
 					</p:column>
 					<p:column id="nomeColumn" filterBy="#{item.pergunta}"
-						headerText="Perfil" styleClass="esquerda"
-						filterMatchMode="contains">
+						headerText="Perfil"	filterMatchMode="contains">
 						<f:facet name="header">
 							<h:outputText value="Pergunta" />
 						</f:facet>
@@ -56,13 +58,23 @@
 						</p:commandLink>
 					</p:column>
 					<p:column>
-						<h:commandLink value="Excluir"
-							actionListener="#{perguntaFrequenteMB.delete}" styleClass="btn">
-							<f:attribute name="perguntaFrequente" value="#{item}" />
-						</h:commandLink>
-						<br />
+						<p:commandLink id="delete" value="Excluir" onclick="confirmation.show()" type="button" styleClass="btn">
+							<f:setPropertyActionListener value="#{item}" target="#{perguntaFrequenteMB.perguntaFrequente}" />
+						</p:commandLink>
 					</p:column>
 				</p:dataTable>
+				
+				<p:confirmDialog id="confirmDialog"
+					message="Tem certeza que quer apagar essa pergunta frequente?"
+					header="Deletando pergunta frequente" severity="alert"
+					widgetVar="confirmation">
+
+					<p:commandButton id="confirm" value="Sim" update=":form"
+						oncomplete="confirmation.hide()" actionListener="#{perguntaFrequenteMB.delete}"/>
+					<p:commandButton id="decline" value="Não"
+						onclick="confirmation.hide()" type="button" />
+				</p:confirmDialog>
+
 			</h:form>
 
 			<h:form>
