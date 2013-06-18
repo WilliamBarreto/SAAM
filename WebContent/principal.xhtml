@@ -62,10 +62,10 @@
 
 
 				<h:form>
-					<h:commandButton class="btn btn-small btn-danger"
+					<h:commandButton class="btn btn-small btn-info"
 						rendered="#{controllerMB.area == 'mulher' ? true:false}"
 						value="Cadastre-se" action="#{controllerMB.cadastrarMulher}" />
-					<h:commandButton class="btn btn-small btn-danger"
+					<h:commandButton class="btn btn-small btn-info"
 						rendered="#{controllerMB.area == 'voluntario'? true:false}"
 						value="Cadastre-se" action="#{controllerMB.cadastrarVoluntario}" />
 				</h:form>
@@ -94,7 +94,7 @@
 				</h:form>
 
 				<h:form>
-					<h:commandButton class="btn btn-small btn-info"
+					<h:commandButton class="btn btn-small"
 						rendered="#{controllerMB.area == 'mulher' ? true:false}"
 						value="Acessar Anônimo" action="#{usuarioMB.loginAnonimo}" />
 				</h:form>

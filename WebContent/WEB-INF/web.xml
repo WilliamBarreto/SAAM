@@ -103,7 +103,6 @@
 		<dispatcher>ERROR</dispatcher>
 	</filter-mapping>
 	
-	<!-- Permissão
 	<filter>
 		<filter-name>permissao</filter-name>
 		<filter-class>br.ucb.saam.util.PermissaoFilter</filter-class>
@@ -121,7 +120,7 @@
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 	</filter-mapping>
-	-->
+
 	<!-- Páginas de Erro -->
 	
 	<!-- 

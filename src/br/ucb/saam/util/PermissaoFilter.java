@@ -29,6 +29,7 @@ public class PermissaoFilter implements Filter{
 		
 		if(usuario != null){
 			
+			permissoes.add("/SAAM/home/home.xhtml");
 			for (String p: permissoes) {
 				System.out.println(p);
 			}
